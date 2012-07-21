@@ -15,11 +15,13 @@
 (setq column-number-mode t)
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
+(setq show-trailing-whitespace t)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (blink-cursor-mode 0)
 (tool-bar-mode -1)
 (delete-selection-mode)
+(set-scroll-bar-mode nil)
 
 ;; set up our own site-lisp.
 (let ((default-directory "~/.emacs.d/site-lisp/"))
@@ -31,3 +33,19 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
+
+;; global hooks.
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; because there's no other way to run emacs.
+(defun toggle-fullscreen ()
+  (interactive)
+  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+			 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+			 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))
+(toggle-fullscreen)
+
+;; load our other setup files.
+(add-to-list 'load-path "~/.emacs.d/")
+(require 'setup-git)
