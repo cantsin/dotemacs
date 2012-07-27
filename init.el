@@ -16,12 +16,18 @@
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 (setq show-trailing-whitespace t)
+(setq echo-keystrokes 0.1)
+(setq shift-select-mode nil)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (blink-cursor-mode 0)
 (tool-bar-mode -1)
 (delete-selection-mode)
 (set-scroll-bar-mode nil)
+(auto-compression-mode t)
+
+(set-default 'indent-tabs-mode nil)
+(set-default 'indicate-empty-lines t)
 
 ;; set up our own site-lisp.
 (let ((default-directory "~/.emacs.d/site-lisp/"))
@@ -35,7 +41,10 @@
 (package-initialize)
 
 ;; global hooks.
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'after-save-hook
+	  'executable-make-buffer-file-executable-if-script-p)
+(add-hook 'before-save-hook
+	  'delete-trailing-whitespace)
 
 ;; because there's no other way to run emacs.
 (defun toggle-fullscreen ()
@@ -46,6 +55,17 @@
 			 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))
 (toggle-fullscreen)
 
+;; theme.
+(load-theme 'zenburn t)
+
+;; save our customizations elsewhere.
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
+
 ;; load our other setup files.
 (add-to-list 'load-path "~/.emacs.d/")
-(require 'setup-git)
+(require 'setup-magit)
+(require 'setup-windmove)
+(require 'setup-misc)
+(require 'setup-smex)
+(require 'setup-ido)

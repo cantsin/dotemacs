@@ -4,6 +4,6 @@
 (set-face-foreground 'diff-added "#00cc33")
 (set-face-foreground 'diff-removed "#ff0000")
 
-(load-theme 'zenburn)
+(global-set-key (kbd "C-c g") 'magit-status)
 
-(provide 'setup-git)
+(provide 'setup-magit)
