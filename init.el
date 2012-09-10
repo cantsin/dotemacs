@@ -3,6 +3,7 @@
 (global-font-lock-mode t)
 
 (setq inhibit-splash-screen t)
+(setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
@@ -18,6 +19,13 @@
 (setq show-trailing-whitespace t)
 (setq echo-keystrokes 0.1)
 (setq shift-select-mode nil)
+(setq tooltip-use-echo-area t)
+(setq color-theme-is-global t)
+(setq sentence-end-double-space t)
+(setq whitespace-style '(face trailing lines-tail tabs))
+(setq whitespace-line-column 80)
+(setq shift-select-mode nil)
+(setq mouse-yank-at-point t)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (blink-cursor-mode 0)
@@ -25,12 +33,14 @@
 (delete-selection-mode)
 (set-scroll-bar-mode nil)
 (auto-compression-mode t)
+(tooltip-mode -1)
+(hl-line-mode t)
 
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines t)
 
 ;; set up our own site-lisp.
-(let ((default-directory "~/.emacs.d/site-lisp/"))
+(let ((default-directory (concat user-emacs-directory "site-lisp")))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 
@@ -58,14 +68,20 @@
 ;; theme.
 (load-theme 'zenburn t)
 
+;; places.
+(setq save-place-file (concat user-emacs-directory "places"))
+
 ;; save our customizations elsewhere.
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
 
 ;; load our other setup files.
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path user-emacs-directory)
+(require 'setup-private)
 (require 'setup-magit)
 (require 'setup-windmove)
 (require 'setup-misc)
 (require 'setup-smex)
 (require 'setup-ido)
+(require 'setup-erc)
+(require 'setup-gnus)
