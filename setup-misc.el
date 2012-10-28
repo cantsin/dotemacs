@@ -1,3 +1,12 @@
+;; show the battery status if applicable.
+(require 'battery)
+(when (and battery-status-function
+           (not (string-match-p "N/A"
+                                (battery-format "%B"
+                        (funcall battery-status-function)))))
+  (setq battery-mode-line-format " [%b%p%%, %t]")
+  (display-battery-mode 1))
+
 ;; this should be already part of emacs.
 (defun copy-line (&optional arg)
   (interactive "P")
@@ -54,6 +63,9 @@
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
+;; toggle refill-mode on/off
+(global-set-key (kbd "C-c q") 'refill-mode)
+
 ;; enable some disabled commands.
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -62,5 +74,15 @@
 ;; pretty-print evals.
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
 (global-set-key [remap eval-expression] 'pp-eval-expression)
+
+(custom-set-faces
+ '(default ((t (:family "Liberation Mono" :foundry "unknown" :slant normal :weight normal :height 128 :width normal)))))
+
+;; disable overwrite-mode because it is really annoying.
+(define-key global-map [(insert)] nil)
+
+;; enable w3m
+(require 'w3m-load)
+(setq w3m-use-tab t)
 
 (provide 'setup-misc)

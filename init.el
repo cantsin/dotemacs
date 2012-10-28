@@ -68,6 +68,11 @@
 ;; theme.
 (load-theme 'zenburn t)
 
+;; show the date and time.
+(setq display-time-day-and-date t)
+(setq display-time-24hr-format t)
+(display-time)
+
 ;; places.
 (setq save-place-file (concat user-emacs-directory "places"))
 
@@ -82,6 +87,7 @@
 (require 'setup-windmove)
 (require 'setup-misc)
 (require 'setup-smex)
+(require 'setup-dired)
 (require 'setup-ido)
 (require 'setup-erc)
 (require 'setup-gnus)
