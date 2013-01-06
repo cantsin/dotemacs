@@ -123,7 +123,7 @@
 (require 'setup-dired)
 (require 'setup-ido)
 (require 'setup-erc)
-(require 'setup-gnus)
+;;(require 'setup-gnus)
 (require 'setup-org)
 (require 'setup-languages)
 

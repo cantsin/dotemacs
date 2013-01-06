@@ -88,8 +88,8 @@
 (define-key global-map [(insert)] nil)
 
 ;; enable w3m
-(require 'w3m-load)
-(setq w3m-use-tab t)
+;;(require 'w3m-load)
+;;(setq w3m-use-tab t)
 
 ;; fix annoying DOS or Mac line endings
 (defun fix-coding-system ()
@@ -127,7 +127,7 @@
   (openwith-mode 1))
 
 ;; malyon -- z interpreter.
-(require 'malyon)
+;; (require 'malyon)
 
 ;; webjump
 (global-set-key (kbd "C-x g") 'webjump)
