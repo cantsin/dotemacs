@@ -1,11 +1,3 @@
-;; show the battery status if applicable.
-(require 'battery)
-(when (and battery-status-function
-           (not (string-match-p "N/A"
-                                (battery-format "%B"
-                        (funcall battery-status-function)))))
-  (setq battery-mode-line-format " [%b%p%%, %t]")
-  (display-battery-mode 1))
 
 ;; this should be already part of emacs.
 (defun copy-line (&optional arg)
