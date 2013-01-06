@@ -102,7 +102,6 @@ matches a regexp in `erc-keywords'."
   "Connect to IRC."
   (interactive)
   (when (y-or-n-p "IRC? ")
-    (erc :server "irc.freenode.net" :port 6667)
-    (erc-tls :server "irc.flowdock.com" :port 6697)))
+    (erc :server "irc.freenode.net" :port 6667)))
 
 (provide 'setup-erc)

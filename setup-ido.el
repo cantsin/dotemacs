@@ -9,17 +9,4 @@
 (setq ido-handle-duplicate-virtual-buffers 2)
 (setq ido-max-prospects 10)
 
-(defun ido-for-mode (prompt the-mode)
-  (switch-to-buffer
-   (ido-completing-read prompt
-                        (save-excursion
-                          (delq
-                           nil
-                           (mapcar (lambda (buf)
-                                     (when (buffer-live-p buf)
-                                       (with-current-buffer buf
-                                         (and (eq major-mode the-mode)
-                                              (buffer-name buf)))))
-                                   (buffer-list)))))))
-
 (provide 'setup-ido)

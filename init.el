@@ -1,3 +1,8 @@
+;; Turn off mouse interface early in startup to avoid momentary display
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+
 ;; global settings.
 (global-auto-revert-mode 1)
 (global-font-lock-mode t)
@@ -24,14 +29,11 @@
 (setq sentence-end-double-space t)
 (setq whitespace-style '(face trailing lines-tail tabs))
 (setq whitespace-line-column 80)
-(setq shift-select-mode nil)
 (setq mouse-yank-at-point t)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (blink-cursor-mode 0)
-(tool-bar-mode -1)
 (delete-selection-mode)
-(set-scroll-bar-mode nil)
 (auto-compression-mode t)
 (tooltip-mode -1)
 (hl-line-mode t)
@@ -49,6 +51,42 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
+
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+(defvar my-packages
+  '(confluence
+    diminish
+    dired+
+    expand-region
+    git-commit-mode
+    gitconfig-mode
+    gitignore-mode
+    haskell-mode
+    hl-line+
+    ido-ubiquitous
+    offlineimap
+    openwith
+    paredit
+    session
+    smart-tab
+    smex
+    zenburn-theme)
+  "A list of packages to ensure are installed at launch.")
+
+;; install manually:
+;; - bbdb
+;; - julia-mode.el
+;; - magit
+;; - notmuch
+;; - org-bullets.el
+;; - session
+;; - stripe-buffer.el
+
+(dolist (p my-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
 
 ;; global hooks.
 (add-hook 'after-save-hook
@@ -86,3 +124,11 @@
 (require 'setup-ido)
 (require 'setup-erc)
 (require 'setup-gnus)
+(require 'setup-org)
+(require 'setup-languages)
+
+;; diminish mode ftw
+(require 'diminish)
+(diminish 'eldoc-mode)
+;(diminish 'paredit-mode "()")
+;(diminish 'smart-tab-mode)
