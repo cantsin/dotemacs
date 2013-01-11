@@ -56,7 +56,8 @@
   (package-refresh-contents))
 
 (defvar my-packages
-  '(confluence
+  '(clojure-mode
+    confluence
     diminish
     dired+
     expand-region
@@ -66,6 +67,7 @@
     haskell-mode
     hl-line+
     ido-ubiquitous
+    nrepl
     offlineimap
     openwith
     paredit
@@ -125,6 +127,7 @@
 (require 'setup-erc)
 ;;(require 'setup-gnus)
 (require 'setup-org)
+(require 'setup-clojure)
 (require 'setup-languages)
 
 ;; diminish mode ftw
