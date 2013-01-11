@@ -93,6 +93,19 @@ matches a regexp in `erc-keywords'."
       nil)))
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
+(defun my-erc-switch-to-erc-buffer nil
+  "Switch to ERC buffer using IDO to choose which one, or start ERC if not already started."
+  (interactive)
+  (let (final-list (list ))
+    (dolist (buf (buffer-list) final-list)
+      (if (equal 'erc-mode (with-current-buffer buf major-mode))
+     	  (setq final-list (append (list (buffer-name buf)) final-list))))
+    (if final-list
+     	(switch-to-buffer (ido-completing-read "Buffer: " final-list))
+      (call-interactively 'erc))))
+(eval-after-load 'erc-mode
+  '(define-key erc-mode-map (kbd "\C-c\C-b") 'my-erc-switch-to-erc-buffer))
+
 ;; add ERC to the menu.
 (require 'easymenu)
 (easy-menu-add-item nil '("tools") ["IRC with ERC" erc t])
