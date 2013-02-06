@@ -5,6 +5,7 @@
 (require 'erc-ring)
 (require 'erc-netsplit)
 (require 'tls)
+(require 'znc)
 
 (erc-spelling-mode 1)
 (erc-autojoin-mode 1)
@@ -101,7 +102,6 @@ matches a regexp in `erc-keywords'."
 (defun irc ()
   "Connect to IRC."
   (interactive)
-  (when (y-or-n-p "IRC? ")
-    (erc :server "irc.freenode.net" :port 6667)))
+  (znc-all))
 
 (provide 'setup-erc)
