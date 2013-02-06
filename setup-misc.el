@@ -81,9 +81,6 @@
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
 (global-set-key [remap eval-expression] 'pp-eval-expression)
 
-(custom-set-faces
- '(default ((t (:family "Liberation Mono" :foundry "unknown" :slant normal :weight normal :height 128 :width normal)))))
-
 ;; disable overwrite-mode because it is really annoying.
 (define-key global-map [(insert)] nil)
 
