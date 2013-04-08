@@ -1,5 +1,17 @@
 (require 'org-bullets)
 
+(setq org-use-speed-commands t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (sh . t)))
+
+(setq org-confirm-babel-evaluate nil)
+
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+
 (add-hook 'org-mode-hook
           (lambda () (org-bullets-mode 1)))
 
