@@ -10,6 +10,16 @@
 (setq-default kill-read-only-ok t) ;; required for copy-line.
 (global-set-key "\C-c\C-k" 'copy-line)
 
+
+(global-set-key (kbd "C-?") 'help-command)
+(global-set-key (kbd "M-?") 'mark-paragraph)
+(global-set-key (kbd "C-h") 'delete-backward-char)
+(global-set-key (kbd "M-h") 'backward-kill-word)
+
+(global-set-key (kbd "C-x O") (lambda ()
+                                (interactive)
+                                (other-window -1)))
+
 ;; save our point position between sessions elsewhere.
 (require 'saveplace)
 (setq-default save-place t)
@@ -35,6 +45,7 @@
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 ;; paredit.
 (autoload 'paredit-mode "paredit"
@@ -126,6 +137,49 @@
 ;; malyon -- z interpreter.
 ;; (require 'malyon)
 
+;; terminal.
+(defun visit-term-buffer ()
+  "Create or visit a terminal buffer."
+  (interactive)
+  (if (not (get-buffer "*ansi-term*"))
+      (progn
+        (split-window-sensibly (selected-window))
+        (other-window 1)
+        (ansi-term (getenv "SHELL")))
+    (switch-to-buffer-other-window "*ansi-term*")))
+
+(global-set-key (kbd "C-c t") 'visit-term-buffer)
+
+;; a godsend
+(electric-indent-mode +1)
+
+;; indent region, defun, or buffer
+(defun indent-buffer ()
+  "Indent the currently visited buffer."
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
+(defun indent-defun ()
+  "Indent the current defun."
+  (interactive)
+  (save-excursion
+    (mark-defun)
+    (indent-region (region-beginning) (region-end))))
+
+(defun indent-region-or-defun ()
+  "Indent a region if selected, otherwise the defun."
+  (interactive)
+  (save-excursion
+    (if (region-active-p)
+        (progn
+          (indent-region (region-beginning) (region-end))
+          (message "Indented selected region."))
+      (progn
+        (indent-defun)
+        (message "Indented defun.")))))
+
+(global-set-key (kbd "C-M-\\") 'indent-region-or-defun)
+
 ;; webjump
 (global-set-key (kbd "C-x g") 'webjump)
 
@@ -159,5 +213,30 @@ with the first matching buffer's major mode."
    (car occur-revert-arguments)))
 (define-key occur-mode-map "m" 'occur-multi-occur)
 (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
+
+(setq flymake-gui-warnings-enabled nil)
+
+;; gnomenm
+(require 'gnomenm)
+
+;; A saner ediff
+(setq ediff-diff-options "-w")
+(setq ediff-split-window-function 'split-window-horizontally)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;; Nic says eval-expression-print-level needs to be set to nil (turned off) so
+;; that you can always see what's happening.
+(setq eval-expression-print-level nil)
+
+;; When popping the mark, continue popping until the cursor actually moves
+;; Also, if the last command was a copy - skip past all the expand-region cruft.
+(defadvice pop-to-mark-command (around ensure-new-position activate)
+  (let ((p (point)))
+    (when (eq last-command 'save-region-or-current-line)
+      ad-do-it
+      ad-do-it
+      ad-do-it)
+    (dotimes (i 10)
+      (when (= p (point)) ad-do-it))))
 
 (provide 'setup-misc)

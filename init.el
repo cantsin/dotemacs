@@ -40,6 +40,23 @@
 
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines t)
+(set-default 'sentence-end-double-space nil)
+
+;; Allow pasting selection outside of Emacs
+(setq x-select-enable-clipboard t)
+
+;; not 72, please.
+(setq fill-column 80)
+
+;; UTF-8 please
+(setq locale-coding-system 'utf-8) ; pretty
+(set-terminal-coding-system 'utf-8) ; pretty
+(set-keyboard-coding-system 'utf-8) ; pretty
+(set-selection-coding-system 'utf-8) ; please
+(prefer-coding-system 'utf-8) ; with sugar on top
+
+;; Easily navigate sillycased words
+(global-subword-mode 1)
 
 ;; set up our own site-lisp.
 (let ((default-directory (concat user-emacs-directory "site-lisp")))
@@ -63,6 +80,7 @@
     git-commit-mode
     gitconfig-mode
     gitignore-mode
+    gnomenm
     haskell-mode
     hl-line+
     ido-ubiquitous
@@ -72,7 +90,13 @@
     session
     smart-tab
     smex
-    zenburn-theme)
+    zenburn-theme
+
+    ;; auxiliary libraries
+    dash
+    ht
+    loop
+    s)
   "A list of packages to ensure are installed at launch.")
 
 ;; install manually:
@@ -123,7 +147,8 @@
 (require 'setup-dired)
 (require 'setup-ido)
 (require 'setup-erc)
-;;(require 'setup-gnus)
+(require 'setup-eshell)
+(require 'setup-mu4e)
 (require 'setup-org)
 (require 'setup-languages)
 
