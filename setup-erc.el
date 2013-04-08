@@ -110,11 +110,4 @@ matches a regexp in `erc-keywords'."
 (require 'easymenu)
 (easy-menu-add-item nil '("tools") ["IRC with ERC" erc t])
 
-;; custom command.
-(defun irc ()
-  "Connect to IRC."
-  (interactive)
-  (when (y-or-n-p "IRC? ")
-    (erc :server "irc.freenode.net" :port 6667)))
-
 (provide 'setup-erc)
