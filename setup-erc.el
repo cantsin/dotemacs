@@ -5,6 +5,7 @@
 (require 'erc-ring)
 (require 'erc-netsplit)
 (require 'tls)
+(require 'znc)
 
 (erc-spelling-mode 1)
 (erc-autojoin-mode 1)
@@ -109,5 +110,11 @@ matches a regexp in `erc-keywords'."
 ;; add ERC to the menu.
 (require 'easymenu)
 (easy-menu-add-item nil '("tools") ["IRC with ERC" erc t])
+
+;; custom command.
+(defun irc ()
+  "Connect to IRC."
+  (interactive)
+  (znc-all))
 
 (provide 'setup-erc)
