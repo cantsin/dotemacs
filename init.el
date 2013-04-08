@@ -3,6 +3,22 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 ;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
+;; timestamps in *Messages*
+(defun current-time-microseconds ()
+  (let* ((nowtime (current-time))
+         (now-ms (nth 2 nowtime)))
+    (concat (format-time-string "[%Y-%m-%dT%T" nowtime) (format ".%d] " now-ms))))
+
+(defadvice message (before test-symbol activate)
+  (if (not (string-equal (ad-get-arg 0) "%s%s"))
+      (let ((deactivate-mark nil))
+        (save-excursion
+          (set-buffer "*Messages*")
+          (goto-char (point-max))
+          (if (not (bolp))
+              (newline))
+          (insert (current-time-microseconds))))))
+
 ;; global settings.
 (global-auto-revert-mode 1)
 (global-font-lock-mode t)
@@ -74,6 +90,7 @@
     session
     smart-tab
     smex
+    twittering-mode
     zenburn-theme)
   "A list of packages to ensure are installed at launch.")
 
@@ -89,6 +106,19 @@
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
+
+;; el-get.
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (let (el-get-master-branch)
+      (goto-char (point-max))
+      (eval-print-last-sexp))))
+
+(el-get 'sync)
 
 ;; global hooks.
 (add-hook 'after-save-hook
@@ -115,6 +145,12 @@
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
 
+;; remap backspace key to something more sensible
+(global-set-key (kbd "C-?") 'help-command)
+(global-set-key (kbd "M-?") 'mark-paragraph)
+(global-set-key (kbd "C-h") 'delete-backward-char)
+(global-set-key (kbd "M-h") 'backward-kill-word)
+
 ;; load our other setup files.
 (add-to-list 'load-path user-emacs-directory)
 (require 'setup-private)
@@ -128,6 +164,7 @@
 ;;(require 'setup-gnus)
 (require 'setup-org)
 (require 'setup-clojure)
+(require 'setup-twitter)
 (require 'setup-languages)
 
 ;; diminish mode ftw
