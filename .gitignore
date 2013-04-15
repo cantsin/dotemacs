@@ -4,3 +4,4 @@
 /setup-private.el
 /eshell/
 /save-place
+*.elc
