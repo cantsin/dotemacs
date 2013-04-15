@@ -7,13 +7,14 @@
       (append '(("\\.jl$" . julia-mode)) auto-mode-alist))
 
 ;; python
-(require 'jedi)
-(setq jedi:setup-keys t)
-(add-hook 'python-mode-hook 'jedi:setup)
-(add-hook 'python-mode-hook 'auto-complete-mode)
+;; TODO adjust for 3.x
+;; (require 'jedi)
+;; (setq jedi:setup-keys t)
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (add-hook 'python-mode-hook 'auto-complete-mode)
 
-(setq jedi:server-args
-      '("--sys-path" "/usr/local/lib/python2.7/dist-packages"))
+;; (setq jedi:server-args
+;;       '("--sys-path" "/usr/local/lib/python2.7/dist-packages"))
 
 ;; elisp
 (defun eval-and-replace ()
