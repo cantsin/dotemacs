@@ -5,64 +5,86 @@
 (setq eshell-review-quick-commands nil)
 (setq eshell-smart-space-goes-to-end t)
 
-(defun eshell/emacs (file)
-  (find-file file))
+(defun eshell/emacs (&rest args)
+  "Open a file in emacs. Some habits die hard."
+  (if (null args)
+      (bury-buffer)
+    ;; We have to expand the file names or else naming a directory in an
+    ;; argument causes later arguments to be looked for in that directory,
+    ;; not the starting directory
+    (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
 
 (defun eshell/clear ()
   (interactive)
   (let ((inhibit-read-only t))
     (erase-buffer)))
 
-(defun eshell/magit ()
-  "Run magit status here."
-  (call-interactively #'magit-status)
-  nil)
+(defun eshell/dired ()
+  (dired (eshell/pwd)))
 
-(defun eshell/gd ()
-  "Run magit diff here."
-  (call-interactively #'magit-diff-working-tree)
-  nil)
+(defun eshell/sb (&rest args)
+  "Switch to given buffer."
+  (funcall 'switch-to-buffer (apply 'eshell-flatten-and-stringify args)))
 
-;; args does not seem to consume arguments?
-;; eshell-command does not do what we want?
-;; def-advice?
-(defun eshell/git (command &rest args)
-  (cond
-   ((> (length args) 0)
-    (apply 'eshell-command (cons (concat "git-" command) args)))
-   ((equal command "diff")
-    (call-interactively #'magit-diff-working-tree))
-   ((equal command "status")
-    (call-interactively #'magit-status))
-   (t
-    (apply 'eshell-command (cons (concat "git-" command) args)))))
+(defun eshell-view-file (file)
+  "A version of `view-file' which properly respects the eshell prompt."
+  (interactive "fView file: ")
+  (unless (file-exists-p file) (error "%s does not exist" file))
+  (let ((had-a-buf (get-file-buffer file))
+        (buffer (find-file-noselect file)))
+    (if (eq (with-current-buffer buffer (get major-mode 'mode-class))
+            'special)
+        (progn
+          (switch-to-buffer buffer)
+          (message "Not using View mode because the major mode is special"))
+      (let ((undo-window (list (window-buffer) (window-start)
+                               (+ (window-point)
+                                  (length (funcall eshell-prompt-function))))))
+        (switch-to-buffer buffer)
+        (view-mode-enter (cons (selected-window) (cons nil undo-window))
+                         'kill-buffer)))))
 
-(defun eshell/deb (&rest args)
-  (eshell-eval-using-options
-   "deb" args
-   '((?f "find" t find "list available packages matching a pattern")
-     (?i "installed" t installed "list installed debs matching a pattern")
-     (?l "list-files" t list-files "list files of a package")
-     (?s "show" t show "show an available package")
-     (?v "version" t version "show the version of an installed package")
-     (?w "where" t where "find the package containing the given file")
-     (nil "help" nil nil "show this usage information")
-     :show-usage)
-   (eshell-do-eval
-    (eshell-parse-command
-     (cond
-      (find
-       (format "apt-cache search %s" find))
-      (installed
-       (format "dlocate -l %s | grep '^.i'" installed))
-      (list-files
-       (format "dlocate -L %s | sort" list-files))
-      (show
-       (format "apt-cache show %s" show))
-      (version
-       (format "dlocate -s %s | egrep '^(Package|Status|Version):'" version))
-      (where
-       (format "dlocate %s" where))))
-    t)))
+(defun eshell/less (&rest args)
+  "Invoke `view-file' on a file. \"less +42 foo\" will go to line 42 in
+the buffer for foo."
+  (while args
+    (if (string-match "\\`\\+\\([0-9]+\\)\\'" (car args))
+        (let* ((line (string-to-number (match-string 1 (pop args))))
+               (file (pop args)))
+          (eshell-view-file file)
+          (goto-line line))
+      (eshell-view-file (pop args)))))
+
+(defalias 'eshell/more 'eshell/less)
+
+(defun invoke-bash (command)
+  (let ((invoke-bash-cmd (concat "bash -c \"" command "\"")))
+    (message invoke-bash-cmd)
+    (throw 'eshell-replace-command (eshell-parse-command invoke-bash-cmd))))
+
+(defun eshell/git (&rest command)
+  (if (null command)
+      (call-interactively #'magit-status)
+    (cond
+     ((equal (first command) "status")
+      (call-interactively #'magit-status))
+     ((equal (first command) "diff")
+      (call-interactively #'magit-diff-working-tree))
+     (t
+      ;; does not quite work yet
+      (invoke-bash (concat "git " (mapconcat 'identity command " ")))))))
+
+(defun eshell/info (subject)
+  "Read the Info manual on SUBJECT."
+  (let ((buf (current-buffer)))
+    (Info-directory)
+    (let ((node-exists (ignore-errors (Info-menu subject))))
+      (if node-exists
+          0
+        ;; We want to switch back to *eshell* if the requested
+        ;; Info manual doesn't exist.
+        (switch-to-buffer buf)
+        (eshell-print (format "There is no Info manual on %s.\n" subject))
+        1))))
 
 (provide 'setup-eshell)
