@@ -1,41 +1,4 @@
 
-;; this should be already part of emacs.
-(defun copy-line (&optional arg)
-  (interactive "P")
-  (save-excursion
-    (toggle-read-only 1)
-    (kill-line arg)
-    (toggle-read-only 0)))
-
-(setq-default kill-read-only-ok t) ;; required for copy-line.
-(global-set-key "\C-c\C-k" 'copy-line)
-
-
-(global-set-key (kbd "C-?") 'help-command)
-(global-set-key (kbd "M-?") 'mark-paragraph)
-(global-set-key (kbd "C-h") 'delete-backward-char)
-(global-set-key (kbd "M-h") 'backward-kill-word)
-
-(global-set-key (kbd "C-x O") (lambda ()
-                                (interactive)
-                                (other-window -1)))
-
-;; save our point position between sessions elsewhere.
-(require 'saveplace)
-(setq-default save-place t)
-(setq save-place-file (concat user-emacs-directory "save-place"))
-
-;; Write backup files to own directory
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name
-                 (concat user-emacs-directory "backups")))))
-
-;; Make backups of files, even when they're in version control
-(setq vc-make-backup-files t)
-
-;; scroll compilation buffer by default
-(setq compilation-scroll-output t)
-
 ;; default hooks.
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
@@ -88,6 +51,17 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
+;; better narrow indirect support
+(defun narrow-to-region-indirect (start end)
+  "Restrict editing in this buffer to the current region, indirectly."
+  (interactive "r")
+  (deactivate-mark)
+  (let ((buf (clone-indirect-buffer nil nil)))
+    (with-current-buffer buf
+      (narrow-to-region start end))
+    (switch-to-buffer buf)))
+(global-set-key (kbd "C-x n x") 'narrow-to-region-indirect)
+
 ;; pretty-print evals.
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
 (global-set-key [remap eval-expression] 'pp-eval-expression)
@@ -137,18 +111,17 @@
 ;; malyon -- z interpreter.
 ;; (require 'malyon)
 
-;; terminal.
-(defun visit-term-buffer ()
-  "Create or visit a terminal buffer."
+(defun visit-eshell-buffer ()
+  "Create or visit an eshell buffer."
   (interactive)
-  (if (not (get-buffer "*ansi-term*"))
+  (if (not (get-buffer "*eshell*"))
       (progn
         (split-window-sensibly (selected-window))
         (other-window 1)
-        (ansi-term (getenv "SHELL")))
-    (switch-to-buffer-other-window "*ansi-term*")))
+        (eshell))
+    (switch-to-buffer-other-window "*eshell*")))
 
-(global-set-key (kbd "C-c t") 'visit-term-buffer)
+(global-set-key (kbd "C-c t") 'visit-eshell-buffer)
 
 ;; a godsend
 (electric-indent-mode +1)
@@ -238,5 +211,22 @@ with the first matching buffer's major mode."
       ad-do-it)
     (dotimes (i 10)
       (when (= p (point)) ad-do-it))))
+
+;; a proper delete-horizontal-space that ignores newlines.
+(defun kill-whitespace ()
+  "Kill the whitespace between two non-whitespace characters"
+  (interactive "*")
+  (save-excursion
+    (save-restriction
+      (save-match-data
+        (progn
+          (re-search-backward "[^ \t\r\n]" nil t)
+          (re-search-forward "[ \t\r\n]+" nil t)
+          (replace-match "" nil nil))))))
+
+(global-set-key (kbd "M-\\") 'kill-whitespace)
+
+(require 'powerline)
+(powerline-default-theme)
 
 (provide 'setup-misc)
