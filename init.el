@@ -1,7 +1,8 @@
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+;; use C-mouse-3 to pop up entire menu-bar as popup menu
 
 ;; timestamps in *Messages*
 (defun current-time-microseconds ()
@@ -162,7 +163,9 @@
 ;; theme.
 (load-theme 'zenburn t)
 
-;; places.
+;; save point
+(require 'saveplace)
+(setq-default save-place t)
 (setq save-place-file (concat user-emacs-directory "places"))
 
 ;; save our customizations elsewhere.
@@ -174,6 +177,32 @@
 (global-set-key (kbd "M-?") 'mark-paragraph)
 (global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "M-h") 'backward-kill-word)
+
+;; this should be already part of emacs.
+(defun copy-line (&optional arg)
+  (interactive "P")
+  (save-excursion
+    (toggle-read-only 1)
+    (kill-line arg)
+    (toggle-read-only 0)))
+
+(setq-default kill-read-only-ok t) ;; required for copy-line.
+(global-set-key "\C-c\C-k" 'copy-line)
+
+(global-set-key (kbd "C-x O") (lambda ()
+                                (interactive)
+                                (other-window -1)))
+
+;; Write backup files to own directory
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name
+                 (concat user-emacs-directory "backups")))))
+
+;; Make backups of files, even when they're in version control
+(setq vc-make-backup-files t)
+
+;; scroll compilation buffer by default
+(setq compilation-scroll-output t)
 
 ;; set window title!
 (setq-default frame-title-format
@@ -205,9 +234,9 @@
 (require 'setup-eshell)
 (require 'setup-mu4e)
 (require 'setup-org)
-(require 'setup-clojure)
 (require 'setup-twitter)
 (require 'setup-languages)
+(require 'setup-session)
 
 ;; diminish mode ftw
 (require 'diminish)
