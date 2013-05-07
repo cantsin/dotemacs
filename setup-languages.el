@@ -1,5 +1,16 @@
 ;; set up various languages here.
 
+;; clojure
+(setq nrepl-popup-stacktraces nil)
+(setq nrepl-lein-command "~/bin/lein")
+
+(add-to-list 'same-window-buffer-names "*nrepl*")
+
+(add-hook 'nrepl-mode-hook 'subword-mode)
+(add-hook 'nrepl-mode-hook 'paredit-mode)
+(add-hook 'nrepl-interaction-mode-hook
+          'nrepl-turn-on-eldoc-mode)
+
 ;; julia
 (require 'julia-mode)
 
@@ -35,27 +46,24 @@
 
 (require 'smart-compile)
 
-;; use mode-compile after saving; bind to keypress.
-(global-set-key '[(ctrl c) (ctrl %)]
-                (lambda ()
-                  (interactive)
-                  (if (member 'smart-compile after-save-hook)
-                      (progn
-                        (setq after-save-hook
-                              (remove 'smart-compile after-save-hook))
-                        (message "No longer compiling after saving."))
-                    (progn
-                      (add-to-list 'after-save-hook 'smart-compile)
-                      (message "Compiling after saving.")))))
+;; work in progress. requires some setup. no error checking!
+(defun recompile-if-extant ()
+  (interactive)
+  (switch-to-buffer-other-frame "*compilation*")
+  (recompile))
+
+(global-set-key (kbd "C-c C-c") 'recompile-if-extant)
 
 ;; bury compilation when successful
-(add-to-list 'compilation-finish-functions
-             (lambda (buffer msg)
-               (when (bury-buffer buffer)
-                 (replace-buffer-in-windows buffer))))
+;; (add-to-list 'compilation-finish-functions
+;;              (lambda (buffer msg)
+;;                (when (bury-buffer buffer)
+;;                  (replace-buffer-in-windows buffer))))
 
+;; always use the same window.
 (setq compilation-buffer-name-function
-      (lambda (mode) (concat "*" (downcase mode) ": " (buffer-name) "")))
+      '(lambda (mode)
+     "*compilation*"))
 
 (setq compilation-scroll-output 'first-error)
 
