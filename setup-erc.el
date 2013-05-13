@@ -24,6 +24,8 @@
 (setq erc-save-buffer-on-part t)
 (setq erc-hide-timestamps nil)
 (setq erc-auto-query 'buffer)
+;; annoying when you have large channels
+(setq erc-hide-list '("JOIN" "PART" "QUIT"))
 
 (defadvice save-buffers-kill-emacs (before save-logs (arg) activate)
   (save-some-buffers t (lambda () (when (and (eq major-mode 'erc-mode)
