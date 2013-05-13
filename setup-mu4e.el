@@ -10,14 +10,6 @@
 (setq mu4e-use-fancy-chars t)
 
 (require 'smtpmail)
-;; (setq message-send-mail-function 'smtpmail-send-it
-;;       starttls-use-gnutls t
-;;       smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-;;       smtpmail-auth-credentials '(("smtp.gmail.com" 587 "jtranovich@gmail.com" nil))
-;;       smtpmail-default-smtp-server "smtp.gmail.com"
-;;       smtpmail-smtp-server "smtp.gmail.com"
-;;       smtpmail-smtp-service 587)
-;; ;; alternatively,
 (setq message-send-mail-function 'smtpmail-send-it
       smtpmail-stream-type 'starttls
       smtpmail-default-smtp-server "smtp.gmail.com"

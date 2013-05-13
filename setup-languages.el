@@ -73,4 +73,7 @@
 (add-to-list 'smart-compile-alist
              '("\\.rs\\'" . "rust build %f"))
 
+;; litable, very experimental
+(require 'litable)
+
 (provide 'setup-languages)
