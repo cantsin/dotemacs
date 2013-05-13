@@ -14,6 +14,8 @@
 
 (add-hook 'org-mode-hook
           (lambda () (org-bullets-mode 1)))
+(add-hook 'org-after-todo-state-change-hook
+          (lambda () (org-update-statistics-cookies t)))
 
 (require 'stripe-buffer)
 
@@ -26,5 +28,6 @@
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-ce" 'org-archive-subtree)
 
 (provide 'setup-org)
