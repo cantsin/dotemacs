@@ -238,6 +238,30 @@ with the first matching buffer's major mode."
 
 (global-hl-line-mode +1)
 
+;; visual-regexp.
+(require 'visual-regexp)
+(define-key global-map (kbd "C-c r") 'vr/replace)
+(define-key global-map (kbd "C-c q") 'vr/query-replace)
+
+(require 'ace-jump-mode)
+
+;; key chords. should be used sparingly.
+(require 'key-chord)
+(key-chord-define-global "jj" 'other-window)
+(key-chord-define-global "AA" 'ace-jump-word-mode)
+(key-chord-mode +1)
+
+;; Move more quickly
+(global-set-key (kbd "C-S-n")
+                (lambda ()
+                  (interactive)
+                  (ignore-errors (next-line 5))))
+
+(global-set-key (kbd "C-S-p")
+                (lambda ()
+                  (interactive)
+                  (ignore-errors (previous-line 5))))
+
 (require 'powerline)
 (powerline-default-theme)
 

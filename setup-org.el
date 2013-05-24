@@ -17,6 +17,19 @@
 (add-hook 'org-after-todo-state-change-hook
           (lambda () (org-update-statistics-cookies t)))
 
+(defun update-parent-cookie ()
+  (when (equal major-mode 'org-mode)
+    (save-excursion
+      (ignore-errors
+        (org-back-to-heading)
+        (org-update-parent-todo-statistics)))))
+
+(defadvice org-kill-line (after fix-cookies activate)
+  (update-parent-cookie))
+
+(defadvice kill-whole-line (after fix-cookies activate)
+  (update-parent-cookie))
+
 (require 'stripe-buffer)
 
 (add-hook 'org-mode-hook 'org-table-stripes-enable)
