@@ -67,6 +67,13 @@
 
 (setq compilation-scroll-output 'first-error)
 
+;; use M-. and M-, to jump to definitions
+(autoload 'elisp-slime-nav-mode "elisp-slime-nav")
+(add-hook 'emacs-lisp-mode-hook
+          (lambda () (elisp-slime-nav-mode t)))
+(eval-after-load 'elisp-slime-nav
+  '(diminish 'elisp-slime-nav-mode))
+
 ;; haskell
 (add-to-list 'smart-compile-alist
              '("\\.hs\\'" . "ghc -o %n --make %f"))
