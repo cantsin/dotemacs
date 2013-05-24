@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/magit/magit.png?branch=maint,master,next)](https://travis-ci.org/magit/magit)
+
 It's Magit!  An Emacs mode for Git.
 ===================================
 
@@ -8,8 +10,7 @@ later.
 advantage of Git's native features without breaking compatibility with
 other systems.
 
-To get started see the [Magit User Manual][manual] or perhaps the
-[cheatsheet][cheatsheet] if you're in a hurry. There's also an
+To get started see the [Magit User Manual][manual]. There's also an
 excellent [Magit screencast][screencast] by Alex Vollmer which
 demonstrates some of the major features.
 
@@ -29,21 +30,6 @@ Emacs should be able to find it.  Then add
     (require 'magit)
 
 to your `.emacs` file.
-
-Magit also now supports extensions:
-
-### git-svn
-
-`(require 'magit-svn)` - integrates with git-svn. Hit 'N' to see your
-options.
-
-### git-topgit
-
-`(require 'magit-topgit)` - integrates with topgit.
-
-### git-stgit
-
-`(require 'magit-stgit)` - integrates with StGit.
 
 Getting started
 ---------------
@@ -65,14 +51,30 @@ at Google Groups.
 
 Magit's website is currently hosted [on GitHub][website].
 
+Extensions
+----------
+
+Magit also now supports extensions:
+
+### git-svn
+
+`(require 'magit-svn)` - integrates with git-svn. Hit 'N' to see your
+options.
+
+### git-topgit
+
+`(require 'magit-topgit)` - integrates with topgit.
+
+### git-stgit
+
+`(require 'magit-stgit)` - integrates with StGit.
+
 Development
 -----------
 
-Magit was started by Marius Vollmer. It is now collectively maintained by the
-Magit Owners Team: https://github.com/organizations/magit/teams/53130
-
-For a full list of contributors have a look at `magit.el` in the
-source distribution.
+Magit was started by Marius Vollmer. It is now collectively maintained
+by the [Magit Owners Team][owners]. [Many more people][contributors]
+have contributed.
 
 Magit's canonical source repository is currently
 [hosted on GitHub][development].
@@ -81,7 +83,8 @@ Magit's canonical source repository is currently
 [website]: http://magit.github.com/magit
 [development]: http://github.com/magit/magit
 [manual]: http://magit.github.com/magit/magit.html
-[cheatsheet]: http://daemianmack.com/magit-cheatsheet.html
 [screencast]: http://vimeo.com/2871241
 [download]: http://github.com/magit/magit/downloads
 [google group]: http://groups.google.com/group/magit/
+[owners]: https://github.com/magit?tab=members
+[contributors]: https://github.com/magit/magit/contributors
