@@ -226,6 +226,18 @@ with the first matching buffer's major mode."
 
 (global-set-key (kbd "M-\\") 'kill-whitespace)
 
+;; hugely useful
+(global-set-key (kbd "C-x p") 'proced)
+
+;; by default, open as root if necessary
+(defadvice ido-find-file (after find-file-sudo activate)
+  "Find file as root if necessary."
+  (unless (and buffer-file-name
+               (file-writable-p buffer-file-name))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+(global-hl-line-mode +1)
+
 (require 'powerline)
 (powerline-default-theme)
 
