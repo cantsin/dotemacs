@@ -1,5 +1,6 @@
 (require 'eshell)
 (require 'em-smart)
+(require 'tramp) ;; lets "sudo" work for some reason
 
 (setq eshell-where-to-jump 'begin)
 (setq eshell-review-quick-commands nil)

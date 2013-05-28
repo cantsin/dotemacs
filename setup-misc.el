@@ -248,6 +248,8 @@ with the first matching buffer's major mode."
 ;; key chords. should be used sparingly.
 (require 'key-chord)
 (key-chord-define-global "jj" 'other-window)
+(key-chord-define-global "df" 'ido-switch-buffer)
+(key-chord-define-global "SS" 'save-buffer)
 (key-chord-define-global "AA" 'ace-jump-word-mode)
 (key-chord-mode +1)
 
