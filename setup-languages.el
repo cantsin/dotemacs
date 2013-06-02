@@ -1,6 +1,10 @@
-;; set up various languages here.
+;;; setup-languages -- Summary
+;;; Commentary:
+;;; Setup for various languages.
+;;; Code:
 
 ;; clojure
+(require 'nrepl)
 (setq nrepl-popup-stacktraces nil)
 (setq nrepl-lein-command "~/bin/lein")
 
@@ -48,6 +52,7 @@
 
 ;; work in progress. requires some setup. no error checking!
 (defun recompile-if-extant ()
+  "Recompile, assumes the *compilation* frame exists."
   (interactive)
   (switch-to-buffer-other-frame "*compilation*")
   (recompile))
@@ -87,4 +92,12 @@
 ;; litable, very experimental
 (require 'litable)
 
+;; flycheck ftw
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(require 'flycheck-color-mode-line)
+(eval-after-load "flycheck"
+  '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
+
 (provide 'setup-languages)
+;;; setup-languages.el ends here
