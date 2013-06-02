@@ -60,6 +60,10 @@
 ;;                (when (bury-buffer buffer)
 ;;                  (replace-buffer-in-windows buffer))))
 
+(electric-indent-mode +1)
+(add-hook 'python-mode-hook
+          #'(lambda () (setq electric-indent-mode nil)))
+
 ;; always use the same window.
 (setq compilation-buffer-name-function
       '(lambda (mode)

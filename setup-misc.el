@@ -123,9 +123,6 @@
 
 (global-set-key (kbd "C-c t") 'visit-eshell-buffer)
 
-;; a godsend
-(electric-indent-mode +1)
-
 ;; indent region, defun, or buffer
 (defun indent-buffer ()
   "Indent the currently visited buffer."
@@ -252,17 +249,6 @@ with the first matching buffer's major mode."
 (key-chord-define-global "SS" 'save-buffer)
 (key-chord-define-global "AA" 'ace-jump-word-mode)
 (key-chord-mode +1)
-
-;; Move more quickly
-(global-set-key (kbd "C-S-n")
-                (lambda ()
-                  (interactive)
-                  (ignore-errors (next-line 5))))
-
-(global-set-key (kbd "C-S-p")
-                (lambda ()
-                  (interactive)
-                  (ignore-errors (previous-line 5))))
 
 (require 'powerline)
 (powerline-default-theme)
