@@ -1,16 +1,23 @@
+;;; init -- summary
+;;; Commentary:
+;;; set generic defaults then default to setup-* modules
+
+;;; Code:
+
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 ;; use C-mouse-3 to pop up entire menu-bar as popup menu
 
-;; timestamps in *Messages*
 (defun current-time-microseconds ()
+  "Show the current time in microseconds."
   (let* ((nowtime (current-time))
          (now-ms (nth 2 nowtime)))
     (concat (format-time-string "[%Y-%m-%dT%T" nowtime) (format ".%d] " now-ms))))
 
 (defadvice message (before test-symbol activate)
+  "Wrap message notifications with timestamps."
   (if (not (string-equal (ad-get-arg 0) "%s%s"))
       (let ((deactivate-mark nil))
         (save-excursion
@@ -99,6 +106,8 @@
     gitconfig-mode
     gitignore-mode
     gnomenm
+    flycheck
+    flycheck-color-mode-line
     haskell-mode
     hl-line+
     ido-ubiquitous
@@ -155,6 +164,7 @@
 
 ;; because there's no other way to run emacs.
 (defun toggle-fullscreen ()
+  "Always maximize.  Intended for tiling WMs."
   (interactive)
   (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
 			 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
@@ -182,11 +192,12 @@
 
 ;; this should be already part of emacs.
 (defun copy-line (&optional arg)
+  "Copy the line, passing on ARG."
   (interactive "P")
   (save-excursion
-    (toggle-read-only 1)
+    (read-only-mode t)
     (kill-line arg)
-    (toggle-read-only 0)))
+    (read-only-mode nil)))
 
 (setq-default kill-read-only-ok t) ;; required for copy-line.
 (global-set-key "\C-c\C-k" 'copy-line)
@@ -280,3 +291,4 @@ point reaches the beginning or end of the buffer, stop there."
   (interactive)
   (find-file-other-window user-init-file))
 (global-set-key (kbd "C-c I") 'find-user-init-file)
+;;; init.el ends here
