@@ -1,3 +1,7 @@
+;;; setup-dired -- Summary
+;;; Commentary:
+;;; Setup dired.
+;;; Code:
 (require 'stripe-buffer)
 
 (add-hook 'dired-mode-hook 'stripe-listify-buffer)
@@ -9,6 +13,7 @@
 (setq auto-revert-verbose nil)
 
 (defun dired-back-to-top ()
+  "Skip the . and .. directories."
   (interactive)
   (beginning-of-buffer)
   (dired-next-line 4))
@@ -17,6 +22,7 @@
   (vector 'remap 'beginning-of-buffer) 'dired-back-to-top)
 
 (defun dired-jump-to-bottom ()
+  "Skip the blank line at the end of dired."
   (interactive)
   (end-of-buffer)
   (dired-next-line -1))
@@ -34,3 +40,4 @@
 (dired-details-install)
 
 (provide 'setup-dired)
+;;; setup-dired.el ends here

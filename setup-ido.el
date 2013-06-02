@@ -1,4 +1,7 @@
-;; Use ido everywhere
+;;; setup-ido -- Summary
+;;; Commentary:
+;;; Setup ido.
+;;; Code:
 (require 'ido-ubiquitous)
 (ido-ubiquitous-mode 1)
 
@@ -23,8 +26,8 @@
            (insert "~/")
          (call-interactively 'self-insert-command))))))
 
-;; Fix ido-ubiquitous for newer packages
 (defmacro ido-ubiquitous-use-new-completing-read (cmd package)
+  "Fix ido-ubiquitous for newer packages."
   `(eval-after-load ,package
      '(defadvice ,cmd (around ido-ubiquitous-new activate)
         (let ((ido-ubiquitous-enable-compatibility nil))
@@ -35,3 +38,4 @@
 (ido-ubiquitous-use-new-completing-read yas/visit-snippet-file 'yasnippet)
 
 (provide 'setup-ido)
+;;; setup-ido.el ends here

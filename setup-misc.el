@@ -1,3 +1,7 @@
+;;; setup-misc -- Summary
+;;; Commentary:
+;;; Setup various bits that don't really go anywhere else.
+;;; Code:
 
 ;; default hooks.
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -25,6 +29,7 @@
 (setq uniquify-buffer-name-style 'forward)
 
 ;; diff.
+(require 'ediff)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq diff-switches "-u")
 
@@ -32,6 +37,7 @@
 (winner-mode 1)
 
 ;; paren-mode.
+(require 'paren)
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 (setq show-paren-style 'mixed)
@@ -53,7 +59,8 @@
 
 ;; better narrow indirect support
 (defun narrow-to-region-indirect (start end)
-  "Restrict editing in this buffer to the current region, indirectly."
+  "Restrict editing in this buffer to the current \\
+region (delimited by START and END), indirectly."
   (interactive "r")
   (deactivate-mark)
   (let ((buf (clone-indirect-buffer nil nil)))
@@ -73,8 +80,8 @@
 ;;(require 'w3m-load)
 ;;(setq w3m-use-tab t)
 
-;; fix annoying DOS or Mac line endings
 (defun fix-coding-system ()
+  "Fix annoying DOS or Mac line endings."
   (interactive)
   (progn
    (set-buffer-file-coding-system 'utf-8-unix)
@@ -85,28 +92,28 @@
 (global-hl-line-highlight)
 
 ;; openwith
-(when (require 'openwith nil 'noerror)
-  (setq openwith-associations
-        (list
-         (list (openwith-make-extension-regexp
-                '("mp4" "avi" "mov" "flv"
-                  "ogm" "ogg" "mkv"))
-               "mplayer"
-               '(file))
-         (list (openwith-make-extension-regexp
-                '("xbm" "pbm" "pgm" "ppm" "pnm"
-                  "png" "gif" "bmp" "tif" "jpeg" "jpg"))
-               "feh"
-               '(file))
-         (list (openwith-make-extension-regexp
-                '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
-               "libreoffice"
-               '(file))
-         (list (openwith-make-extension-regexp
-                '("pdf" "ps" "ps.gz" "dvi"))
-               "evince"
-               '(file))))
-  (openwith-mode 1))
+(require 'openwith)
+(setq openwith-associations
+      (list
+       (list (openwith-make-extension-regexp
+              '("mp4" "avi" "mov" "flv"
+                "ogm" "ogg" "mkv"))
+             "mplayer"
+             '(file))
+       (list (openwith-make-extension-regexp
+              '("xbm" "pbm" "pgm" "ppm" "pnm"
+                "png" "gif" "bmp" "tif" "jpeg" "jpg"))
+             "feh"
+             '(file))
+       (list (openwith-make-extension-regexp
+              '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
+             "libreoffice"
+             '(file))
+       (list (openwith-make-extension-regexp
+              '("pdf" "ps" "ps.gz" "dvi"))
+             "evince"
+             '(file))))
+(openwith-mode 1)
 
 ;; malyon -- z interpreter.
 ;; (require 'malyon)
@@ -164,7 +171,7 @@
 
 ;; occur-mode customizations
 (defun get-buffers-matching-mode (mode)
-  "Returns a list of buffers where their major-mode is equal to MODE"
+  "Return a list of buffers where their 'major-mode` is equal to MODE."
   (let ((buffer-mode-matches '()))
     (dolist (buf (buffer-list))
       (with-current-buffer buf
@@ -173,7 +180,7 @@
     buffer-mode-matches))
 
 (defun occur-multi-occur ()
-  "Starts multi-occur for the current search term on all buffers
+  "Start `multi-occur' for the current search term on all buffers \\
 with the first matching buffer's major mode."
   (interactive)
   (multi-occur
@@ -184,6 +191,7 @@ with the first matching buffer's major mode."
 (define-key occur-mode-map "m" 'occur-multi-occur)
 (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
 
+(require 'flymake)
 (setq flymake-gui-warnings-enabled nil)
 
 ;; gnomenm
@@ -198,9 +206,9 @@ with the first matching buffer's major mode."
 ;; that you can always see what's happening.
 (setq eval-expression-print-level nil)
 
-;; When popping the mark, continue popping until the cursor actually moves
-;; Also, if the last command was a copy - skip past all the expand-region cruft.
 (defadvice pop-to-mark-command (around ensure-new-position activate)
+  "When popping the mark, continue popping until the cursor will move \\
+Also, if the last command was a copy - skip past all the expand-region cruft."
   (let ((p (point)))
     (when (eq last-command 'save-region-or-current-line)
       ad-do-it
@@ -211,7 +219,7 @@ with the first matching buffer's major mode."
 
 ;; a proper delete-horizontal-space that ignores newlines.
 (defun kill-whitespace ()
-  "Kill the whitespace between two non-whitespace characters"
+  "Kill the whitespace between two non-whitespace characters."
   (interactive "*")
   (save-excursion
     (save-restriction
@@ -254,3 +262,4 @@ with the first matching buffer's major mode."
 (powerline-default-theme)
 
 (provide 'setup-misc)
+;;; setup-misc.el ends here
