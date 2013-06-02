@@ -43,4 +43,7 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 (global-set-key "\C-ce" 'org-archive-subtree)
 
+(add-hook 'org-mode-hook
+          #'(lambda () (setq electric-indent-mode nil)))
+
 (provide 'setup-org)
