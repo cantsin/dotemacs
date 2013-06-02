@@ -123,9 +123,6 @@
 
 (global-set-key (kbd "C-c t") 'visit-eshell-buffer)
 
-;; a godsend
-(electric-indent-mode +1)
-
 ;; indent region, defun, or buffer
 (defun indent-buffer ()
   "Indent the currently visited buffer."
@@ -237,6 +234,21 @@ with the first matching buffer's major mode."
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (global-hl-line-mode +1)
+
+;; visual-regexp.
+(require 'visual-regexp)
+(define-key global-map (kbd "C-c r") 'vr/replace)
+(define-key global-map (kbd "C-c q") 'vr/query-replace)
+
+(require 'ace-jump-mode)
+
+;; key chords. should be used sparingly.
+(require 'key-chord)
+(key-chord-define-global "jj" 'other-window)
+(key-chord-define-global "df" 'ido-switch-buffer)
+(key-chord-define-global "SS" 'save-buffer)
+(key-chord-define-global "AA" 'ace-jump-word-mode)
+(key-chord-mode +1)
 
 (require 'powerline)
 (powerline-default-theme)
