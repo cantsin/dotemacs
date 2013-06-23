@@ -2,9 +2,7 @@
 ;;; Commentary:
 ;;; Setup ido.
 ;;; Code:
-(require 'ido-ubiquitous)
-(ido-ubiquitous-mode 1)
-
+(require 'ido)
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 (setq ido-enable-prefix nil)
@@ -14,6 +12,12 @@
 (setq ido-use-virtual-buffers t)
 (setq ido-handle-duplicate-virtual-buffers 2)
 (setq ido-max-prospects 10)
+
+(require 'ido-vertical-mode)
+(ido-vertical-mode 1)
+
+(require 'ido-ubiquitous)
+(ido-ubiquitous-mode 1)
 
 (add-hook 'ido-setup-hook
  (lambda ()
