@@ -14,6 +14,8 @@
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
+(global-set-key (kbd "C-c s") 'flyspell-correct-word-before-point)
+
 ;; paredit.
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)

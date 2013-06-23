@@ -8,6 +8,7 @@
 (setq mu4e-sent-messages-behavior 'delete)
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-use-fancy-chars t)
+(setq mu4e-view-show-images t)
 
 (require 'smtpmail)
 (setq message-send-mail-function 'smtpmail-send-it
@@ -18,6 +19,22 @@
 
 (setq mu4e-get-mail-command "offlineimap")
 (setq mu4e-update-interval 300)
+
+(defun archive-email (msg)
+  (let* ((maildir (mu4e-message-field msg :maildir))
+         (root (save-match-data
+                 (string-match "\\(/[^/]+\\)/.*" maildir)
+                 (match-string 1 maildir)))
+         (allmail (concat root "/" "[Gmail].All Mail")))
+    (mu4e-mark-set 'move allmail)))
+
+(add-to-list 'mu4e-headers-actions
+             '("Archive email" . archive-email) t)
+
+(fset 'my-move-to-archive "AA")
+
+(define-key mu4e-headers-mode-map (kbd "a")
+  'my-move-to-archive)
 
 (defun my-mu4e-set-account ()
   "Set the account for composing a message."
