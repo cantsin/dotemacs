@@ -97,8 +97,7 @@
   (package-refresh-contents))
 
 (defvar my-packages
-  '(bbdb
-    clojure-mode
+  '(clojure-mode
     diminish
     dired+
     elfeed
