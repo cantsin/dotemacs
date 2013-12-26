@@ -1,3 +1,7 @@
+;;; setup-org -- Summary
+;;; Commentary:
+;;; Setup org-mode.
+;;; Code:
 (require 'org-bullets)
 
 (setq org-use-speed-commands t)
@@ -35,7 +39,24 @@
 (add-hook 'org-mode-hook 'org-table-stripes-enable)
 
 (setq org-startup-indented t)
+(setq org-return-follows-link t)
+(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies t)
+(setq org-use-fast-todo-selection t)
 (setq org-archive-location ".archived.org::* From %s")
+(setq org-default-notes-file "~/remote/Dropbox/notes.org")
+(setq org-stuck-projects
+      '("TODO={.+}/-DONE" nil nil "SCHEDULED:\\|DEADLINE:"))
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
+         "* TODO %?\n  %i\n  %a")
+        ("r" "respond" entry (file org-default-notes-file)
+         "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n\n")))
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "|" "DONE(d)")
+        (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
+        (sequence "|" "FUTURE(l)")
+        (sequence "|" "CANCELED(c)")))
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
@@ -47,3 +68,4 @@
           #'(lambda () (setq electric-indent-mode nil)))
 
 (provide 'setup-org)
+;;; setup-org.el ends here

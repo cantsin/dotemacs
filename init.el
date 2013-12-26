@@ -97,10 +97,12 @@
   (package-refresh-contents))
 
 (defvar my-packages
-  '(clojure-mode
-    confluence
+  '(bbdb
+    clojure-mode
     diminish
     dired+
+    elfeed
+    esxml
     expand-region
     git-commit-mode
     gitconfig-mode
@@ -115,6 +117,7 @@
     offlineimap
     openwith
     paredit
+    sauron
     session
     smart-tab
     smex
