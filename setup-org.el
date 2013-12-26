@@ -53,7 +53,7 @@
         ("r" "respond" entry (file org-default-notes-file)
          "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n\n")))
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "|" "DONE(d)")
+      '((sequence "TODO(t)" "PENDING(p)" "|" "DONE(d)")
         (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
         (sequence "|" "FUTURE(l)")
         (sequence "|" "CANCELED(c)")))
