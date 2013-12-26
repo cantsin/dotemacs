@@ -9,6 +9,8 @@
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-use-fancy-chars t)
 (setq mu4e-view-show-images t)
+(setq mu4e-headers-leave-behavior 'apply)
+(setq mu4e-confirm-quit nil)
 
 (require 'smtpmail)
 (setq message-send-mail-function 'smtpmail-send-it

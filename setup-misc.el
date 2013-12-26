@@ -16,6 +16,9 @@
 
 (global-set-key (kbd "C-c s") 'flyspell-correct-word-before-point)
 
+;; elfeed.
+(global-set-key (kbd "C-x w") 'elfeed)
+
 ;; paredit.
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)
@@ -53,6 +56,10 @@
 
 ;; make footnotes easier to use
 (global-set-key (kbd "C-c f") 'org-footnote-action)
+
+;; make {back,for}ward-paragraph easier to use
+(global-set-key (kbd "M-[") 'backward-paragraph)
+(global-set-key (kbd "M-]") 'forward-paragraph)
 
 ;; enable some disabled commands.
 (put 'narrow-to-region 'disabled nil)
@@ -262,6 +269,16 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
 
 (require 'powerline)
 (powerline-default-theme)
+
+;; try sauron
+(require 'sauron)
+
+(defun url-decode-region (start end)
+  "URL decode a region from START to END."
+  (interactive "r")
+  (let ((text (url-unhex-string (buffer-substring start end))))
+    (delete-region start end)
+    (insert text)))
 
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
