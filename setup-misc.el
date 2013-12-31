@@ -249,8 +249,9 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
 ;; by default, open as root if necessary
 (defadvice ido-find-file (after find-file-sudo activate)
   "Find file as root if necessary."
-  (unless (and buffer-file-name
-               (file-writable-p buffer-file-name))
+  (unless (or (and buffer-file-name
+                   (file-writable-p buffer-file-name))
+              (equal major-mode 'dired-mode))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (global-hl-line-mode +1)
