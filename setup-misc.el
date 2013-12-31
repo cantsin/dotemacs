@@ -240,6 +240,9 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
 
 (global-set-key (kbd "M-\\") 'kill-whitespace)
 
+;; more whitespace stuff.
+(setq global-whitespace-cleanup-mode t)
+
 ;; hugely useful
 (global-set-key (kbd "C-x p") 'proced)
 

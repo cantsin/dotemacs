@@ -1,8 +1,11 @@
-
+;;; setup-mu4e -- Summary
+;;; Commentary:
+;;; Setup mu4e.
+;;; Code:
 (require 'mu4e)
 
 ;; set up "main" account first
-(setq mu4e-maildir "~/email")
+(setq mu4e-maildir "~/remote/email")
 
 ;; don't save messages to Sent Messages, Gmail/IMAP takes care of this
 (setq mu4e-sent-messages-behavior 'delete)
@@ -68,3 +71,4 @@
 (setq mu4e-html2text-command "python -m html2text")
 
 (provide 'setup-mu4e)
+;;; setup-mu4e.el ends here

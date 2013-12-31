@@ -1,7 +1,7 @@
 ;;; bbdb-mua.el --- various MUA functionality for BBDB
 
 ;; Copyright (C) 1991, 1992, 1993 Jamie Zawinski <jwz@netscape.com>.
-;; Copyright (C) 2010-2012 Roland Winkler <winkler@gnu.org>
+;; Copyright (C) 2010-2013 Roland Winkler <winkler@gnu.org>
 
 ;; This file is part of the Insidious Big Brother Database (aka BBDB),
 
@@ -24,7 +24,7 @@
 
 ;;; This file lets you do stuff like
 ;;;
-;;; o  automatically add some string to the notes field(s) based on the
+;;; o  automatically add some string to some field(s) based on the
 ;;;    contents of header fields of the current message
 ;;; o  only automatically create records when certain header fields
 ;;;    are matched
@@ -57,30 +57,32 @@
   (autoload 'message-field-value "message")
   (autoload 'mail-decode-encoded-word-string "mail-parse"))
 
+(defconst bbdb-mua-mode-alist
+  '((vm vm-mode vm-virtual-mode vm-summary-mode vm-presentation-mode)
+    (gnus gnus-summary-mode gnus-article-mode gnus-tree-mode)
+    (rmail rmail-mode rmail-summary-mode)
+    (mh mhe-mode mhe-summary-mode mh-folder-mode)
+    (message message-mode)
+    (mail mail-mode))
+  "Alist of MUA modes supported by BBDB.
+Each element is of the form (MUA MODE MODE ...), where MODEs are used by MUA.")
+
 (defun bbdb-mua ()
   "For the current message return the MUA.
 Return values include
   gnus      Newsreader Gnus
   rmail     Reading Mail in Emacs
-  vm        VM
+  vm        Viewmail
   mh        Emacs interface to the MH mail system (aka MH-E)
   message   Mail and News composition mode that goes with Gnus
   mail      Emacs Mail Mode."
-  (cond ((memq major-mode ;; VM
-               '(vm-mode vm-virtual-mode vm-summary-mode vm-presentation-mode))
-         'vm)
-        ((memq major-mode ;; Gnus
-               '(gnus-summary-mode gnus-article-mode gnus-tree-mode))
-         'gnus)
-        ((memq major-mode '(rmail-mode rmail-summary-mode)) ;; Rmail
-         'rmail)
-        ((memq major-mode '(mhe-mode mhe-summary-mode mh-folder-mode)) ;: MH-E
-         'mh)
-        ((eq major-mode 'message-mode) ;; Message mode
-         'message)
-        ((eq major-mode 'mail-mode) ;; Mail mode
-         'mail)
-        (t (error "BBDB: MUA `%s' not supported" major-mode))))
+  (let ((mm-alist bbdb-mua-mode-alist)
+        elt mua)
+    (while (setq elt (pop mm-alist))
+      (if (memq major-mode (cdr elt))
+          (setq mua (car elt)
+                mm-alist nil)))
+    (or mua (error "BBDB: MUA `%s' not supported" major-mode))))
 
 ;;;###autoload
 (defun bbdb-message-header (header)
@@ -171,15 +173,12 @@ is ignored. If IGNORE-ADDRESS is nil, use value of `bbdb-user-mail-address-re'."
     (dolist (headers message-headers)
       (dolist (header (cdr headers))
         (when (setq content (bbdb-message-header header))
-          ;; Real work is done by `mail-extract-address-components'.
           ;; Always extract all addresses because we do not know yet which
           ;; address might match IGNORE-ADDRESS.
-          (dolist (address (mail-extract-address-components content t))
+          (dolist (address (bbdb-extract-address-components content t))
             ;; We canonicalize name and mail as early as possible.
-            (setq name (nth 0 address)
-                  mail (bbdb-canonicalize-mail (nth 1 address))) ; may be nil
-            (if name ; may be nil
-                (setq name (funcall bbdb-message-clean-name-function name)))
+            (setq name (car address)
+                  mail (cadr address))
             ;; ignore uninteresting addresses
             (unless (or (and (stringp ignore-address)
                              (or (and name (string-match ignore-address name))
@@ -251,6 +250,9 @@ Usually this function is called by the wrapper `bbdb-mua-update-records'."
                (task
                 (catch 'done
                   (setq hits
+                        ;; We put the call of `bbdb-notice-mail-hook'
+                        ;; into `bbdb-annotate-message' so that this hook
+                        ;; runs only if the user agreed to change a record.
                         (cond ((eq bbdb-update-records-p 'create)
                                (bbdb-annotate-message address 'create))
                               ((eq bbdb-update-records-p 'query)
@@ -542,6 +544,7 @@ UPDATE-P is defined in `bbdb-update-records'."
 
 (defmacro bbdb-mua-wrapper (&rest body)
   "Perform BODY in a MUA buffer."
+  (declare (debug t))
   `(let ((mua (bbdb-mua)))
      ;; Here we replicate BODY multiple times which gets clumsy
      ;; for a larger BODY!
@@ -571,6 +574,19 @@ Called with a prefix, the value of UPDATE-P becomes the cdr of this variable."
           (unless (string= "" str) (intern str))) ; nil otherwise
       update-p)))
 
+(defun bbdb-mua-window-p ()
+  "Return lambda function matching the MUA window.
+This return value can be used as arg HORIZ-P of `bbdb-display-records'."
+  (let ((mm-alist bbdb-mua-mode-alist)
+        elt fun)
+    (while (setq elt (cdr (pop mm-alist)))
+      (if (memq major-mode elt)
+          (setq fun `(lambda (window)
+                       (with-current-buffer (window-buffer window)
+                         (memq major-mode ',elt)))
+                mm-alist nil)))
+    fun))
+
 ;;;###autoload
 (defun bbdb-mua-display-records (&optional header-class update-p)
   "Display the BBDB record(s) for the addresses in this message.
@@ -584,10 +600,11 @@ use all classes in `bbdb-message-headers'.
 UPDATE-P may take the same values as `bbdb-update-records-p'.
 For interactive calls, see function `bbdb-mua-update-interactive-p'."
   (interactive (list nil (bbdb-mua-update-interactive-p)))
-  (let (records)
+  (let ((bbdb-pop-up-window-size bbdb-mua-pop-up-window-size)
+        records)
     (bbdb-mua-wrapper
      (setq records (bbdb-mua-update-records header-class update-p)))
-    (if records (bbdb-display-records records))
+    (if records (bbdb-display-records records nil nil nil (bbdb-mua-window-p)))
     records))
 
 ;;;###autoload
@@ -617,9 +634,9 @@ If the records do not exist, they are generated."
 
 (defun bbdb-annotate-record (record annotation &optional field replace)
   "In RECORD add an ANNOTATION to FIELD.
-FIELD defaults to note field `notes'.
+FIELD defaults to xfield `notes'.
 If REPLACE is non-nil, ANNOTATION replaces the content of FIELD."
-  (if (memq field '(name firstname lastname phone address Notes))
+  (if (memq field '(name firstname lastname phone address xfields))
       (error "Field `%s' illegal" field))
   (unless (string= "" (setq annotation (bbdb-string-trim annotation)))
     (cond ((memq field '(affix organization mail aka))
@@ -676,7 +693,7 @@ For interactive calls, use car of `bbdb-mua-update-interactive-p'."
                      "Field: "
                      (mapcar 'symbol-name
                              (append '(name affix organization aka mail)
-                                     bbdb-notes-label-list)))))
+                                     bbdb-xfield-label-list)))))
         (car bbdb-mua-update-interactive-p)))
 
 ;;;###autoload
@@ -688,14 +705,15 @@ For interactive calls, use car of `bbdb-mua-update-interactive-p'.
 HEADER-CLASS is defined in `bbdb-message-headers'.  If it is nil,
 use all classes in `bbdb-message-headers'."
   (interactive (bbdb-mua-edit-field-interactive))
-  (cond ((memq field '(firstname lastname address phone Notes))
+  (cond ((memq field '(firstname lastname address phone xfields))
          (error "Field `%s' not editable this way" field))
         ((not field)
          (setq field 'notes)))
   (bbdb-mua-wrapper
-   (let ((records (bbdb-mua-update-records header-class update-p)))
+   (let ((records (bbdb-mua-update-records header-class update-p))
+         (bbdb-pop-up-window-size bbdb-mua-pop-up-window-size))
      (when records
-       (bbdb-display-records records)
+       (bbdb-display-records records nil nil nil (bbdb-mua-window-p))
        (dolist (record records)
          (bbdb-edit-field record field)
          (bbdb-maybe-update-display record))))))
@@ -734,8 +752,10 @@ use all classes in `bbdb-message-headers'.
 UPDATE-P may take the same values as `bbdb-mua-auto-update-p'.
 If UPDATE-P is nil, use `bbdb-mua-auto-update-p' (which see).
 
-If `bbdb-message-pop-up' is non-nil, the *BBDB* buffer is displayed
-along with the MUA window(s), showing the matching records.
+If `bbdb-mua-pop-up' is non-nil, BBDB pops up the *BBDB* buffer
+along with the MUA window(s), displaying the matching records
+using `bbdb-pop-up-layout'.
+If this is nil, BBDB is updated silently.
 
 This function is intended for noninteractive use via appropriate MUA hooks.
 Call `bbdb-mua-auto-update-init' in your init file to put this function
@@ -744,23 +764,12 @@ See `bbdb-mua-display-records' and friends for interactive commands."
   (let* ((bbdb-silent-internal t)
          (records (bbdb-mua-update-records header-class
                                            (or update-p
-                                               bbdb-mua-auto-update-p))))
-    (if bbdb-message-pop-up
+                                               bbdb-mua-auto-update-p)))
+         (bbdb-pop-up-window-size bbdb-mua-pop-up-window-size))
+    (if bbdb-mua-pop-up
         (if records
-            (let* ((mua (bbdb-mua))
-                   (mode (cond ((eq mua 'vm) 'vm-mode)
-                               ((eq mua 'gnus) 'gnus-article-mode)
-                               ((eq mua 'rmail) 'rmail-mode)
-                               ((eq mua 'mh) 'mh-folder-mode)
-                               ((eq mua 'message) 'message-mode)
-                               ((eq mua 'mail) 'mail-mode))))
-              (bbdb-display-records
-               records nil nil nil
-               ;; We consider horizontal window splitting for windows
-               ;; that are used by the MUA.
-               `(lambda (window)
-                  (with-current-buffer (window-buffer window)
-                    (eq major-mode ',mode)))))
+              (bbdb-display-records records bbdb-pop-up-layout
+                                    nil nil (bbdb-mua-window-p))
           ;; If there are no records, empty the BBDB window.
           (bbdb-undisplay-records)))
     records))
@@ -878,16 +887,9 @@ For use as an element of `bbdb-notice-mail-hook'."
 
 ;;; Massage of mail addresses
 
-(defun bbdb-canonicalize-mail (mail)
-  "Canonicalize MAIL address using `bbdb-canonicalize-mail-function'."
-  (if mail
-      (if (functionp bbdb-canonicalize-mail-function)
-          (funcall bbdb-canonicalize-mail-function mail)
-        mail)))
-
 (defcustom bbdb-canonical-hosts
   ;; Example
-  (mapconcat 'regexp-quote '("cs.cmu.edu" "ri.cmu.edu") "\\|")
+  (regexp-opt '("cs.cmu.edu" "ri.cmu.edu"))
   "Regexp matching the canonical part of the domain part of a mail address.
 If the domain part of a mail address matches this regexp, the domain
 is replaced by the substring that actually matched this address.
@@ -904,6 +906,7 @@ Used by  `bbdb-canonicalize-mail-1'"
 ;;;###autoload
 (defun bbdb-canonicalize-mail-1 (address)
   "Example of `bbdb-canonicalize-mail-function'."
+  (setq address (bbdb-string-trim address))
   (cond
    ;;
    ;; rewrite mail-drop hosts.
@@ -1013,29 +1016,95 @@ This strips garbage from the user full NAME string."
   ;; Remove leading non-alpha chars
   (if (string-match "\\`[^[:alpha:]]+" name)
       (setq name (substring name (match-end 0))))
+
+  (if (string-match "^\\([^@]+\\)@" name)
+      ;; The name is really a mail address and we use the part preceeding "@".
+      ;; Everything following "@" is ignored.
+      (setq name (match-string 1 name)))
+
+  ;; Replace "firstname.surname" by "firstname surname".
+  ;; Do not replace ". " with " " because that could be an initial.
+  (setq name (replace-regexp-in-string "\\.\\([^ ]\\)" " \\1" name))
+
+  ;; Replace tabs, spaces, and underscores with a single space.
+  (setq name (replace-regexp-in-string "[ \t\n_]+" " " name))
+
+  ;; Remove trailing comments separated by "(" or " [-#]"
+  ;; This does not work all the time because some of our friends in
+  ;; northern europe have brackets in their names...
+  (if (string-match "[^ \t]\\([ \t]*\\((\\| [-#]\\)\\)" name)
+      (setq name (substring name 0 (match-beginning 1))))
+
+  ;; Remove phone extensions (like "x1234" and "ext. 1234")
+  (let ((case-fold-search t))
+    (setq name (replace-regexp-in-string
+                "\\W+\\(x\\|ext\\.?\\)\\W*[-0-9]+" "" name)))
+
   ;; Remove trailing non-alpha chars
   (if (string-match "[^[:alpha:]]+\\'" name)
       (setq name (substring name 0 (match-beginning 0))))
 
-  (if (string-match "^[^@]+" name)
-      ;; The name is really a mail address and we use the part preceeding "@".
-      ;; Replace "firstname.surname" by "firstname surname".
-      ;; Do not replace ". " with " " because that could be an initial.
-      (setq name (replace-regexp-in-string "[._]\\([^ ]\\)" " \\1"
-                                           (match-string 0 name)))
+  ;; Remove text properties
+  (substring-no-properties name))
 
-    ;; Replace tabs, spaces, and underscores with a single space.
-    (setq name (replace-regexp-in-string "[ \t\n_]+" " " name))
-    ;; Remove phone extensions (like "x1234" and "ext. 1234")
-    ;; This does not work all the time because some of our friends in
-    ;; northern europe have brackets in their names...
-    (let ((case-fold-search t))
-      (setq name (replace-regexp-in-string
-                  "\\W+\\(x\\|ext\\.?\\)\\W*[-0-9]+" "" name)))
-    ;; Remove trailing parenthesized comments
-    (when (string-match "[^ \t]\\([ \t]*\\((\\| -\\| #\\)\\)" name)
-      (setq name (substring name 0 (match-beginning 1)))))
+;;; Mark BBDB records in the MUA summary buffer
 
-  name)
+(defun bbdb-mua-summary-unify (address)
+  "Unify mail ADDRESS displayed for a message in the MUA Summary buffer.
+Typically ADDRESS refers to the value of the From header of a message.
+If ADDRESS matches a record in BBDB display a unified name instead of ADDRESS
+in the MUA Summary buffer.
+
+Unification uses `bbdb-mua-summary-unification-list' (see there).
+The first match in this list becomes the text string displayed
+for a message in the MUA Summary buffer instead of ADDRESS.
+If variable `bbdb-mua-summary-mark' is non-nil use it to precede known addresses.
+Return the unified mail address.
+
+Currently this works with Gnus and VM.  It requires the BBDB insinuation
+of these MUAs.  Also, the MUA Summary format string must use
+`bbdb-mua-summary-unify-format-letter' (see there)."
+  ;; ADDRESS is analyzed as in `bbdb-get-address-components'.
+  (let* ((data (bbdb-extract-address-components address))
+         (name (car data))
+         (mail (cadr data))
+         (record (car (bbdb-message-search name mail)))
+         (u-list bbdb-mua-summary-unification-list)
+         elt val)
+    (while (setq elt (pop u-list))
+      (setq val (cond ((eq elt 'message-name) name)
+                      ((eq elt 'message-mail) mail)
+                      ((eq elt 'message-address) address)
+                      (record (let ((result (bbdb-record-field record elt)))
+                                (if (stringp result) result
+                                  (car result)))))) ; RESULT is list.
+      (if val (setq u-list nil)))
+    (format "%s%s"
+            (cond ((not bbdb-mua-summary-mark) "")
+                  ((not record) " ")
+                  ((functionp bbdb-mua-summary-mark-field)
+                   (funcall bbdb-mua-summary-mark-field record))
+                  ((bbdb-record-xfield record bbdb-mua-summary-mark-field))
+                  (t bbdb-mua-summary-mark))
+            (or val name mail address "**UNKNOWN**"))))
+
+(defun bbdb-mua-summary-mark (address)
+  "In the MUA Summary buffer mark messages matching a BBDB record.
+ADDRESS typically refers to the value of the From header of a message.
+If ADDRESS matches a record in BBDB return a mark, \" \" otherwise.
+The mark itself is the value of the xfield `bbdb-mua-summary-mark-field'
+if this xfield is in the poster's record, and `bbdb-mua-summary-mark' otherwise."
+  (if (not bbdb-mua-summary-mark)
+      "" ; for consistency
+    ;; ADDRESS is analyzed as in `bbdb-get-address-components'.
+    (let* ((data (bbdb-extract-address-components address))
+           (record (car (bbdb-message-search (car data) (cadr data)))))
+      (if record
+          (or (when (functionp bbdb-mua-summary-mark-field)
+                (funcall bbdb-mua-summary-mark-field record)
+                t)
+              (bbdb-record-xfield record bbdb-mua-summary-mark-field)
+              bbdb-mua-summary-mark)
+        " "))))
 
 (provide 'bbdb-mua)
