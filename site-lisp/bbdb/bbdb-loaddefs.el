@@ -3,7 +3,7 @@
     (add-to-list 'load-path (file-name-directory load-file-name)))
 
 ;;;### (autoloads (bbdb-initialize bbdb-version bbdb-mode) "bbdb"
-;;;;;;  "bbdb.el" (20639 58665 36155 724000))
+;;;;;;  "bbdb.el" (21183 14625 864929 281000))
 ;;; Generated autoloads from bbdb.el
 
 (defsubst bbdb-records nil "\
@@ -36,7 +36,7 @@ You can move around using the usual cursor motion commands.
 \\[bbdb]	 Search for records in the database (on all fields).
 \\[bbdb-search-mail]	 Search for records by mail address.
 \\[bbdb-search-organization]	 Search for records by organization.
-\\[bbdb-search-notes]	 Search for records by note.
+\\[bbdb-search-xfields]	 Search for records by xfields.
 \\[bbdb-search-name]	 Search for records by name.
 \\[bbdb-search-changed]	 Display records that have changed since the database was saved.
 \\[bbdb-mail]	 Compose mail to the person represented by the current record.
@@ -63,7 +63,6 @@ Important variables:
 	 `bbdb-default-domain'
 	 `bbdb-layout'
 	 `bbdb-file'
-	 `bbdb-message-caching'
 	 `bbdb-phone-style'
 	 `bbdb-check-auto-save-file'
 	 `bbdb-pop-up-layout'
@@ -73,7 +72,7 @@ Important variables:
 	 `bbdb-add-mails'
 	 `bbdb-new-mails-primary'
 	 `bbdb-read-only'
-	 `bbdb-message-pop-up'
+	 `bbdb-mua-pop-up'
 	 `bbdb-user-mail-address-re'
 
 There are numerous hooks.  M-x apropos ^bbdb.*hook RET
@@ -98,6 +97,10 @@ to initialize the respective mail/news readers and composers:
   vm         VM mail reader.
   mail       Mail (M-x mail).
   message    Message mode.
+
+Initialization of miscellaneous packages:
+  sc         Supercite.
+
 See also `bbdb-mua-auto-update-init'.  The latter is a separate function
 as this allows one to initialize the auto update feature for some MUAs only,
 for example only for outgoing messages.
@@ -107,7 +110,7 @@ for example only for outgoing messages.
 ;;;***
 
 ;;;### (autoloads (bbdb-anniv-diary-entries) "bbdb-anniv" "bbdb-anniv.el"
-;;;;;;  (20639 58665 32155 724000))
+;;;;;;  (21183 14625 860929 282000))
 ;;; Generated autoloads from bbdb-anniv.el
 
 (autoload 'bbdb-anniv-diary-entries "bbdb-anniv" "\
@@ -124,18 +127,18 @@ To enable this feature, put the following into your .emacs:
 ;;;### (autoloads (bbdb-help bbdb-info bbdb-copy-records-as-kill
 ;;;;;;  bbdb-grab-url bbdb-browse-url bbdb-dial bbdb-add-mail-alias
 ;;;;;;  bbdb-mail-aliases bbdb-complete-mail bbdb-completing-read-mails
-;;;;;;  bbdb-completion-predicate bbdb-mail bbdb-dwim-mail bbdb-sort-notes
+;;;;;;  bbdb-completion-predicate bbdb-mail bbdb-dwim-mail bbdb-sort-xfields
 ;;;;;;  bbdb-sort-phones bbdb-sort-addresses bbdb-merge-records bbdb-omit-record
 ;;;;;;  bbdb-display-records-with-layout bbdb-display-records-completely
 ;;;;;;  bbdb-toggle-records-layout bbdb-display-current-record bbdb-display-all-records
 ;;;;;;  bbdb-delete-records bbdb-delete-field-or-record bbdb-transpose-fields
 ;;;;;;  bbdb-edit-field bbdb-insert-field bbdb-create bbdb-creation-no-change
 ;;;;;;  bbdb-creation-newer bbdb-creation-older bbdb-timestamp-newer
-;;;;;;  bbdb-timestamp-older bbdb-search-changed bbdb-search-notes
+;;;;;;  bbdb-timestamp-older bbdb-search-changed bbdb-search-xfields
 ;;;;;;  bbdb-search-phone bbdb-search-mail bbdb-search-address bbdb-search-organization
 ;;;;;;  bbdb-search-name bbdb bbdb-search-invert bbdb-append-display
 ;;;;;;  bbdb-append-display-p bbdb-do-records bbdb-do-all-records)
-;;;;;;  "bbdb-com" "bbdb-com.el" (20639 58665 32155 724000))
+;;;;;;  "bbdb-com" "bbdb-com.el" (21183 14625 860929 282000))
 ;;; Generated autoloads from bbdb-com.el
 
 (autoload 'bbdb-do-all-records "bbdb-com" "\
@@ -174,7 +177,7 @@ With prefix ARG a negative number, do not invert next search.
 
 (autoload 'bbdb "bbdb-com" "\
 Display all records in the BBDB matching REGEXP
-in either the name(s), organization, address, phone, mail, or notes.
+in either the name(s), organization, address, phone, mail, or xfields.
 
 \(fn REGEXP &optional LAYOUT)" t nil)
 
@@ -204,8 +207,8 @@ Display all records in the BBDB matching REGEXP in the phones field.
 
 \(fn REGEXP &optional LAYOUT)" t nil)
 
-(autoload 'bbdb-search-notes "bbdb-com" "\
-Display all records in the BBDB matching REGEXP in the notes FIELD.
+(autoload 'bbdb-search-xfields "bbdb-com" "\
+Display all BBDB records for which xfield FIELD matches REGEXP.
 
 \(fn FIELD REGEXP &optional LAYOUT)" t nil)
 
@@ -297,7 +300,6 @@ irrespective of the value of ARG.
 (autoload 'bbdb-delete-field-or-record "bbdb-com" "\
 For RECORDS delete FIELD.
 If FIELD is the `name' field, delete RECORDS from datanbase.
-Only then RECORDS may be more than one record.
 Interactively, use BBDB prefix \\<bbdb-mode-map>\\[bbdb-do-all-records], see `bbdb-do-all-records',
 and FIELD is the field point is on.
 If prefix NOPROMPT is non-nil, do not confirm deletion.
@@ -352,8 +354,9 @@ With prefix N, omit the next N records.  If negative, omit backwards.
 (autoload 'bbdb-merge-records "bbdb-com" "\
 Merge OLD-RECORD into NEW-RECORD.
 This copies all the data in OLD-RECORD into NEW-RECORD.  Then OLD-RECORD
-is deleted.  If both records have names and/or organizations, ask which to use.
-Phone numbers, addresses, and mail addresses are simply concatenated.
+is deleted.  If both records have names ask which to use.
+Affixes, organizations, phone numbers, addresses, and mail addresses
+are simply concatenated.
 
 Interactively, OLD-RECORD is the current record.  NEW-RECORD is prompted for.
 With prefix arg NEW-RECORD defaults to the first record with the same name.
@@ -378,8 +381,8 @@ in `bbdb-change-hook').
 
 \(fn RECORDS &optional UPDATE)" t nil)
 
-(autoload 'bbdb-sort-notes "bbdb-com" "\
-Sort the notes in RECORDS according to `bbdb-notes-sort-order'.
+(autoload 'bbdb-sort-xfields "bbdb-com" "\
+Sort the xfields in RECORDS according to `bbdb-xfields-sort-order'.
 Interactively, use BBDB prefix \\<bbdb-mode-map>\\[bbdb-do-all-records], see `bbdb-do-all-records'.
 If UPDATE is non-nil (as in interactive calls) update the database.
 Otherwise, this is the caller's responsiblity (for example, when used
@@ -389,14 +392,15 @@ in `bbdb-change-hook').
 
 (autoload 'bbdb-dwim-mail "bbdb-com" "\
 Return a string to use as the mail address of RECORD.
-The mail address is formatted like \"Firstname Lastname <address>\".
-If both the first name and last name are constituents of the address
-as in John.Doe@Some.Host, and `bbdb-mail-avoid-redundancy' is non-nil,
-then the address is used as is.
+The name in the mail address is formatted obeying `bbdb-mail-name-format'
+and `bbdb-mail-name'.  However, if both the first name and last name
+are constituents of the address as in John.Doe@Some.Host,
+and `bbdb-mail-avoid-redundancy' is non-nil, then the address is used as is
+and `bbdb-mail-name-format' and `bbdb-mail-name' are ignored.
 If `bbdb-mail-avoid-redundancy' is 'mail-only the name is never included.
 MAIL may be a mail address to be used for RECORD.
 If MAIL is an integer, use the MAILth mail address of RECORD.
-If Mail is nil use the first mail address of RECORD.
+If MAIL is nil use the first mail address of RECORD.
 
 \(fn RECORD &optional MAIL)" nil nil)
 
@@ -423,23 +427,27 @@ Like `read-string', but allows `bbdb-complete-mail' style completion.
 
 (autoload 'bbdb-complete-mail "bbdb-com" "\
 In a mail buffer, complete the user name or mail before point.
-Completion happens up to the preceeding newline, colon, or comma,
-or the value of START-POS).
+Completion happens up to the preceeding colon, or comma,
+or the value of BEG).
 Return non-nil if there is a valid completion, else return nil.
 
 Completion behaviour can be controlled with `bbdb-completion-list'.
-If what has been typed is unique, insert an entry of the form
-\"User Name <mail>\" (although see `bbdb-mail-allow-redundancy').
-If it is a valid completion but not unique, a list of completions is displayed.
-If the completion is done and `bbdb-complete-mail-allow-cycling' is
-t then cycle through the mails for the matching record.
+If what has been typed is unique, insert an address formatted
+by `bbdb-dwim-mail' (see there).
+If what has been typed is a valid completion but not unique,
+a list of completions is displayed.
+If the completion is done and `bbdb-complete-mail-allow-cycling' is t
+then cycle through the mails for the matching record.  If BBDB
+would format a given address different from what we have in the mail buffer,
+the first round of cycling reformats the address accordingly, then we cycle
+through the mails for the matching record.
 With prefix CYCLE-COMPLETION-BUFFER non-nil, display a list of all mails
 available for cycling.
 
-Set variable `bbdb-complete-mail' non-nil for enabling this feature
+Set the variable `bbdb-complete-mail' non-nil for enabling this feature
 as part of the MUA insinuation.
 
-\(fn &optional START-POS CYCLE-COMPLETION-BUFFER)" t nil)
+\(fn &optional BEG CYCLE-COMPLETION-BUFFER)" t nil)
 
 (define-obsolete-function-alias 'bbdb-complete-name 'bbdb-complete-mail)
 
@@ -506,8 +514,8 @@ Interactively, use BBDB prefix \\<bbdb-mode-map>\\[bbdb-do-all-records], see `bb
 
 ;;;***
 
-;;;### (autoloads (bbdb-insinuate-gnus bbdb/gnus-score) "bbdb-gnus"
-;;;;;;  "bbdb-gnus.el" (20639 58665 32155 724000))
+;;;### (autoloads (bbdb-insinuate-gnus bbdb/gnus-split-method bbdb/gnus-score)
+;;;;;;  "bbdb-gnus" "bbdb-gnus.el" (21183 14625 860929 282000))
 ;;; Generated autoloads from bbdb-gnus.el
 
 (autoload 'bbdb/gnus-score "bbdb-gnus" "\
@@ -519,6 +527,14 @@ addresses better than the traditionally static global scorefile.
 
 \(fn GROUP)" nil nil)
 
+(autoload 'bbdb/gnus-split-method "bbdb-gnus" "\
+This function expects to be called in a buffer which contains a mail
+message to be spooled, and the buffer should be narrowed to the message
+headers.  It returns a list of groups to which the message should be
+spooled, using the addresses in the headers and information from BBDB.
+
+\(fn)" nil nil)
+
 (autoload 'bbdb-insinuate-gnus "bbdb-gnus" "\
 Hook BBDB into Gnus.
 Do not call this in your init file.  Use `bbdb-initialize'.
@@ -528,7 +544,7 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 ;;;***
 
 ;;;### (autoloads (bbdb-ispell-export) "bbdb-ispell" "bbdb-ispell.el"
-;;;;;;  (20639 58665 32155 724000))
+;;;;;;  (21183 14625 860929 282000))
 ;;; Generated autoloads from bbdb-ispell.el
 
 (autoload 'bbdb-ispell-export "bbdb-ispell" "\
@@ -539,7 +555,7 @@ Export BBDB records to ispell personal dictionaries.
 ;;;***
 
 ;;;### (autoloads (bbdb-insinuate-mail bbdb-insinuate-message) "bbdb-message"
-;;;;;;  "bbdb-message.el" (20639 58665 32155 724000))
+;;;;;;  "bbdb-message.el" (21183 14625 860929 282000))
 ;;; Generated autoloads from bbdb-message.el
 
 (autoload 'bbdb-insinuate-message "bbdb-message" "\
@@ -556,8 +572,8 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 
 ;;;***
 
-;;;### (autoloads (bbdb-insinuate-mh) "bbdb-mhe" "bbdb-mhe.el" (20639
-;;;;;;  58665 32155 724000))
+;;;### (autoloads (bbdb-insinuate-mh) "bbdb-mhe" "bbdb-mhe.el" (21183
+;;;;;;  14625 860929 282000))
 ;;; Generated autoloads from bbdb-mhe.el
 
 (autoload 'bbdb-insinuate-mh "bbdb-mhe" "\
@@ -569,7 +585,7 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 ;;;***
 
 ;;;### (autoloads (bbdb-undocumented-variables bbdb-migrate) "bbdb-migrate"
-;;;;;;  "bbdb-migrate.el" (20639 58665 36155 724000))
+;;;;;;  "bbdb-migrate.el" (21183 14625 860929 282000))
 ;;; Generated autoloads from bbdb-migrate.el
 
 (autoload 'bbdb-migrate "bbdb-migrate" "\
@@ -598,7 +614,7 @@ for outdated BBDB variables that are set via your personal `custom-file'.
 ;;;;;;  bbdb-display-all-recipients bbdb-mua-display-recipients bbdb-mua-display-sender
 ;;;;;;  bbdb-mua-display-records bbdb-update-records bbdb-select-message
 ;;;;;;  bbdb-ignore-message bbdb-accept-message bbdb-message-header)
-;;;;;;  "bbdb-mua" "bbdb-mua.el" (20639 58665 36155 724000))
+;;;;;;  "bbdb-mua" "bbdb-mua.el" (21183 14625 864929 281000))
 ;;; Generated autoloads from bbdb-mua.el
 
 (autoload 'bbdb-message-header "bbdb-mua" "\
@@ -741,8 +757,10 @@ use all classes in `bbdb-message-headers'.
 UPDATE-P may take the same values as `bbdb-mua-auto-update-p'.
 If UPDATE-P is nil, use `bbdb-mua-auto-update-p' (which see).
 
-If `bbdb-message-pop-up' is non-nil, the *BBDB* buffer is displayed
-along with the MUA window(s), showing the matching records.
+If `bbdb-mua-pop-up' is non-nil, BBDB pops up the *BBDB* buffer
+along with the MUA window(s), displaying the matching records
+using `bbdb-pop-up-layout'.
+If this is nil, BBDB is updated silently.
 
 This function is intended for noninteractive use via appropriate MUA hooks.
 Call `bbdb-mua-auto-update-init' in your init file to put this function
@@ -780,8 +798,8 @@ Example of `bbdb-canonicalize-mail-function'.
 
 ;;;***
 
-;;;### (autoloads (bbdb-print) "bbdb-print" "bbdb-print.el" (20639
-;;;;;;  58665 36155 724000))
+;;;### (autoloads (bbdb-print) "bbdb-print" "bbdb-print.el" (21183
+;;;;;;  14625 864929 281000))
 ;;; Generated autoloads from bbdb-print.el
 
 (autoload 'bbdb-print "bbdb-print" "\
@@ -797,7 +815,7 @@ of the printout, notably the variables `bbdb-print-alist' and
 ;;;***
 
 ;;;### (autoloads (bbdb-insinuate-rmail) "bbdb-rmail" "bbdb-rmail.el"
-;;;;;;  (20639 58665 36155 724000))
+;;;;;;  (21183 14625 864929 281000))
 ;;; Generated autoloads from bbdb-rmail.el
 
 (autoload 'bbdb-insinuate-rmail "bbdb-rmail" "\
@@ -808,10 +826,60 @@ Do not call this in your init file.  Use `bbdb-initialize'.
 
 ;;;***
 
+;;;### (autoloads (bbdb-insinuate-sc bbdb/sc-default) "bbdb-sc" "bbdb-sc.el"
+;;;;;;  (21183 14625 864929 281000))
+;;; Generated autoloads from bbdb-sc.el
+
+(autoload 'bbdb/sc-default "bbdb-sc" "\
+If the current \"from\" field in `sc-mail-info' alist
+contains only a mail address, lookup mail address in BBDB,
+and prepend a new \"from\" field to `sc-mail-info'.
+
+\(fn)" nil nil)
+
+(autoload 'bbdb-insinuate-sc "bbdb-sc" "\
+Hook BBDB into Supercite.
+Do not call this in your init file.  Use `bbdb-initialize'.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-snarf bbdb-snarf-yank bbdb-snarf-paragraph)
+;;;;;;  "bbdb-snarf" "bbdb-snarf.el" (21183 14625 864929 281000))
+;;; Generated autoloads from bbdb-snarf.el
+
+(autoload 'bbdb-snarf-paragraph "bbdb-snarf" "\
+Snarf BBDB record from paragraph around position POS using RULE.
+The paragraph is the one that contains POS or follows POS.
+Interactively POS is the position of point.
+RULE defaults to `bbdb-snarf-rule-default'.
+See `bbdb-snarf-rule-alist' for details.
+
+\(fn POS &optional RULE)" t nil)
+
+(autoload 'bbdb-snarf-yank "bbdb-snarf" "\
+Snarf a BBDB record from latest kill using RULE.
+The latest kill may also be a window system selection, see `current-kill'.
+RULE defaults to `bbdb-snarf-rule-default'.
+See `bbdb-snarf-rule-alist' for details.
+
+\(fn &optional RULE)" t nil)
+
+(autoload 'bbdb-snarf "bbdb-snarf" "\
+Snarf a BBDB record in STRING using RULE.
+Interactively, STRING is the current region.
+RULE defaults to `bbdb-snarf-rule-default'.
+See `bbdb-snarf-rule-alist' for details.
+
+\(fn STRING &optional RULE)" t nil)
+
+;;;***
+
 ;;;### (autoloads (bbdb-insinuate-vm bbdb/vm-virtual-folder bbdb/vm-auto-folder
 ;;;;;;  bbdb/vm-virtual-real-folders bbdb/vm-virtual-folder-field
 ;;;;;;  bbdb/vm-auto-folder-field bbdb/vm-auto-folder-headers) "bbdb-vm"
-;;;;;;  "bbdb-vm.el" (20639 58665 36155 724000))
+;;;;;;  "bbdb-vm.el" (21183 14625 864929 281000))
 ;;; Generated autoloads from bbdb-vm.el
 
 (defvar bbdb/vm-auto-folder-headers '("From:" "To:" "CC:") "\
@@ -821,12 +889,12 @@ The order in this list is the order how matching will be performed.")
 (custom-autoload 'bbdb/vm-auto-folder-headers "bbdb-vm" t)
 
 (defvar bbdb/vm-auto-folder-field 'vm-folder "\
-The field which `bbdb/vm-auto-folder' searches for.")
+The xfield which `bbdb/vm-auto-folder' searches for.")
 
 (custom-autoload 'bbdb/vm-auto-folder-field "bbdb-vm" t)
 
 (defvar bbdb/vm-virtual-folder-field 'vm-virtual "\
-The field which `bbdb/vm-virtual-folder' searches for.")
+The xfield which `bbdb/vm-virtual-folder' searches for.")
 
 (custom-autoload 'bbdb/vm-virtual-folder-field "bbdb-vm" t)
 
@@ -838,13 +906,13 @@ If nil use `vm-primary-inbox'.")
 
 (autoload 'bbdb/vm-auto-folder "bbdb-vm" "\
 Add entries to `vm-auto-folder-alist' for the records in BBDB.
-For each record that has a `vm-folder' attribute, add an element
+For each record that has a `vm-folder' xfield, add an element
 \(MAIL-REGEXP . FOLDER-NAME) to `vm-auto-folder-alist'.
 The element gets added to the sublists of `vm-auto-folder-alist'
 specified in `bbdb/vm-auto-folder-headers'.
 MAIL-REGEXP matches the mail addresses of the BBDB record.
-The value of the `vm-folder' attribute becomes FOLDER-NAME.
-The `vm-folder' attribute is defined via `bbdb/vm-auto-folder-field'.
+The value of the `vm-folder' xfield becomes FOLDER-NAME.
+The `vm-folder' xfield is defined via `bbdb/vm-auto-folder-field'.
 
 Add this function to `bbdb-before-save-hook' and your .vm.
 
@@ -852,17 +920,17 @@ Add this function to `bbdb-before-save-hook' and your .vm.
 
 (autoload 'bbdb/vm-virtual-folder "bbdb-vm" "\
 Create `vm-virtual-folder-alist' according to the records in BBDB.
-For each record that has a `vm-virtual' attribute, add or modify the
+For each record that has a `vm-virtual' xfield, add or modify the
 corresponding VIRTUAL-FOLDER-NAME element of `vm-virtual-folder-alist'.
 
   (VIRTUAL-FOLDER-NAME ((FOLDER-NAME ...)
                         (author-or-recipient MAIL-REGEXP)))
 
-VIRTUAL-FOLDER-NAME is the first element of the `vm-virtual' attribute.
-FOLDER-NAME ... are either the remaining attributes of vm-virtual,
+VIRTUAL-FOLDER-NAME is the first element of the `vm-virtual' xfield.
+FOLDER-NAME ... are either the remaining elements of the `vm-virtual' xfield,
 or `bbdb/vm-virtual-real-folders' or `vm-primary-inbox'.
 MAIL-REGEXP matches the mail addresses of the BBDB record.
-The `vm-virtual' attribute is defined via `bbdb/vm-virtual-folder-field'.
+The `vm-virtual' xfield is defined via `bbdb/vm-virtual-folder-field'.
 
 Add this function to `bbdb-before-save-hook' and your .vm.
 
@@ -873,6 +941,11 @@ Hook BBDB into VM.
 Do not call this in your init file.  Use `bbdb-initialize'.
 
 \(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads nil nil ("bbdb-pkg.el" "bbdb-site.el") (21183 51751
+;;;;;;  15550 766000))
 
 ;;;***
 

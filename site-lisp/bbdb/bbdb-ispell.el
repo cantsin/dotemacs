@@ -1,6 +1,6 @@
 ;;; bbdb-ispell.el --- export names from BBDB to personal ispell dictionaries
 
-;; Copyright (C) 2011-2012 Ivan Kanis <ivan.kanis@googlemail.com>
+;; Copyright (C) 2011-2013 Ivan Kanis <ivan.kanis@googlemail.com>
 ;;                         and Roland Winkler <winkler@gnu.org>
 
 ;; Author: Ivan Kanis <ivan.kanis@googlemail.com>
@@ -54,7 +54,7 @@ Allowed elements are as in the return value of `ispell-valid-dictionary-list'."
   :type (list 'repeat
               (append '(choice) (mapcar (lambda (field) `(const ,field))
                                         '(name organization affix aka address))
-                      '((symbol :tag "note")))))
+                      '((symbol :tag "xfield")))))
 
 (defcustom bbdb-ispell-min-word-length 3
   "Words with fewer characters are ignored."

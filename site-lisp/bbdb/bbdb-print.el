@@ -1,7 +1,7 @@
 ;;; bbdb-print.el -- for printing BBDB databases using TeX.
 
 ;; Copyright (C) 1993 Boris Goldowsky
-;; Copyright (C) 2010-2012 Roland Winkler <winkler@gnu.org>
+;; Copyright (C) 2010-2013 Roland Winkler <winkler@gnu.org>
 
 ;; Authors: Boris Goldowsky <boris@cs.rochester.edu>
 ;;          Dirk Grunwald <grunwald@cs.colorado.edu>
@@ -53,13 +53,6 @@
 ;;; are controlled by the variable `bbdb-print-alist'. See its
 ;;; documentation for the allowed options.
 
-;;; Installation:
-;;;
-;;; Put this file somewhere in `load-path'.
-;;; Put (require 'bbdb-print) into ~/.emacs, or autoload it.
-;;; Put bbdb-print.tex, bbdb-print-brief.tex, and bbdb-cols.tex
-;;; in TEXINPUTS path.
-;;;
 ;;; This program was adapted for BBDB by Boris Goldowsky
 ;;; <boris@cs.rochester.edu> and Dirk Grunwald
 ;;; <grunwald@cs.colorado.edu> using a TeX format designed by Luigi
@@ -281,6 +274,27 @@ Each element may take the same values as in `bbdb-address-format-list'.
 The EDIT elements of `bbdb-address-format-list' are ignored."
   :group 'bbdb-utilities-print)
 
+(defcustom bbdb-print-name-format 'first-last
+  "Format for names when printing BBDB.
+If first-last format names as \"Firstname Lastname\".
+If last-first format names as \"Lastname, Firstname\".
+If `bbdb-print-name' returns the full name as a single, preformatted string,
+this takes precedence over `bbdb-print-name-format'."
+  :group 'bbdb-utilities-print
+  :type '(choice (const :tag "Firstname Lastname" first-last)
+                 (const :tag "Lastname, Firstname" last-first)))
+
+(defcustom bbdb-print-name 'tex-name
+  "Xfield holding the full print name for a record.
+This may also be a function taking one argument, a record.
+If it returns the full print name as a single string, this is used \"as is\".
+If it returns a cons pair (FIRST . LAST) with the first and last name
+for this record, these are formatted obeying `bbdb-print-name-format'.
+In any case, this function should call `bbdb-print-tex-quote' as needed."
+  :group 'bbdb-utilities-print
+  :type '(choice (symbol :tag "xfield")
+                 (function :tag "print name function")))
+
 ;;; Functions:
 
 (defsubst bbdb-print-field-p (field)
@@ -351,12 +365,19 @@ of the printout, notably the variables `bbdb-print-alist' and
     (widen)
     (erase-buffer)
     (insert bbdb-print-prolog)
-    (let (val)
+    (let (tmp)
       (dolist (dim '(hsize vsize hoffset voffset))
-        (if (setq val (cdr (assoc dim alist)))
-            (insert (format "\\%s=%s\n" dim val)))))
-    (dolist (file (cdr (assoc 'include-files alist)))
-      (insert (format "\\input %s\n" file)))
+        (if (setq tmp (cdr (assoc dim alist)))
+            (insert (format "\\%s=%s\n" dim tmp))))
+      (dolist (file (cdr (assoc 'include-files alist)))
+        (if (setq tmp (locate-file file bbdb-print-tex-path '(".tex" "")))
+            (progn
+              ;; We use lisp `insert-file-contents' instead of TeX `\input'
+              ;; because installing the respective files in the proper place
+              ;; of a TeX installation can be tricky...
+              (insert-file-contents tmp)
+              (goto-char (point-max)))
+          (error "File `%s' not found, check bbdb-print-tex-path" file))))
     (insert (format "\n\\set%ssize{%d}\n"
                     psstring (cdr (assoc 'font-size alist)))
             (format "\\setseparator{%d}\n"
@@ -392,15 +413,26 @@ The return value is the new CURRENT-LETTER."
 
   (let ((first-letter
          (substring (concat (bbdb-record-sortkey record) "?") 0 1))
-        (name    (or (bbdb-record-note record 'tex-name)
-                     (bbdb-print-tex-quote
-                      (bbdb-record-name record))))
+        (name (cond ((functionp bbdb-print-name)
+                     (let ((value (funcall bbdb-print-name record)))
+                       (cond ((stringp value) value)
+                             ((eq bbdb-print-name-format 'first-last)
+                              (bbdb-concat 'name-first-last
+                                           (car value) (cdr value)))
+                             (t
+                              (bbdb-concat 'name-last-first
+                                           (cdr value) (car value))))))
+                    ((bbdb-record-xfield record bbdb-print-name))
+                    ((eq bbdb-print-name-format 'first-last)
+                     (bbdb-print-tex-quote (bbdb-record-name record)))
+                    (t
+                     (bbdb-print-tex-quote (bbdb-record-name-lf record)))))
         (organization (bbdb-record-organization record))
         (affix   (bbdb-record-affix record))
         (mail    (bbdb-record-mail record))
         (phone   (bbdb-record-phone record))
         (address (bbdb-record-address record))
-        (notes   (bbdb-record-Notes record))
+        (xfields (bbdb-record-xfields record))
         (bbdb-address-format-list bbdb-print-address-format-list))
 
     (when (eval bbdb-print-require)
@@ -479,15 +511,15 @@ The return value is the new CURRENT-LETTER."
              "}\n"))
         (insert "\\address{}\n")) ;; needed for brief format
 
-      ;; Notes
-      (dolist (note notes)
-        (when (bbdb-print-field-p (car note))
-          (if (eq 'notes (car note))
+      ;; xfields
+      (dolist (xfield xfields)
+        (when (bbdb-print-field-p (car xfield))
+          (if (eq 'notes (car xfield))
               (insert (format "\\notes{%s}\n"
-                              (bbdb-print-tex-quote (cdr note))))
+                              (bbdb-print-tex-quote (cdr xfield))))
             (insert (format "\\note{%s}{%s}\n"
-                            (bbdb-print-tex-quote (symbol-name (car note)))
-                            (bbdb-print-tex-quote (cdr note)))))))
+                            (bbdb-print-tex-quote (symbol-name (car xfield)))
+                            (bbdb-print-tex-quote (cdr xfield)))))))
 
       ;; Mark end of the record.
       (insert "\\endrecord\n%\n")
