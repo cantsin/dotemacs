@@ -1,4 +1,11 @@
+;;; setup-magit -- Summary
+;;; Commentary:
+;;; Setup magit.
+;;; Code:
 (require 'magit)
+
+(if (eq system-type 'windows-nt)
+    (setq magit-git-executable "C:\\Program Files (x86)\\Git\\bin\\git.exe"))
 
 (set-face-foreground 'diff-context "#666666")
 (set-face-foreground 'diff-added "#00cc33")
@@ -40,3 +47,4 @@
 (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
 
 (provide 'setup-magit)
+;;; setup-magit.el ends here

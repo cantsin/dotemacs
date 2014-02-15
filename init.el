@@ -97,14 +97,17 @@
   (package-refresh-contents))
 
 (defvar my-packages
-  '(clojure-mode
+  '(ace-jump-mode
+    clojure-mode
     diminish
     dired+
+    dired-details
     elfeed
+    elisp-slime-nav
     esxml
     expand-region
     git-commit-mode
-    gitconfig-mode
+    gitconfig
     gitignore-mode
     gnomenm
     flycheck
@@ -112,6 +115,7 @@
     haskell-mode
     hl-line+
     ido-ubiquitous
+    key-chord
     nrepl
     offlineimap
     openwith
@@ -169,13 +173,13 @@
 (defun toggle-fullscreen ()
   "Always maximize.  Intended for tiling WMs."
   (interactive)
-  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-			 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
-  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-			 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))
-(when window-system
-  (toggle-fullscreen))
-
+  (if (eq system-type 'windows-nt)
+      (w32-send-sys-command 61488)
+    (cond
+     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                            '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                            '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))))
 ;; theme.
 (load-theme 'zenburn t)
 
@@ -295,4 +299,9 @@ point reaches the beginning or end of the buffer, stop there."
   (interactive)
   (find-file-other-window user-init-file))
 (global-set-key (kbd "C-c I") 'find-user-init-file)
+
+;; windows needs this to execute at the end
+(when window-system
+  (toggle-fullscreen))
+
 ;;; init.el ends here
