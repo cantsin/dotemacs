@@ -3,6 +3,9 @@
 ;;; Setup dired.
 ;;; Code:
 (require 'stripe-buffer)
+(require 'dired)
+(require 'dired-details)
+(dired-details-install)
 
 (add-hook 'dired-mode-hook 'stripe-listify-buffer)
 
