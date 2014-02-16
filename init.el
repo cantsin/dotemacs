@@ -272,7 +272,6 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; load our other setup files.
 (add-to-list 'load-path user-emacs-directory)
-(require 'setup-private)
 (require 'setup-magit)
 (require 'setup-windmove)
 (require 'setup-misc)
@@ -281,7 +280,6 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'setup-ido)
 (require 'setup-erc)
 (require 'setup-eshell)
-(require 'setup-mu4e)
 (require 'setup-org)
 (require 'setup-twitter)
 (require 'setup-languages)
@@ -292,6 +290,12 @@ point reaches the beginning or end of the buffer, stop there."
 (diminish 'eldoc-mode)
 ;(diminish 'paredit-mode "()")
 ;(diminish 'smart-tab-mode)
+
+;; load only if available
+(when (fbound 'mu4e)
+  (require 'setup-mu4e))
+(if (file-exists-p "~/.emacs.d/setup-private.el")
+    (require 'setup-private))
 
 ;; easy access!
 (defun find-user-init-file ()

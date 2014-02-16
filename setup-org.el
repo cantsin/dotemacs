@@ -34,6 +34,9 @@
 (defadvice kill-whole-line (after fix-cookies activate)
   (update-parent-cookie))
 
+;; (defadvice org-archive-subtree (after fix-cookies activate)
+;;   (update-parent-cookie))
+
 (require 'stripe-buffer)
 
 (add-hook 'org-mode-hook 'org-table-stripes-enable)
@@ -63,6 +66,15 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 (global-set-key "\C-ce" 'org-archive-subtree)
+
+;; set up shortcut for priorities
+(push '("p" "Agenda for all priorities" agenda ""
+        ((org-agenda-skip-function
+          '(and
+            (not
+             (org-entry-get nil "PRIORITY"))
+            (point-at-eol)))))
+      org-agenda-custom-commands)
 
 (add-hook 'org-mode-hook
           #'(lambda () (setq electric-indent-mode nil)))
