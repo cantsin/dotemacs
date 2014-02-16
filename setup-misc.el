@@ -284,5 +284,18 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
     (delete-region start end)
     (insert text)))
 
+(defun epg--check-error-for-decrypt (context)
+  "CONTEXT is an epg context.
+Here, we work around a bug in epg where gpg prints out \"Good
+signature\" and is yet otherwise successful."
+  (let ((errors (epg-context-result-for context 'error)))
+    (if (epg-context-result-for context 'decryption-failed)
+	(signal 'epg-error
+		(list "Decryption failed" (epg-errors-to-string errors))))
+    (unless (or (epg-context-result-for context 'decryption-okay)
+                (equal errors '((exit))))
+      (signal 'epg-error
+	      (list "Can't decrypt" (epg-errors-to-string errors))))))
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
