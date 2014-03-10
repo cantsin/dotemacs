@@ -19,6 +19,11 @@
 (require 'ido-vertical-mode)
 (ido-vertical-mode 1)
 
+(defvar ido-cur-list nil)
+(defvar ido-cur-item nil)
+(defvar ido-default-item nil)
+(defvar predicate nil)
+(defvar inherit-input-method nil)
 (require 'ido-ubiquitous)
 (ido-ubiquitous-mode t)
 
