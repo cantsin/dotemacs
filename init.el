@@ -160,7 +160,7 @@ point reaches the beginning or end of the buffer, stop there."
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 
 ;; theme.
-;(load-theme 'zenburn t)
+(load-theme 'zenburn t)
 
 ;; write backup files to its own directory
 (setq backup-directory-alist
