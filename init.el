@@ -152,12 +152,14 @@ point reaches the beginning or end of the buffer, stop there."
 (add-hook 'makefile-mode-hook
           'indent-tabs-mode)
 
-;; windmove and fixes for windmove/org.
-(windmove-default-keybindings)
-(add-hook 'org-shiftup-final-hook 'windmove-up)
-(add-hook 'org-shiftleft-final-hook 'windmove-left)
-(add-hook 'org-shiftdown-final-hook 'windmove-down)
-(add-hook 'org-shiftright-final-hook 'windmove-right)
+;; {wind,frame}move.
+(require 'windmove)
+(global-set-key [(control H)] 'windmove-left)
+(global-set-key [(control J)] 'windmove-down)
+(global-set-key [(control K)] 'windmove-up)
+(global-set-key [(control L)] 'windmove-right)
+(require 'framemove)
+(setq framemove-hook-into-windmove t)
 
 ;; theme.
 (load-theme 'zenburn t)
