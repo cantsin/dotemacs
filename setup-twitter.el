@@ -1,3 +1,8 @@
+;;; setup-twitter -- summary
+;;; Commentary:
+;;; set twitter defaults.
+
+;;; Code:
 (require 'twittering-mode)
 
 (setq twittering-cert-file "/etc/ssl/certs/ca-certificates.crt")
@@ -8,3 +13,4 @@
           '(lambda () (longlines-mode)))
 
 (provide 'setup-twitter)
+;;; setup-twitter.el ends here

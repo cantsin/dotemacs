@@ -1,3 +1,7 @@
+;;; setup-windmove -- Summary
+;;; Commentary:
+;;; Setup windmove.
+;;; Code:
 (windmove-default-keybindings)
 
 (global-set-key (kbd "C-c j")  'windmove-left)
@@ -10,3 +14,4 @@
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 
 (provide 'setup-windmove)
+;;; setup-windmove.el ends here

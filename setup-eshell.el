@@ -4,6 +4,9 @@
 ;;; Code:
 (require 'eshell)
 (require 'em-smart)
+(require 'em-prompt)
+(require 'em-dirs)
+
 (require 'tramp) ;; lets "sudo" work for some reason
 
 (setq eshell-where-to-jump 'begin)
@@ -59,7 +62,8 @@ line 42 in the buffer for foo.."
         (let* ((line (string-to-number (match-string 1 (pop args))))
                (file (pop args)))
           (eshell-view-file file)
-          (goto-line line))
+          (goto-char (point-min))
+          (forward-line (1- line)))
       (eshell-view-file (pop args)))))
 
 (defalias 'eshell/more 'eshell/less)
@@ -75,9 +79,9 @@ line 42 in the buffer for foo.."
   (if (null command)
       (call-interactively #'magit-status)
     (cond
-     ((equal (first command) "status")
+     ((equal (car command) "status")
       (call-interactively #'magit-status))
-     ((equal (first command) "diff")
+     ((equal (car command) "diff")
       (call-interactively #'magit-diff-working-tree))
      (t
       ;; does not quite work yet

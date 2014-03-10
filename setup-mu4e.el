@@ -11,9 +11,10 @@
 (setq mu4e-sent-messages-behavior 'delete)
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-use-fancy-chars t)
-(setq mu4e-view-show-images t)
 (setq mu4e-headers-leave-behavior 'apply)
 (setq mu4e-confirm-quit nil)
+
+(defvar my-mu4e-account-alist 'nil)
 
 (require 'smtpmail)
 (setq message-send-mail-function 'smtpmail-send-it
@@ -26,6 +27,7 @@
 (setq mu4e-update-interval 300)
 
 (defun archive-email (msg)
+  "Archive a gmail MSG."
   (let* ((maildir (mu4e-message-field msg :maildir))
          (root (save-match-data
                  (string-match "\\(/[^/]+\\)/.*" maildir)

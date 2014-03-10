@@ -2,7 +2,10 @@
 ;;; Commentary:
 ;;; Setup org-mode.
 ;;; Code:
+(require 'org)
+(require 'org-agenda)
 (require 'org-bullets)
+(require 'org-capture)
 
 (setq org-use-speed-commands t)
 
@@ -22,6 +25,7 @@
           (lambda () (org-update-statistics-cookies t)))
 
 (defun update-parent-cookie ()
+  "Update the count of items in this section."
   (when (equal major-mode 'org-mode)
     (save-excursion
       (ignore-errors
@@ -29,9 +33,11 @@
         (org-update-parent-todo-statistics)))))
 
 (defadvice org-kill-line (after fix-cookies activate)
+  "When killing the line, update the cookie."
   (update-parent-cookie))
 
 (defadvice kill-whole-line (after fix-cookies activate)
+  "When killing the whole line, also update the cookie."
   (update-parent-cookie))
 
 ;; (defadvice org-archive-subtree (after fix-cookies activate)

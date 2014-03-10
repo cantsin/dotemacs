@@ -266,15 +266,14 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
 (require 'key-chord)
 (key-chord-define-global "jj" 'other-window)
 (key-chord-define-global "df" 'ido-switch-buffer)
-(key-chord-define-global "SS" 'save-buffer)
+(key-chord-define-global "ds" '(lambda ()
+                                 (interactive)
+                                 (switch-to-buffer (other-buffer (current-buffer) 1))))
 (key-chord-define-global "AA" 'ace-jump-word-mode)
 (key-chord-mode +1)
 
 (require 'powerline)
 (powerline-default-theme)
-
-;; try sauron
-(require 'sauron)
 
 (defun url-decode-region (start end)
   "URL decode a region from START to END."
@@ -283,6 +282,7 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
     (delete-region start end)
     (insert text)))
 
+(require 'epg)
 (defun epg--check-error-for-decrypt (context)
   "CONTEXT is an epg context.
 Here, we work around a bug in epg where gpg prints out \"Good

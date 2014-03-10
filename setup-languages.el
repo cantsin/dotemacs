@@ -86,6 +86,7 @@
 ;; flycheck ftw
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+(require 'js)
 (setq js-indent-level 2)
 
 (require 'flycheck-color-mode-line)
