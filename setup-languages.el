@@ -15,12 +15,6 @@
 (add-hook 'nrepl-interaction-mode-hook
           'nrepl-turn-on-eldoc-mode)
 
-;; julia
-(require 'julia-mode)
-
-(setq auto-mode-alist
-      (append '(("\\.jl$" . julia-mode)) auto-mode-alist))
-
 ;; python
 ;; TODO adjust for 3.x
 ;; (require 'jedi)
@@ -88,9 +82,6 @@
              '("\\.hs\\'" . "ghc -o %n --make %f"))
 (add-to-list 'smart-compile-alist
              '("\\.rs\\'" . "rust build %f"))
-
-;; litable, very experimental
-(require 'litable)
 
 ;; flycheck ftw
 (add-hook 'after-init-hook #'global-flycheck-mode)

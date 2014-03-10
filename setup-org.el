@@ -68,13 +68,13 @@
 (global-set-key "\C-ce" 'org-archive-subtree)
 
 ;; set up shortcut for priorities
-(push '("p" "Agenda for all priorities" agenda ""
-        ((org-agenda-skip-function
-          '(and
-            (not
-             (org-entry-get nil "PRIORITY"))
-            (point-at-eol)))))
-      org-agenda-custom-commands)
+(setq org-agenda-custom-commands
+      '(("p" "Agenda for all priorities" agenda ""
+          ((org-agenda-skip-function
+            '(and
+              (not
+               (org-entry-get nil "PRIORITY"))
+              (point-at-eol)))))))
 
 (add-hook 'org-mode-hook
           #'(lambda () (setq electric-indent-mode nil)))
