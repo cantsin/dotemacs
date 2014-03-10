@@ -4,6 +4,7 @@
 (source org)
 
 (depends-on "ace-jump-mode")
+(depends-on "auto-complete")
 (depends-on "bbdb")
 (depends-on "cask")
 (depends-on "clojure-mode")
@@ -35,7 +36,9 @@
 (depends-on "notmuch")
 (depends-on "nrepl")
 (depends-on "offlineimap")
+(depends-on "omnisharp")
 (depends-on "openwith")
+(depends-on "org")
 (depends-on "org-bullets")
 (depends-on "org-journal")
 (depends-on "pallet")

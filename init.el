@@ -39,21 +39,6 @@
 (global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "M-h") 'backward-kill-word)
 
-;; smex.
-(global-set-key (kbd "M-x") (lambda ()
-                              (interactive)
-                              (or (boundp 'smex-cache)
-                                  (smex-initialize))
-                              (global-set-key [(meta x)] 'smex)
-                              (smex)))
-
-(global-set-key (kbd "C-c M-x") (lambda ()
-                                  (interactive)
-                                  (or (boundp 'smex-cache)
-                                      (smex-initialize))
-                                  (global-set-key [(shift meta x)] 'smex-major-mode-commands)
-                                  (smex-major-mode-commands)))
-
 ;; easy access!
 (defun find-user-init-file ()
   "Edit the `user-init-file', in another window."
@@ -143,6 +128,22 @@ point reaches the beginning or end of the buffer, stop there."
 (cask-initialize)
 (require 'pallet)
 
+;; smex.
+(require 'smex)
+(global-set-key (kbd "M-x") (lambda ()
+                              (interactive)
+                              (or (boundp 'smex-cache)
+                                  (smex-initialize))
+                              (global-set-key [(meta x)] 'smex)
+                              (smex)))
+
+(global-set-key (kbd "C-c M-x") (lambda ()
+                                  (interactive)
+                                  (or (boundp 'smex-cache)
+                                      (smex-initialize))
+                                  (global-set-key [(shift meta x)] 'smex-major-mode-commands)
+                                  (smex-major-mode-commands)))
+
 ;; global hooks.
 (add-hook 'after-save-hook
 	  'executable-make-buffer-file-executable-if-script-p)
@@ -211,7 +212,6 @@ point reaches the beginning or end of the buffer, stop there."
 ;; load our other setup files.
 (add-to-list 'load-path user-emacs-directory)
 (require 'setup-magit)
-(require 'setup-windmove)
 (require 'setup-misc)
 (require 'setup-dired)
 (require 'setup-ido)
@@ -221,6 +221,7 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'setup-twitter)
 (require 'setup-languages)
 (require 'setup-session)
+(require 'setup-unity)
 (require 'setup-mu4e)
 
 ;; diminish mode ftw
@@ -235,17 +236,17 @@ point reaches the beginning or end of the buffer, stop there."
     (require 'setup-private))
 
 ;; because there's no other way to run emacs.
-(require 'x-dnd)
 (defun toggle-fullscreen ()
   "Always maximize.  Intended for tiling WMs."
   (interactive)
   (if (eq system-type 'windows-nt)
-      (w32-send-sys-command 61488)
-    (cond
-     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                            '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
-     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                            '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))))
+      (when (fboundp 'w32-send-sys-command)
+        (w32-send-sys-command 61488))
+    (when (fboundp 'x-send-client-message)
+      (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                             '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+      (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                             '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))))
 
 ;; windows needs this to execute at the end
 (when window-system
