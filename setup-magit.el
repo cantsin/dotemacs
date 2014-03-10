@@ -12,6 +12,7 @@
 (set-face-foreground 'diff-removed "#ff0000")
 
 (global-set-key (kbd "C-c g") 'magit-status)
+(global-set-key (kbd "C-c f") 'vc-git-grep)
 
 (defun magit-toggle-whitespace ()
   "Toggle whitespace."

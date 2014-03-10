@@ -21,6 +21,7 @@
 (depends-on "flycheck")
 (depends-on "flycheck-cask")
 (depends-on "flycheck-color-mode-line")
+(depends-on "framemove")
 (depends-on "git-commit-mode")
 (depends-on "gitconfig")
 (depends-on "gitignore-mode")
