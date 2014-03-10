@@ -222,7 +222,6 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'setup-languages)
 (require 'setup-session)
 (require 'setup-unity)
-(require 'setup-mu4e)
 
 ;; diminish mode ftw
 (require 'diminish)
@@ -234,6 +233,8 @@ point reaches the beginning or end of the buffer, stop there."
 ;; load only if available
 (if (file-exists-p "~/.emacs.d/setup-private.el")
     (require 'setup-private))
+(when (require 'mu4e nil 'noerror)
+  (require 'setup-mu4e))
 
 ;; because there's no other way to run emacs.
 (defun toggle-fullscreen ()
