@@ -12,13 +12,14 @@
 (setq dired-listing-switches "-alk")
 
 ;; Auto refresh dired, but be quiet about it
+(require 'autorevert)
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 
 (defun dired-back-to-top ()
   "Skip the . and .. directories."
   (interactive)
-  (beginning-of-buffer)
+  (goto-char (point-min))
   (dired-next-line 4))
 
 (define-key dired-mode-map
@@ -27,7 +28,7 @@
 (defun dired-jump-to-bottom ()
   "Skip the blank line at the end of dired."
   (interactive)
-  (end-of-buffer)
+  (goto-char (point-max))
   (dired-next-line -1))
 
 (define-key dired-mode-map

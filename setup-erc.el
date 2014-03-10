@@ -7,6 +7,7 @@
 (require 'erc-join)
 (require 'erc-fill)
 (require 'erc-ring)
+(require 'erc-log)
 (require 'erc-netsplit)
 (require 'tls)
 (require 'znc)
@@ -23,7 +24,6 @@
 
 ;; logging
 (setq erc-log-insert-log-on-open nil)
-(setq erc-log-channels t)
 (setq erc-log-channels-directory "~/.irc_logs/")
 (setq erc-save-buffer-on-part t)
 (setq erc-hide-timestamps nil)
@@ -64,7 +64,7 @@ If DELAY is specified, it will be the minimum time in seconds
 that can occur between two notifications.  The default is
 `my-erc-page-timeout'."
   (unless delay (setq delay my-erc-page-timeout))
-  (let ((cur-time (time-to-seconds (current-time)))
+  (let ((cur-time (float-time (current-time)))
         (cur-assoc (assoc nick my-erc-page-nick-alist))
         (last-time))
     (if cur-assoc
