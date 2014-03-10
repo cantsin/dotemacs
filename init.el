@@ -82,84 +82,9 @@
 ;; Easily navigate sillycased words
 (global-subword-mode 1)
 
-;; set up our own site-lisp.
-(let ((default-directory (concat user-emacs-directory "site-lisp")))
-  (normal-top-level-add-to-load-path '("."))
-  (normal-top-level-add-subdirs-to-load-path))
-
-;; add marmalade to package-archives.
-(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(package-initialize)
-
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-(defvar my-packages
-  '(ace-jump-mode
-    clojure-mode
-    diminish
-    dired+
-    dired-details
-    elfeed
-    elisp-slime-nav
-    esxml
-    expand-region
-    git-commit-mode
-    gitconfig
-    gitignore-mode
-    gnomenm
-    flycheck
-    flycheck-color-mode-line
-    haskell-mode
-    hl-line+
-    ido-ubiquitous
-    key-chord
-    nrepl
-    offlineimap
-    openwith
-    paredit
-    sauron
-    session
-    smart-tab
-    smex
-    ;;twittering-mode
-    whitespace-cleanup-mode
-    zenburn-theme
-
-    ;; auxiliary libraries
-    dash
-    ht
-    loop
-    s)
-  "A list of packages to ensure are installed at launch.")
-
-;; install manually:
-;; - bbdb
-;; - julia-mode.el
-;; - magit
-;; - notmuch
-;; - org-bullets.el
-;; - session
-;; - stripe-buffer.el
-
-(dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
-
-;; el-get.
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (let (el-get-master-branch)
-      (goto-char (point-max))
-      (eval-print-last-sexp))))
-
-(el-get 'sync)
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+(require 'pallet)
 
 ;; global hooks.
 (add-hook 'after-save-hook
@@ -169,19 +94,8 @@
 (add-hook 'makefile-mode-hook
           'indent-tabs-mode)
 
-;; because there's no other way to run emacs.
-(defun toggle-fullscreen ()
-  "Always maximize.  Intended for tiling WMs."
-  (interactive)
-  (if (eq system-type 'windows-nt)
-      (w32-send-sys-command 61488)
-    (cond
-     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                            '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
-     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                            '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))))
 ;; theme.
-(load-theme 'zenburn t)
+;(load-theme 'zenburn t)
 
 ;; save point
 (require 'saveplace)
@@ -292,7 +206,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;(diminish 'smart-tab-mode)
 
 ;; load only if available
-(when (fbound 'mu4e)
+(when (require 'mu4e nil 'no-error)
   (require 'setup-mu4e))
 (if (file-exists-p "~/.emacs.d/setup-private.el")
     (require 'setup-private))
@@ -303,6 +217,18 @@ point reaches the beginning or end of the buffer, stop there."
   (interactive)
   (find-file-other-window user-init-file))
 (global-set-key (kbd "C-c I") 'find-user-init-file)
+
+;; because there's no other way to run emacs.
+(defun toggle-fullscreen ()
+  "Always maximize.  Intended for tiling WMs."
+  (interactive)
+  (if (eq system-type 'windows-nt)
+      (w32-send-sys-command 61488)
+    (cond
+     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                            '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                            '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))))
 
 ;; windows needs this to execute at the end
 (when window-system

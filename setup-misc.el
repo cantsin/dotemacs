@@ -3,6 +3,8 @@
 ;;; Setup various bits that don't really go anywhere else.
 ;;; Code:
 
+(require 'eldoc)
+
 ;; default hooks.
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
@@ -22,6 +24,7 @@
 ;; paredit.
 (autoload 'paredit-mode "paredit"
   "Minor mode for pseudo-structurally editing Lisp code." t)
+
 ;; make paredit and eldoc play nice.
 (eldoc-add-command 'paredit-backward-delete 'paredit-close-round)
 
@@ -95,10 +98,6 @@ region (delimited by START and END), indirectly."
   (progn
    (set-buffer-file-coding-system 'utf-8-unix)
    (save-buffer)))
-
-;; hl-line
-(require 'hl-line+)
-(global-hl-line-highlight)
 
 ;; openwith
 (require 'openwith)
@@ -203,9 +202,6 @@ with the first matching buffer's major mode."
 (require 'flymake)
 (setq flymake-gui-warnings-enabled nil)
 
-;; gnomenm
-(require 'gnomenm)
-
 ;; A saner ediff
 (setq ediff-diff-options "-w")
 (setq ediff-split-window-function 'split-window-horizontally)
@@ -254,7 +250,10 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
               (equal major-mode 'dired-mode))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
+;; hl-line
+(require 'hl-line+)
 (global-hl-line-mode +1)
+(global-hl-line-highlight)
 
 ;; visual-regexp.
 (require 'visual-regexp)

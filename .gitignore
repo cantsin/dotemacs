@@ -1,9 +1,8 @@
 /auto-save-list/*
-/elpa/*
 /url/cookies
 /setup-private.el
 /eshell/
 /save-place
 *.elc
 /tramp
-/el-get/
+.cask
