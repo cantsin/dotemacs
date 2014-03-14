@@ -8,25 +8,11 @@
 ;; default hooks.
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode +1)))
-(add-hook 'lisp-mode-hook (lambda () (paredit-mode +1)))
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 (global-set-key (kbd "C-c s") 'flyspell-correct-word-before-point)
 
 ;; elfeed.
 (global-set-key (kbd "C-x w") 'elfeed)
-
-;; paredit.
-(autoload 'paredit-mode "paredit"
-  "Minor mode for pseudo-structurally editing Lisp code." t)
-
-;; make paredit and eldoc play nice.
-(eldoc-add-command 'paredit-backward-delete 'paredit-close-round)
 
 ;; smart-tab.
 (require 'smart-tab)
@@ -43,12 +29,6 @@
 
 ;; winner-mode.
 (winner-mode 1)
-
-;; paren-mode.
-(require 'paren)
-(show-paren-mode 1)
-(setq show-paren-delay 0)
-(setq show-paren-style 'mixed)
 
 ;; expand-mode.
 (require 'expand-region)
@@ -80,10 +60,6 @@ region (delimited by START and END), indirectly."
       (narrow-to-region start end))
     (switch-to-buffer buf)))
 (global-set-key (kbd "C-x n x") 'narrow-to-region-indirect)
-
-;; pretty-print evals.
-(global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
-(global-set-key [remap eval-expression] 'pp-eval-expression)
 
 ;; disable overwrite-mode because it is really annoying.
 (define-key global-map [(insert)] nil)
@@ -122,9 +98,6 @@ region (delimited by START and END), indirectly."
              "evince"
              '(file))))
 (openwith-mode 1)
-
-;; malyon -- z interpreter.
-;; (require 'malyon)
 
 (defun visit-eshell-buffer ()
   "Create or visit an eshell buffer."
@@ -198,9 +171,6 @@ with the first matching buffer's major mode."
    (car occur-revert-arguments)))
 (define-key occur-mode-map "m" 'occur-multi-occur)
 (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
-
-(require 'flymake)
-(setq flymake-gui-warnings-enabled nil)
 
 ;; A saner ediff
 (setq ediff-diff-options "-w")
