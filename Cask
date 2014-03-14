@@ -5,8 +5,10 @@
 
 (depends-on "ace-jump-mode")
 (depends-on "auto-complete")
+(depends-on "auto-yasnippet")
 (depends-on "bbdb")
 (depends-on "cask")
+(depends-on "cider")
 (depends-on "clojure-mode")
 (depends-on "clojurescript-mode")
 (depends-on "dash")
@@ -57,5 +59,7 @@
 (depends-on "twittering-mode")
 (depends-on "visual-regexp")
 (depends-on "whitespace-cleanup-mode")
+(depends-on "yasnippet")
+(depends-on "yasnippet-bundle")
 (depends-on "zenburn-theme")
 (depends-on "znc")

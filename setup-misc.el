@@ -264,11 +264,11 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
 
 ;; key chords. should be used sparingly.
 (require 'key-chord)
-(key-chord-define-global "DF" 'ido-switch-buffer)
-(key-chord-define-global "DS" '(lambda ()
+(key-chord-define-global ",," 'ido-switch-buffer)
+(key-chord-define-global ",." '(lambda ()
                                  (interactive)
                                  (switch-to-buffer (other-buffer (current-buffer) 1))))
-(key-chord-define-global "AA" 'ace-jump-word-mode)
+(key-chord-define-global "jj" 'ace-jump-word-mode)
 (key-chord-mode +1)
 
 (require 'powerline)
