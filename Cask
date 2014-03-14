@@ -48,6 +48,7 @@
 (depends-on "paredit")
 (depends-on "powerline")
 (depends-on "pretty-mode")
+(depends-on "rainbow-delimiters")
 (depends-on "s")
 (depends-on "sauron")
 (depends-on "session")
