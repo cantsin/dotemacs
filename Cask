@@ -46,6 +46,7 @@
 (depends-on "org-journal")
 (depends-on "pallet")
 (depends-on "paredit")
+(depends-on "pkg-info")
 (depends-on "powerline")
 (depends-on "pretty-mode")
 (depends-on "rainbow-delimiters")
