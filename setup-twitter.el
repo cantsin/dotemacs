@@ -10,7 +10,7 @@
 (setq twittering-url-show-status nil)
 
 (add-hook 'twittering-mode
-          '(lambda () (longlines-mode)))
+          '(lambda () (visual-line-mode)))
 
 (provide 'setup-twitter)
 ;;; setup-twitter.el ends here

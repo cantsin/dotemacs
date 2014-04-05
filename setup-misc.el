@@ -221,9 +221,9 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 ;; hl-line
-(require 'hl-line+)
-(global-hl-line-mode +1)
-(global-hl-line-highlight)
+;; (require 'hl-line+)
+;; (global-hl-line-mode +1)
+;; (global-hl-line-highlight)
 
 ;; visual-regexp.
 (require 'visual-regexp)
