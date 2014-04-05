@@ -65,7 +65,7 @@
 
 (add-hook 'mu4e-view-mode-hook
           '(lambda () (progn
-                        ;(longlines-mode)
+                        (visual-line-mode)
                         (mu4e-view-toggle-hide-cited))))
 
 ;; this seems better than the default html2text

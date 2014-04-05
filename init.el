@@ -10,24 +10,6 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 ;; use C-mouse-3 to pop up entire menu-bar as popup menu
 
-;; log messages with their time stamp so we can profile.
-(defun current-time-microseconds ()
-  "Show the current time in microseconds."
-  (let* ((nowtime (current-time))
-         (now-ms (nth 2 nowtime)))
-    (concat (format-time-string "[%Y-%m-%dT%T" nowtime) (format ".%d] " now-ms))))
-
-(defadvice message (before test-symbol activate)
-  "Wrap message notifications with timestamps."
-  (if (not (string-equal (ad-get-arg 0) "%s%s"))
-      (let ((deactivate-mark nil))
-        (save-excursion
-          (set-buffer "*Messages*")
-          (goto-char (point-max))
-          (if (not (bolp))
-              (newline))
-          (insert (current-time-microseconds))))))
-
 ;; global settings.
 (global-auto-revert-mode 1)
 (global-font-lock-mode t)
@@ -212,7 +194,7 @@ point reaches the beginning or end of the buffer, stop there."
 (add-hook 'emacs-lisp-mode-hook #'flycheck-emacs-lisp-hook)
 
 ;; load our other setup files.
-(add-to-list 'load-path user-emacs-directory)
+(add-to-list 'load-path (concat user-emacs-directory "."))
 (require 'setup-magit)
 (require 'setup-misc)
 (require 'setup-dired)
@@ -228,7 +210,6 @@ point reaches the beginning or end of the buffer, stop there."
 ;; diminish mode ftw
 (require 'diminish)
 (diminish 'eldoc-mode)
-;(diminish 'paredit-mode "()")
 (diminish 'smart-tab-mode)
 (diminish 'magit-auto-revert-mode)
 
