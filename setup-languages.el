@@ -106,6 +106,7 @@
 (setq js-indent-level 2)
 (setq c-basic-offset 4)
 (c-set-offset 'substatement-open 0)
+(setq lua-indent-level 2)
 
 (require 'flycheck-color-mode-line)
 (eval-after-load "flycheck"
