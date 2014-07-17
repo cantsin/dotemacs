@@ -251,6 +251,10 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
     (delete-region start end)
     (insert text)))
 
+(require 'wgrep)
+(setq wgrep-enable-key "r")
+(setq wgrep-auto-save-buffer t)
+
 (require 'epg)
 (defun epg--check-error-for-decrypt (context)
   "CONTEXT is an epg context.
