@@ -74,6 +74,7 @@
 (depends-on "stripe-buffer")
 (depends-on "twittering-mode")
 (depends-on "visual-regexp")
+(depends-on "wgrep")
 (depends-on "whitespace-cleanup-mode")
 (depends-on "yaml-mode")
 (depends-on "yasnippet")
