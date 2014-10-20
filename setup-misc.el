@@ -86,7 +86,7 @@ region (delimited by START and END), indirectly."
              '(file))
        (list (openwith-make-extension-regexp
               '("xbm" "pbm" "pgm" "ppm" "pnm"
-                "png" "gif" "bmp" "tif" "jpeg" "jpg"))
+                "png" "bmp" "tif")) ;; gif/jpg not included; we want to inline these
              "feh"
              '(file))
        (list (openwith-make-extension-regexp
@@ -268,6 +268,27 @@ signature\" and is yet otherwise successful."
                 (equal errors '((exit))))
       (signal 'epg-error
 	      (list "Can't decrypt" (epg-errors-to-string errors))))))
+
+(defmacro bol-with-prefix (function)
+  "Call FUNCTION.
+Except it moves to beginning of line before calling FUNCTION when
+called with a prefix argument.  The FUNCTION still receives the
+prefix argument."
+  (let ((name (intern (format "endless/%s-BOL" function))))
+    `(progn
+       (defun ,name (p)
+         ,(format
+           "Call `%s', but move to BOL when called with a prefix argument."
+           function)
+         (interactive "P")
+         (when p
+           (forward-line 0))
+         (call-interactively ',function))
+       ',name)))
+
+(global-set-key [remap paredit-kill] (bol-with-prefix paredit-kill))
+(global-set-key [remap org-kill-line] (bol-with-prefix org-kill-line))
+(global-set-key [remap kill-line] (bol-with-prefix paredit-kill))
 
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
