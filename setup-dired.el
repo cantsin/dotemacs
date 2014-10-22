@@ -4,8 +4,6 @@
 ;;; Code:
 (require 'stripe-buffer)
 (require 'dired)
-(require 'dired-details)
-(dired-details-install)
 
 (add-hook 'dired-mode-hook 'stripe-listify-buffer)
 
@@ -33,15 +31,6 @@
 
 (define-key dired-mode-map
   (vector 'remap 'end-of-buffer) 'dired-jump-to-bottom)
-
-(require 'dired+)
-
-;; (add-hook 'dired-load-hook
-;;          (function (lambda () (load "dired-x"))))
-
-(require 'dired-details)
-(setq-default dired-details-hidden-string "--- ")
-(dired-details-install)
 
 (provide 'setup-dired)
 ;;; setup-dired.el ends here

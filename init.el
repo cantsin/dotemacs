@@ -104,6 +104,7 @@ point reaches the beginning or end of the buffer, stop there."
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+(global-prettify-symbols-mode 1)
 
 ;; cask/pallet to manage our installed packages.
 (require 'cask "~/.cask/cask.el")
@@ -186,6 +187,9 @@ point reaches the beginning or end of the buffer, stop there."
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
 
+;; save/restore emacs configuration.
+(desktop-save-mode)
+
 ;; allow flycheck to do its magic with our load-path
 (require 'flycheck)
 (defun flycheck-emacs-lisp-hook ()
@@ -219,18 +223,17 @@ point reaches the beginning or end of the buffer, stop there."
 (when (require 'mu4e nil 'noerror)
   (require 'setup-mu4e))
 
+(defun save-all ()
+  "Save whenever focus is lost/gained."
+  (interactive)
+  (save-some-buffers t))
+(add-hook 'focus-out-hook 'save-all)
+
 ;; because there's no other way to run emacs.
 (defun toggle-fullscreen ()
   "Always maximize.  Intended for tiling WMs."
   (interactive)
-  (if (eq system-type 'windows-nt)
-      (when (fboundp 'w32-send-sys-command)
-        (w32-send-sys-command 61488))
-    (when (fboundp 'x-send-client-message)
-      (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                             '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
-      (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                             '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))))
+  (toggle-frame-fullscreen))
 
 ;; windows needs this to execute at the end
 (when window-system

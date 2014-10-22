@@ -8,3 +8,5 @@
 .cask
 /.session
 /elpa/
+/.emacs.desktop
+/.emacs.desktop.lock
