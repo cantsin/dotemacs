@@ -18,6 +18,8 @@
 (depends-on "dash")
 (depends-on "diminish")
 (depends-on "dockerfile-mode")
+(depends-on "easy-kill")
+(depends-on "easy-kill-extras")
 (depends-on "elfeed")
 (depends-on "elisp-slime-nav")
 (depends-on "epl")
