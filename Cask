@@ -49,6 +49,7 @@
 (depends-on "lua-mode")
 (depends-on "magit")
 (depends-on "magit-gh-pulls")
+(depends-on "multiple-cursors")
 (depends-on "notmuch")
 (depends-on "nrepl")
 (depends-on "offlineimap")
