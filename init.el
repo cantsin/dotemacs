@@ -197,6 +197,22 @@ point reaches the beginning or end of the buffer, stop there."
   (setq flycheck-emacs-lisp-load-path load-path))
 (add-hook 'emacs-lisp-mode-hook #'flycheck-emacs-lisp-hook)
 
+;; replace kill-ring-save.
+(require 'easy-kill)
+(global-set-key [remap kill-ring-save] 'easy-kill)
+(global-set-key [remap mark-sexp] 'easy-mark)
+(define-key easy-kill-base-map (kbd "C-d") 'easy-kill-delete-region)
+(define-key easy-kill-base-map (kbd "DEL") 'easy-kill-delete-region)
+(add-to-list 'easy-kill-alist '(?^ backward-line-edge ""))
+(add-to-list 'easy-kill-alist '(?$ forward-line-edge ""))
+(add-to-list 'easy-kill-alist '(?b buffer ""))
+(add-to-list 'easy-kill-alist '(?< buffer-before-point ""))
+(add-to-list 'easy-kill-alist '(?> buffer-after-point ""))
+(add-to-list 'easy-kill-alist '(?f string-to-char-forward ""))
+(add-to-list 'easy-kill-alist '(?F string-up-to-char-forward ""))
+(add-to-list 'easy-kill-alist '(?t string-to-char-backward ""))
+(add-to-list 'easy-kill-alist '(?T string-up-to-char-backward ""))
+
 ;; load our other setup files.
 (add-to-list 'load-path (concat user-emacs-directory "."))
 (require 'setup-magit)
