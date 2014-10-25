@@ -212,14 +212,6 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
 ;; hugely useful
 (global-set-key (kbd "C-x p") 'proced)
 
-;; by default, open as root if necessary
-(defadvice ido-find-file (after find-file-sudo activate)
-  "Find file as root if necessary."
-  (unless (or (and buffer-file-name
-                   (file-writable-p buffer-file-name))
-              (equal major-mode 'dired-mode))
-    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-
 ;; hl-line
 ;; (require 'hl-line+)
 ;; (global-hl-line-mode +1)
@@ -234,7 +226,7 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
 
 ;; key chords. should be used sparingly.
 (require 'key-chord)
-(key-chord-define-global ",," 'ido-switch-buffer)
+(key-chord-define-global ",," 'helm-mini)
 (key-chord-define-global ",." '(lambda ()
                                  (interactive)
                                  (switch-to-buffer (other-buffer (current-buffer) 1))))
