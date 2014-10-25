@@ -9,6 +9,8 @@
 (require 'helm-swoop)
 (require 'helm-spaces)
 (require 'eshell)
+(require 'projectile)
+(require 'helm-projectile)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
@@ -79,6 +81,14 @@
 (add-hook 'eshell-mode-hook
           #'(lambda ()
               (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
+
+;; projectile
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+(setq projectile-switch-project-action 'helm-projectile)
+(setq helm-projectile-sources-list '(helm-source-projectile-projects
+                                     helm-source-projectile-files-list))
 
 (helm-mode 1)
 
