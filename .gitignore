@@ -11,3 +11,6 @@
 /.emacs.desktop
 /.emacs.desktop.lock
 /.mc-lists.el
+/places
+/el-get/
+/image-dired/

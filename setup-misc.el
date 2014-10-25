@@ -297,5 +297,13 @@ prefix argument."
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+;; goto column.
+(defun go-to-column (column)
+  "Go to COLUMN."
+  (interactive "nColumn: ")
+  (move-to-column column t))
+
+(global-set-key (kbd "M-g M-c") 'go-to-column)
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
