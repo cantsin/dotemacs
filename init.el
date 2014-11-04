@@ -145,7 +145,10 @@ point reaches the beginning or end of the buffer, stop there."
 (setq framemove-hook-into-windmove t)
 
 ;; theme.
-(load-theme 'zenburn t)
+;;(load-theme 'zenburn t)
+(require 'moe-theme)
+(moe-dark)
+(moe-theme-set-color 'orange)
 
 ;; write backup files to its own directory
 (setq backup-directory-alist
