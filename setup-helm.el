@@ -34,7 +34,7 @@
 (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
 ;; spaces
-(global-set-key (kbd "C-c s") 'helm-spaces)
+(global-set-key (kbd "C-c h SPC") 'helm-spaces)
 (setq helm-spaces-new-space-query nil)
 
 ;; swoop
