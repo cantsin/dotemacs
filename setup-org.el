@@ -53,7 +53,6 @@
 (setq org-enforce-todo-checkbox-dependencies t)
 (setq org-use-fast-todo-selection t)
 (setq org-archive-location ".archived.org::* From %s")
-(setq org-default-notes-file "~/remote/Dropbox/notes.org")
 (setq org-stuck-projects
       '("TODO={.+}/-DONE" nil nil "SCHEDULED:\\|DEADLINE:"))
 (setq org-capture-templates

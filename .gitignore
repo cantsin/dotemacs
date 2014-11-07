@@ -19,3 +19,5 @@
 /var/
 /abbrev_defs
 /ac-comphist.dat
+/bookmarks
+/custom.el
