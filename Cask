@@ -90,6 +90,7 @@
 (depends-on "visual-regexp")
 (depends-on "wgrep")
 (depends-on "whitespace-cleanup-mode")
+(depends-on "writegood-mode")
 (depends-on "yaml-mode")
 (depends-on "yasnippet")
 (depends-on "yasnippet-bundle")

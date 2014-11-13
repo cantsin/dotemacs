@@ -317,5 +317,11 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (setq save-abbrevs t)
 (setq-default abbrev-mode t)
 
+;; write good (sic).
+(require 'writegood-mode)
+(global-set-key "\C-cw" 'writegood-mode)
+(global-set-key "\C-c\C-gg" 'writegood-grade-level)
+(global-set-key "\C-c\C-ge" 'writegood-reading-ease)
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
