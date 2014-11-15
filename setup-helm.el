@@ -89,7 +89,7 @@
 (setq helm-projectile-sources-list '(helm-source-projectile-projects
                                      helm-source-projectile-files-list))
 
-(global-set-key (kbd "C-c h g") 'projectile-helm-grep)
+(setq projectile-use-git-grep t)
 
 (helm-mode 1)
 
