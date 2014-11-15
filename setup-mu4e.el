@@ -4,9 +4,6 @@
 ;;; Code:
 (require 'mu4e)
 
-;; set up "main" account first
-(setq mu4e-maildir "~/remote/email")
-
 ;; don't save messages to Sent Messages, Gmail/IMAP takes care of this
 (setq mu4e-sent-messages-behavior 'delete)
 (setq message-kill-buffer-on-exit t)
@@ -17,11 +14,6 @@
 (defvar my-mu4e-account-alist 'nil)
 
 (require 'smtpmail)
-(setq message-send-mail-function 'smtpmail-send-it
-      smtpmail-stream-type 'starttls
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587)
 
 (setq mu4e-get-mail-command "offlineimap")
 (setq mu4e-update-interval 300)

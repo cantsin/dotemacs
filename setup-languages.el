@@ -127,5 +127,8 @@
   (local-set-key (kbd "C-c C-k") 'godoc)))
 ;; go get code.google.com/p/rog-go/exp/cmd/godef
 
+;; auto disassemble llvm when opening .bc files
+(require 'autodisass-llvm-bitcode)
+
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
