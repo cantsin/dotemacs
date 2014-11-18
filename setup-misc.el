@@ -323,5 +323,12 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (global-set-key "\C-c\C-gg" 'writegood-grade-level)
 (global-set-key "\C-c\C-ge" 'writegood-reading-ease)
 
+(global-set-key (kbd "M-j")
+                (lambda ()
+                  (interactive)
+                  (join-line -1)))
+;; Restclient
+(add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode))
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
