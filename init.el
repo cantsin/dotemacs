@@ -229,7 +229,6 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'setup-twitter)
 (require 'setup-languages)
 (require 'setup-session)
-(require 'setup-unity)
 
 ;; diminish mode ftw
 (require 'diminish)
