@@ -87,6 +87,7 @@
 (depends-on "smex")
 (depends-on "solarized-theme")
 (depends-on "stripe-buffer")
+(depends-on "synonyms")
 (depends-on "twittering-mode")
 (depends-on "visual-regexp")
 (depends-on "wgrep")
