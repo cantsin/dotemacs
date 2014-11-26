@@ -330,5 +330,8 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 ;; Restclient
 (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode))
 
+;; Github README.mds.
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
