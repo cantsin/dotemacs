@@ -336,5 +336,9 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 ;; company-mode.
 (add-hook 'after-init-hook 'global-company-mode)
 
+(require 'company)
+;; cabal install hoogle ghc-mod
+(add-to-list 'company-backends 'company-ghc)
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here

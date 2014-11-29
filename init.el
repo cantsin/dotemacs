@@ -110,6 +110,7 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 (require 'pallet)
+(pallet-mode t)
 
 ;; smex.
 (require 'smex)

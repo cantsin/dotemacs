@@ -14,6 +14,7 @@
 (depends-on "clojure-mode")
 (depends-on "clojure-mode-extra-font-locking")
 (depends-on "company")
+(depends-on "company-ghc")
 (depends-on "csharp-mode")
 (depends-on "dash")
 (depends-on "diminish")
