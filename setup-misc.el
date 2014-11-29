@@ -333,5 +333,8 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 ;; Github README.mds.
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
+;; company-mode.
+(add-hook 'after-init-hook 'global-company-mode)
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here

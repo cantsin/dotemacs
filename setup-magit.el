@@ -115,5 +115,10 @@
   (magit-gh-pulls-mode 1)
   (magit-gh-pulls-reload))
 
+;; fix annoying problem with git commit mode
+(add-hook 'git-commit-mode-hook
+          '(lambda () (beginning-of-buffer))
+          t)
+
 (provide 'setup-magit)
 ;;; setup-magit.el ends here
