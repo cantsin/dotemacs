@@ -236,6 +236,16 @@ point reaches the beginning or end of the buffer, stop there."
 (diminish 'eldoc-mode)
 (diminish 'smart-tab-mode)
 (diminish 'magit-auto-revert-mode)
+(diminish 'projectile-mode " Proj")
+(diminish 'paredit-mode " ()")
+(diminish 'company-mode " co")
+(diminish 'helm-mode)
+(diminish 'abbrev-mode)
+(diminish 'flyspell-mode)
+
+;; prettier lines.
+(require 'powerline)
+(powerline-default-theme)
 
 ;; load only if available
 (if (file-exists-p "~/.emacs.d/setup-private.el")

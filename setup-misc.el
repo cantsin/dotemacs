@@ -11,9 +11,6 @@
 
 (global-set-key (kbd "C-c s") 'flyspell-correct-word-before-point)
 
-;; elfeed.
-(global-set-key (kbd "C-x w") 'elfeed)
-
 ;; smart-tab.
 (require 'smart-tab)
 (add-hook 'emacs-lisp-mode-hook 'smart-tab-mode)
@@ -63,10 +60,6 @@ region (delimited by START and END), indirectly."
 
 ;; disable overwrite-mode because it is really annoying.
 (define-key global-map [(insert)] nil)
-
-;; enable w3m
-;;(require 'w3m-load)
-;;(setq w3m-use-tab t)
 
 (defun fix-coding-system ()
   "Fix annoying DOS or Mac line endings."
@@ -212,11 +205,6 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
 ;; hugely useful
 (global-set-key (kbd "C-x p") 'proced)
 
-;; hl-line
-;; (require 'hl-line+)
-;; (global-hl-line-mode +1)
-;; (global-hl-line-highlight)
-
 ;; visual-regexp.
 (require 'visual-regexp)
 (define-key global-map (kbd "C-c r") 'vr/replace)
@@ -232,9 +220,6 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
                                  (switch-to-buffer (other-buffer (current-buffer) 1))))
 (key-chord-define-global "jj" 'ace-jump-word-mode)
 (key-chord-mode +1)
-
-(require 'powerline)
-(powerline-default-theme)
 
 (defun url-decode-region (start end)
   "URL decode a region from START to END."
@@ -334,10 +319,9 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
 ;; company-mode.
-(add-hook 'after-init-hook 'global-company-mode)
-
 (require 'company)
-;; cabal install hoogle ghc-mod
+(require 'helm-company)
+(add-hook 'after-init-hook 'global-company-mode)
 (add-to-list 'company-backends 'company-ghc)
 
 (provide 'setup-misc)
