@@ -130,5 +130,19 @@
 ;; auto disassemble llvm when opening .bc files
 (require 'autodisass-llvm-bitcode)
 
+;; Github README.mds.
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
+;; company-mode.
+(require 'company)
+(require 'helm-company)
+(add-hook 'after-init-hook 'global-company-mode)
+(add-to-list 'company-backends 'company-ghc)
+
+;; skewer-mode.
+(add-hook 'js2-mode-hook 'skewer-mode)
+(add-hook 'css-mode-hook 'skewer-css-mode)
+(add-hook 'html-mode-hook 'skewer-html-mode)
+
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
