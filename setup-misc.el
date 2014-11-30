@@ -61,13 +61,6 @@ region (delimited by START and END), indirectly."
 ;; disable overwrite-mode because it is really annoying.
 (define-key global-map [(insert)] nil)
 
-(defun fix-coding-system ()
-  "Fix annoying DOS or Mac line endings."
-  (interactive)
-  (progn
-   (set-buffer-file-coding-system 'utf-8-unix)
-   (save-buffer)))
-
 ;; openwith
 (require 'openwith)
 (setq openwith-associations
@@ -130,18 +123,6 @@ region (delimited by START and END), indirectly."
         (message "Indented defun.")))))
 
 (global-set-key (kbd "C-M-\\") 'indent-region-or-defun)
-
-;; webjump
-(global-set-key (kbd "C-x g") 'webjump)
-
-;; Add Urban Dictionary to webjump
-(eval-after-load "webjump"
-  '(add-to-list 'webjump-sites
-                '("Urban Dictionary" .
-                  [simple-query
-                   "www.urbandictionary.com"
-                   "http://www.urbandictionary.com/define.php?term="
-                   ""])))
 
 ;; occur-mode customizations
 (defun get-buffers-matching-mode (mode)
@@ -273,14 +254,6 @@ prefix argument."
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-;; goto column.
-(defun go-to-column (column)
-  "Go to COLUMN."
-  (interactive "nColumn: ")
-  (move-to-column column t))
-
-(global-set-key (kbd "M-g M-c") 'go-to-column)
 
 ;; use abbrev to memorize mistakes
 (global-set-key (kbd "C-x C-i") 'endless/ispell-word-then-abbrev)
