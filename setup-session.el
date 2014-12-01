@@ -22,5 +22,8 @@
   (add-hook 'session-after-jump-to-last-change-hook 'maybe-reveal)
   (add-to-list 'session-globals-exclude 'org-mark-ring))
 
+;; fix for overflow
+(setq session-save-print-spec '(t nil 40000))
+
 (provide 'setup-session)
 ;;; setup-session.el ends here
