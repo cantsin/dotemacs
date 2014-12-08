@@ -78,6 +78,8 @@
 (depends-on "pkg-info-dummy-package")
 (depends-on "popup")
 (depends-on "powerline")
+(depends-on "powershell")
+(depends-on "powershell-mode")
 (depends-on "pretty-mode")
 (depends-on "prodigy")
 (depends-on "projectile")

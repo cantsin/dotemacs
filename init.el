@@ -237,7 +237,7 @@ point reaches the beginning or end of the buffer, stop there."
 (diminish 'smart-tab-mode)
 (diminish 'magit-auto-revert-mode)
 (diminish 'projectile-mode " Proj")
-(diminish 'paredit-mode " ()")
+;; (diminish 'paredit-mode " ()")
 (diminish 'company-mode " co")
 (diminish 'helm-mode)
 (diminish 'abbrev-mode)
