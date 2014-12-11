@@ -288,5 +288,20 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 ;; Restclient
 (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode))
 
+;; turn off annoying ffap behavior
+(require 'ffap)
+(setq ffap-alist nil
+      ffap-machine-p-known 'accept
+      ffap-require-prefix nil
+      ffap-gopher-regexp nil
+      ffap-url-regexp nil
+      ffap-ftp-regexp nil
+      ffap-ftp-sans-slash-regexp nil
+      ffap-rfs-regexp nil
+      ffap-shell-prompt-regexp nil)
+(defun ffap-file-at-point nil
+  "Turn off ffap file-at-point completely."
+  nil)
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
