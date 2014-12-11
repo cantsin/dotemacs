@@ -21,4 +21,5 @@
  '(agda2-highlight-datatype-face ((t (:foreground "yellow"))))
  '(agda2-highlight-function-face ((t (:foreground "gold"))))
  '(agda2-highlight-primitive-type-face ((t (:foreground "yellow"))))
- '(flyspell-duplicate ((t (:inherit warning :foreground "pale turquoise" :weight bold)))))
+ '(flyspell-duplicate ((t (:inherit warning :foreground "pale turquoise" :weight bold))))
+ '(stripe-hl-line ((t (:background "dark violet" :foreground "unspecified-bg")))))
