@@ -84,5 +84,9 @@
 (add-hook 'org-mode-hook
           #'(lambda () (setq electric-indent-mode nil)))
 
+(require 'org-clock)
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
 (provide 'setup-org)
 ;;; setup-org.el ends here
