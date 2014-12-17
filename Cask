@@ -53,6 +53,7 @@
 (depends-on "ht")
 (depends-on "ido-ubiquitous")
 (depends-on "ido-vertical-mode")
+(depends-on "jedi")
 (depends-on "json-mode")
 (depends-on "key-chord")
 (depends-on "kv")

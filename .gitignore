@@ -22,3 +22,5 @@
 /bookmarks
 /custom.el
 /data/mthesaur.txt.cache
+/.python-environments/
+/org-clock-save.el

@@ -182,5 +182,9 @@
 (add-hook 'nxml-mode-hook 'flymake-html-load)
 (add-hook 'php-mode-hook 'flymake-html-load)
 
+(require 'jedi)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
