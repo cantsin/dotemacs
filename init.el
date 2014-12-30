@@ -145,6 +145,20 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'framemove)
 (setq framemove-hook-into-windmove t)
 
+;; save buffers on buffer switch
+(defadvice switch-to-buffer (before save-buffer-now activate)
+  (when buffer-file-name (save-buffer)))
+(defadvice other-window (before other-window-now activate)
+  (when buffer-file-name (save-buffer)))
+(defadvice windmove-up (before other-window-now activate)
+  (when buffer-file-name (save-buffer)))
+(defadvice windmove-down (before other-window-now activate)
+  (when buffer-file-name (save-buffer)))
+(defadvice windmove-left (before other-window-now activate)
+  (when buffer-file-name (save-buffer)))
+(defadvice windmove-right (before other-window-now activate)
+  (when buffer-file-name (save-buffer)))
+
 ;; theme.
 ;;(load-theme 'zenburn t)
 (require 'moe-theme)
