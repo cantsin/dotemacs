@@ -60,9 +60,8 @@
                         (visual-line-mode)
                         (mu4e-view-toggle-hide-cited))))
 
-;; this seems better than the default html2text
-;; pip install html2text
-(setq mu4e-html2text-command "python -m html2text")
+(require 'mu4e-contrib)
+(setq mu4e-html2text-command 'mu4e-shr2text)
 
 (provide 'setup-mu4e)
 ;;; setup-mu4e.el ends here

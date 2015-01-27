@@ -4,6 +4,7 @@
 (source org)
 
 (depends-on "ace-jump-mode")
+(depends-on "arduino-mode")
 (depends-on "ascii")
 (depends-on "auto-yasnippet")
 (depends-on "autodisass-llvm-bitcode")
@@ -98,6 +99,7 @@
 (depends-on "stripe-buffer")
 (depends-on "synonyms")
 (depends-on "tagedit")
+(depends-on "toml-mode")
 (depends-on "tuareg")
 (depends-on "twittering-mode")
 (depends-on "visual-regexp")
