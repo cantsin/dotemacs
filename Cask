@@ -111,3 +111,4 @@
 (depends-on "yasnippet-bundle")
 (depends-on "zenburn-theme")
 (depends-on "znc")
+(depends-on "zop-to-char")
