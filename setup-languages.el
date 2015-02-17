@@ -100,6 +100,8 @@
 
 ;; flycheck ftw
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; indentation.
 (require 'js)
@@ -114,6 +116,10 @@
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+
+;; elm-repl
+(setenv "PATH" (concat (getenv "PATH") ":~/.cabal/bin"))
+(setq exec-path (append exec-path '("~/.cabal/bin")))
 
 (require 'go-mode)
 (add-hook 'before-save-hook 'gofmt-before-save)
