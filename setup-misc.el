@@ -333,5 +333,7 @@ With prefix P, create local abbrev.  Otherwise it will be global."
   "Turn off ffap file-at-point completely."
   nil)
 
+(setq ispell-personal-dictionary (concat user-emacs-directory "personal-dict"))
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
