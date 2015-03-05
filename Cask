@@ -76,6 +76,7 @@
 (depends-on "org-journal")
 (depends-on "package-build")
 (depends-on "pallet")
+(depends-on "paradox")
 (depends-on "paredit")
 (depends-on "pkg-info")
 (depends-on "pkg-info-dummy-package")
