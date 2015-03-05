@@ -12,8 +12,34 @@
 (require 'flyspell)
 (global-set-key (kbd "C-c s") 'flyspell-correct-word-before-point)
 (define-key flyspell-mode-map (kbd "M-g n") 'flyspell-goto-next-error)
-;; why is there no flyspell-goto-previous-error?
-;; flyspell-check-previous-highlighted-word
+
+(defun flyspell-goto-previous-error (&optional arg)
+  "Count ARG mis-spelled words backwards."
+  (interactive)
+  (let ((pos1 (point))
+	(pos  (point))
+	(arg  (if (or (not (numberp arg)) (< arg 1)) 1 arg))
+	ov ovs)
+    (if (catch 'exit
+	  (while (and (setq pos (previous-overlay-change pos))
+		      (not (= pos pos1)))
+	    (setq pos1 pos)
+	    (if (> pos (point-min))
+		(progn
+		  (setq ovs (overlays-at (1- pos)))
+		  (while (consp ovs)
+		    (setq ov (car ovs))
+		    (setq ovs (cdr ovs))
+		    (if (and (flyspell-overlay-p ov)
+			     (= 0 (setq arg (1- arg))))
+			(throw 'exit t)))))))
+        (progn
+         (setq flyspell-old-pos-error pos)
+         (setq flyspell-old-buffer-error (current-buffer))
+         (goto-char pos)
+         (backward-word))
+      (error "No word to correct before point"))))
+(define-key flyspell-mode-map (kbd "M-g p") 'flyspell-goto-previous-error)
 
 ;; smart-tab.
 (require 'smart-tab)
