@@ -9,7 +9,11 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
 
+(require 'flyspell)
 (global-set-key (kbd "C-c s") 'flyspell-correct-word-before-point)
+(define-key flyspell-mode-map (kbd "M-g n") 'flyspell-goto-next-error)
+;; why is there no flyspell-goto-previous-error?
+;; flyspell-check-previous-highlighted-word
 
 ;; smart-tab.
 (require 'smart-tab)
