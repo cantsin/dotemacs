@@ -335,5 +335,8 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 
 (setq ispell-personal-dictionary (concat user-emacs-directory "personal-dict"))
 
+(require 'tiny)
+(tiny-setup-default)
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here

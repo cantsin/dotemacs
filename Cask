@@ -102,6 +102,7 @@
 (depends-on "stripe-buffer")
 (depends-on "synonyms")
 (depends-on "tagedit")
+(depends-on "tiny")
 (depends-on "toml-mode")
 (depends-on "tuareg")
 (depends-on "twittering-mode")
