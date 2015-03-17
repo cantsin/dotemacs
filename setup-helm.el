@@ -90,6 +90,18 @@
                                      helm-source-projectile-files-list))
 
 (setq projectile-use-git-grep t)
+(helm-autoresize-mode 1)
+
+(setq helm-split-window-in-side-p t)
+(setq helm-autoresize-max-height 30)
+(setq helm-autoresize-min-height 30)
+
+(defun helm-toggle-header-line ()
+  (if (= (length helm-sources) 1)
+      (set-face-attribute 'helm-source-header nil :height 0.1)
+    (set-face-attribute 'helm-source-header nil :height 1.0)))
+
+(add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
 
 (helm-mode 1)
 
