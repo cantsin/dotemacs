@@ -23,10 +23,11 @@
     (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
 
 (defun eshell/clear ()
-  "Clear the buffer."
+  "Scroll contents of eshell window out of sight, leaving a blank window."
   (interactive)
-  (let ((inhibit-read-only t))
-    (erase-buffer)))
+  (let ((number-newlines (count-lines (window-start) (point))))
+    (insert (make-string number-newlines ?\n)))
+    (eshell-send-input))
 
 (defun eshell/dired ()
   "Call dired on the current directory."
