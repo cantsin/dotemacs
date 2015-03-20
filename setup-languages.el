@@ -100,8 +100,8 @@
 
 ;; flycheck ftw
 (add-hook 'after-init-hook #'global-flycheck-mode)
-#(eval-after-load 'flycheck
-#  '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; racer -- only comment out if installed
 ;; (setq racer-rust-src-path "~/rust/src/")
