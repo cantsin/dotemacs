@@ -130,10 +130,6 @@ directory to make multiple eshell windows easier."
 (load "em-hist")           ; So the history vars are defined
 (if (boundp 'eshell-save-history-on-exit)
     (setq eshell-save-history-on-exit t)) ; Don't ask, just save
-;(message "eshell-ask-to-save-history is %s" eshell-ask-to-save-history)
-(if (boundp 'eshell-ask-to-save-history)
-    (setq eshell-ask-to-save-history 'always)) ; For older(?) version
-;(message "eshell-ask-to-save-history is %s" eshell-ask-to-save-history)
 
 (defun eshell/ef (fname-regexp &rest dir) (ef fname-regexp default-directory))
 
@@ -161,28 +157,29 @@ PWD is not in a git repo (or the git command is not found)."
               "]") 'face `(:foreground "green"))
       )))
 
-(setq eshell-prompt-function
-      (lambda ()
-        (concat
-         (propertize ((lambda (p-lst)
-            (if (> (length p-lst) 3)
-                (concat
-                 (mapconcat (lambda (elm) (if (zerop (length elm)) ""
-                                            (substring elm 0 1)))
-                            (butlast p-lst 3)
-                            "/")
-                 "/"
-                 (mapconcat (lambda (elm) elm)
-                            (last p-lst 3)
-                            "/"))
-              (mapconcat (lambda (elm) elm)
-                         p-lst
-                         "/")))
-          (split-string (pwd-repl-home (eshell/pwd)) "/")) 'face `(:foreground "yellow"))
-         (or (curr-dir-git-branch-string (eshell/pwd)))
-         (propertize "$ " 'face 'default))))
+;; TODO: no autocomplete anymore
+;; (setq eshell-prompt-function
+;;       (lambda ()
+;;         (concat
+;;          (propertize ((lambda (p-lst)
+;;             (if (> (length p-lst) 3)
+;;                 (concat
+;;                  (mapconcat (lambda (elm) (if (zerop (length elm)) ""
+;;                                             (substring elm 0 1)))
+;;                             (butlast p-lst 3)
+;;                             "/")
+;;                  "/"
+;;                  (mapconcat (lambda (elm) elm)
+;;                             (last p-lst 3)
+;;                             "/"))
+;;               (mapconcat (lambda (elm) elm)
+;;                          p-lst
+;;                          "/")))
+;;           (split-string (pwd-repl-home (eshell/pwd)) "/")) 'face `(:foreground "yellow"))
+;;          (or (curr-dir-git-branch-string (eshell/pwd)))
+;;          (propertize "$ " 'face 'default))))
 
-(setq eshell-highlight-prompt nil)
+;; (setq eshell-highlight-prompt nil)
 
 (provide 'setup-eshell)
 ;;; setup-eshell.el ends here
