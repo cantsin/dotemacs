@@ -11,7 +11,6 @@
 
 (require 'flyspell)
 (global-set-key (kbd "C-c s") 'flyspell-correct-word-before-point)
-(define-key flyspell-mode-map (kbd "M-g n") 'flyspell-goto-next-error)
 
 (defun flyspell-goto-previous-error (&optional arg)
   "Count ARG mis-spelled words backwards."
@@ -38,8 +37,65 @@
          (setq flyspell-old-buffer-error (current-buffer))
          (goto-char pos)
          (backward-word))
-      (error "No word to correct before point"))))
-(define-key flyspell-mode-map (kbd "M-g p") 'flyspell-goto-previous-error)
+      (message "No word to correct before point"))))
+
+(defun fly-display-error-or-next-error ()
+  "Display information for current error, or go to next one."
+  (interactive)
+  (when (or (not (flycheck-overlay-errors-at (point)))
+            (not (flyspell-overlay-p (point))))
+    (fly-goto-next-error)))
+
+(defun fly-goto-next-error ()
+  "Jump to next flyspell or flycheck error."
+  (interactive)
+  (let* ((p (point))
+         (message-log-max nil)
+         (spell-next-error-function '(lambda ()
+                                       (forward-word) (forward-char)
+                                       (flyspell-goto-next-error)))
+         (spell-pos (save-excursion
+                      (funcall spell-next-error-function)
+                      (point)))
+         (make-pos (save-excursion
+                     (flycheck-next-error)
+                     (point))))
+    (cond ((or (and (< p make-pos) (< p spell-pos))
+               (and (> p make-pos) (> p spell-pos)))
+           (funcall (if (< make-pos spell-pos)
+                        'flycheck-next-error
+                      spell-next-error-function)))
+          ((< p make-pos)
+           (flycheck-next-error))
+          ((< p spell-pos)
+           (funcall spell-next-error-function)))))
+
+(defun fly-goto-previous-error ()
+  "Jump to previous flyspell or flycheck error."
+  (interactive)
+  (let* ((p (point))
+         (message-log-max nil)
+         (spell-previous-error-function '(lambda ()
+                                       (backward-char)
+                                       (flyspell-goto-previous-error)))
+         (spell-pos (save-excursion
+                      (funcall spell-previous-error-function)
+                      (point)))
+         (make-pos (save-excursion
+                     (flycheck-previous-error)
+                     (point))))
+    (cond ((or (and (< p make-pos) (< p spell-pos))
+               (and (> p make-pos) (> p spell-pos)))
+           (funcall (if (< make-pos spell-pos)
+                        'flycheck-previous-error
+                      spell-previous-error-function)))
+          ((< p make-pos)
+           (flycheck-previous-error))
+          ((< p spell-pos)
+           (funcall spell-previous-error-function)))))
+
+(define-key flyspell-mode-map (kbd "M-g n") 'fly-goto-next-error)
+(define-key flyspell-mode-map (kbd "M-g p") 'fly-goto-previous-error)
 
 ;; smart-tab.
 (require 'smart-tab)
