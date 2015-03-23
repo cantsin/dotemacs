@@ -338,5 +338,9 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (require 'tiny)
 (tiny-setup-default)
 
+;; purpose
+(require 'purpose)
+(purpose-mode)
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here

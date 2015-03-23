@@ -88,6 +88,7 @@
 (depends-on "prodigy")
 (depends-on "projectile")
 (depends-on "purescript-mode")
+(depends-on "purpose")
 (depends-on "pyvirtualenv")
 (depends-on "rainbow-delimiters")
 (depends-on "restclient")

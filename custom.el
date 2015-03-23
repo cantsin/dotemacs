@@ -10,7 +10,7 @@
     (autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp spelling track)))
  '(mu4e-view-show-images t)
  '(org-agenda-file-regexp "\\`[^._].*\\.org\\'")
- '(org-agenda-files (quote ("~/remote/Dropbox/")))
+ '(org-agenda-files nil)
  '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
