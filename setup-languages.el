@@ -198,5 +198,33 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 
+(flycheck-define-checker purs-check
+  "Use purscheck to flycheck PureScript code."
+  :command ("purscheck" source source-original temporary-file-name)
+  :error-patterns
+  ((error line-start
+          (or (and "Error at " (file-name) " line " line ", column " column ":" (zero-or-more " "))
+              (and "\"" (file-name) "\" (line " line ", column " column "):"))
+          (or (message (one-or-more not-newline))
+              (and "\n"
+                   (message
+                    (zero-or-more " ") (one-or-more not-newline)
+                    (zero-or-more "\n"
+                                  (zero-or-more " ")
+                                  (one-or-more not-newline)))))
+          line-end))
+  :modes purescript-mode)
+
+;; connect flycheck with purscheck
+(add-to-list 'flycheck-checkers 'purs-check)
+(add-to-list 'load-path "purscheck.el") ;; custom
+(setq flycheck-purs-check-executable "/home/james/.cabal/bin/purscheck")
+
+;; enable purescript smart indentation and purscheck whenever a
+;; purescript file is loaded into emacs
+(require 'purescript-mode)
+(add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
+(add-hook 'purescript-mode-hook 'flycheck-mode)
+
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
