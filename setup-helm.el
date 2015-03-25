@@ -90,11 +90,6 @@
                                      helm-source-projectile-files-list))
 
 (setq projectile-use-git-grep t)
-(helm-autoresize-mode 1)
-
-(setq helm-split-window-in-side-p t)
-(setq helm-autoresize-max-height 30)
-(setq helm-autoresize-min-height 30)
 
 ;; helm with ag
 (defun projectile-helm-ag ()

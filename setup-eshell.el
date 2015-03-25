@@ -75,7 +75,6 @@ line 42 in the buffer for foo.."
     (message invoke-bash-cmd)
     (throw 'eshell-replace-command (eshell-parse-command invoke-bash-cmd))))
 
-
 (defun pcmpl-git-commands ()
   "Return the most common git commands by parsing the git output."
   (with-temp-buffer
@@ -174,6 +173,8 @@ directory to make multiple eshell windows easier."
 
 (setq eshell-highlight-prompt t)
 (setq eshell-prompt-regexp "\$ ")
+
+(defalias 'eshell/basename 'file-name-nondirectory)
 
 (eval-after-load 'esh-opt
   (progn

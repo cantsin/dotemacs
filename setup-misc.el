@@ -395,7 +395,7 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (tiny-setup-default)
 
 ;; purpose
-(require 'purpose)
+(require 'window-purpose)
 (purpose-mode)
 
 (provide 'setup-misc)
