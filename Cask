@@ -28,6 +28,7 @@
 (depends-on "elm-mode")
 (depends-on "epl")
 (depends-on "erc-image")
+(depends-on "eshell-prompt-extras")
 (depends-on "ess")
 (depends-on "esxml")
 (depends-on "expand-region")
