@@ -104,10 +104,10 @@
   '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; racer -- only comment out if installed
-;; (setq racer-rust-src-path "~/rust/src/")
-;; (setq racer-cmd "~/racer/target/release/racer")
-;; (add-to-list 'load-path "~/racer/editors")
-;; (eval-after-load "rust-mode" '(require 'racer))
+(setq racer-rust-src-path "~/rust/src/")
+(setq racer-cmd "~/racer/target/release/racer")
+(add-to-list 'load-path "~/racer/editors")
+(eval-after-load "rust-mode" '(require 'racer))
 
 ;; indentation.
 (require 'js)
