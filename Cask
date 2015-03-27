@@ -98,7 +98,6 @@
 (depends-on "shut-up")
 (depends-on "skewer-mode")
 (depends-on "smart-compile")
-(depends-on "smart-tab")
 (depends-on "smex")
 (depends-on "solarized-theme")
 (depends-on "stripe-buffer")

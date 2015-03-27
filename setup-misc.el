@@ -97,10 +97,6 @@
 (define-key flyspell-mode-map (kbd "M-g n") 'fly-goto-next-error)
 (define-key flyspell-mode-map (kbd "M-g p") 'fly-goto-previous-error)
 
-;; smart-tab.
-(require 'smart-tab)
-(add-hook 'emacs-lisp-mode-hook 'smart-tab-mode)
-
 ;; uniquify buffers.
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)

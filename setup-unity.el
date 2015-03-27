@@ -15,8 +15,8 @@
 
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
 (add-hook 'csharp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'csharp-mode-hook (lambda ()
-                              (add-to-list 'ac-sources 'ac-source-omnisharp)))
+;; (add-hook 'csharp-mode-hook (lambda ()
+;;                               (add-to-list 'ac-sources 'ac-source-omnisharp)))
 (add-hook 'csharp-mode-hook 'auto-complete-mode)
 
 (require 'omnisharp)
