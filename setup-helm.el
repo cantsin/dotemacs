@@ -103,6 +103,7 @@
  '(helm-ag-insert-at-point 'symbol))
 
 (defun helm-toggle-header-line ()
+  "Toggle the header line."
   (if (= (length helm-sources) 1)
       (set-face-attribute 'helm-source-header nil :height 0.1)
     (set-face-attribute 'helm-source-header nil :height 1.0)))

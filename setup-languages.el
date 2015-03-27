@@ -5,7 +5,7 @@
 
 ;; clojure
 (require 'cider)
-(setq cider-popup-stacktraces nil)
+(setq cider-show-error-buffer nil)
 
 (add-to-list 'same-window-buffer-names "*cider*")
 
@@ -104,16 +104,18 @@
   '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; racer -- only comment out if installed
-(setq racer-rust-src-path "~/rust/src/")
-(setq racer-cmd "~/racer/target/release/racer")
-(add-to-list 'load-path "~/racer/editors")
-(eval-after-load "rust-mode" '(require 'racer))
+;; (setq racer-rust-src-path "~/rust/src/")
+;; (setq racer-cmd "~/racer/target/release/racer")
+;; (add-to-list 'load-path "~/racer/editors")
+;; (eval-after-load "rust-mode" '(require 'racer))
 
 ;; indentation.
 (require 'js)
 (setq js-indent-level 2)
 (setq c-basic-offset 4)
 (c-set-offset 'substatement-open 0)
+
+(require 'lua-mode)
 (setq lua-indent-level 2)
 
 (require 'flycheck-color-mode-line)

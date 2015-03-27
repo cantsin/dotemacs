@@ -236,7 +236,6 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'setup-magit)
 (require 'setup-misc)
 (require 'setup-dired)
-;;(require 'setup-ido)
 (require 'setup-helm)
 (require 'setup-erc)
 (require 'setup-eshell)
