@@ -231,5 +231,9 @@
 (add-hook 'purescript-mode-hook 'flycheck-mode)
 (load "purescript-mode-autoloads")
 
+;; alchemist
+(require 'alchemist)
+(setq alchemist-project-compile-when-needed t)
+
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
