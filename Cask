@@ -108,6 +108,7 @@
 (depends-on "toml-mode")
 (depends-on "tuareg")
 (depends-on "twittering-mode")
+(depends-on "use-package")
 (depends-on "visual-regexp")
 (depends-on "wgrep")
 (depends-on "whitespace-cleanup-mode")
