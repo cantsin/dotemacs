@@ -4,9 +4,6 @@
 ;;; Code:
 
 (require 'use-package)
-(require 'flyspell)
-(require 'flycheck)
-(require 'flycheck-color-mode-line)
 
 ;; flyspell should be able to scan previous errors as well
 (defun flyspell-goto-previous-error (&optional arg)
@@ -30,8 +27,6 @@
 			     (= 0 (setq arg (1- arg))))
 			(throw 'exit t)))))))
         (progn
-         (setq flyspell-old-pos-error pos)
-         (setq flyspell-old-buffer-error (current-buffer))
          (goto-char pos)
          (backward-word))
       (message "No word to correct before point"))))
@@ -113,7 +108,9 @@
   (add-hook 'emacs-lisp-mode-hook
             (function (lambda ()
                         (setq flycheck-emacs-lisp-load-path load-path))))
-  (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
+  (use-package flycheck-color-mode-line
+    :ensure t
+    :init (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
 
 (use-package flycheck
   :ensure t
