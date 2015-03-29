@@ -26,7 +26,6 @@
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'paredit-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 ;; pretty-print evals.
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
@@ -98,11 +97,6 @@
 (add-to-list 'smart-compile-alist
              '("\\.rs\\'" . "rust build %f"))
 
-;; flycheck ftw
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
 ;; racer -- only comment out if installed
 ;; (setq racer-rust-src-path "~/rust/src/")
 ;; (setq racer-cmd "~/racer/target/release/racer")
@@ -117,10 +111,6 @@
 
 (require 'lua-mode)
 (setq lua-indent-level 2)
-
-(require 'flycheck-color-mode-line)
-(eval-after-load "flycheck"
-  '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
@@ -220,7 +210,7 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 
-;; connect flycheck with purscheck
+;; purscheck
 (add-to-list 'load-path "purscheck.el") ;; custom
 (require 'purscheck)
 
@@ -228,7 +218,6 @@
 ;; purescript file is loaded into emacs
 (require 'purescript-mode)
 (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
-(add-hook 'purescript-mode-hook 'flycheck-mode)
 (load "purescript-mode-autoloads")
 
 ;; alchemist

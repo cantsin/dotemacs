@@ -208,13 +208,6 @@ point reaches the beginning or end of the buffer, stop there."
 ;; save/restore emacs configuration.
 (desktop-save-mode)
 
-;; allow flycheck to do its magic with our load-path
-(require 'flycheck)
-(defun flycheck-emacs-lisp-hook ()
-  "Allow flycheck to validate our custom provided elisp files."
-  (setq flycheck-emacs-lisp-load-path load-path))
-(add-hook 'emacs-lisp-mode-hook #'flycheck-emacs-lisp-hook)
-
 ;; replace kill-ring-save.
 (require 'easy-kill)
 (global-set-key [remap kill-ring-save] 'easy-kill)
@@ -233,6 +226,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; load our other setup files.
 (add-to-list 'load-path (concat user-emacs-directory "."))
+(require 'setup-fly)
 (require 'setup-magit)
 (require 'setup-misc)
 (require 'setup-dired)
@@ -252,7 +246,6 @@ point reaches the beginning or end of the buffer, stop there."
 (diminish 'company-mode " co")
 (diminish 'helm-mode)
 (diminish 'abbrev-mode)
-(diminish 'flyspell-mode)
 
 ;; prettier lines.
 (require 'powerline)
