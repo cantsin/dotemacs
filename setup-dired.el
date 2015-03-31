@@ -2,17 +2,7 @@
 ;;; Commentary:
 ;;; Setup dired.
 ;;; Code:
-(require 'stripe-buffer)
-(require 'dired)
-
-(add-hook 'dired-mode-hook 'stripe-listify-buffer)
-
-(setq dired-listing-switches "-alk")
-
-;; Auto refresh dired, but be quiet about it
-(require 'autorevert)
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
+(require 'use-package)
 
 (defun dired-back-to-top ()
   "Skip the . and .. directories."
@@ -20,17 +10,31 @@
   (goto-char (point-min))
   (dired-next-line 4))
 
-(define-key dired-mode-map
-  (vector 'remap 'beginning-of-buffer) 'dired-back-to-top)
-
 (defun dired-jump-to-bottom ()
   "Skip the blank line at the end of dired."
   (interactive)
   (goto-char (point-max))
   (dired-next-line -1))
 
-(define-key dired-mode-map
-  (vector 'remap 'end-of-buffer) 'dired-jump-to-bottom)
+(defun cantsin/dired-config ()
+  "Set up dired."
+  (use-package stripe-buffer
+    :ensure t)
+  (add-hook 'dired-mode-hook 'stripe-listify-buffer)
+
+  (define-key dired-mode-map
+    [remap beginning-of-buffer] 'dired-back-to-top)
+  (define-key dired-mode-map
+    [remap end-of-buffer] 'dired-jump-to-bottom)
+
+  ;; Auto refresh dired, but be quiet about it
+  (use-package autorevert)
+  (setq dired-listing-switches "-alk"
+        global-auto-revert-non-file-buffers t
+        auto-revert-verbose nil))
+
+(use-package dired
+  :config (cantsin/dired-config))
 
 (provide 'setup-dired)
 ;;; setup-dired.el ends here
