@@ -246,7 +246,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;; diminish mode ftw
 (require 'diminish)
 (diminish 'eldoc-mode)
-(diminish 'magit-auto-revert-mode)
+;;(diminish 'magit-auto-revert-mode)
 (diminish 'projectile-mode " Proj")
 (diminish 'company-mode " co")
 (diminish 'helm-mode)
