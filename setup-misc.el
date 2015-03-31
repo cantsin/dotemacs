@@ -2,20 +2,23 @@
 ;;; Commentary:
 ;;; Setup various bits that don't really go anywhere else.
 ;;; Code:
+(require 'use-package)
+
+(use-package ediff
+  :defer t
+  :config (setq diff-switches "-u"
+                ediff-diff-options "-w"
+                ediff-window-setup-function 'ediff-setup-windows-plain
+                ediff-split-window-function 'split-window-horizontally
+                ediff-window-setup-function 'ediff-setup-windows-plain))
+
+(use-package uniquify
+  :config (setq uniquify-buffer-name-style 'forward))
 
 (require 'eldoc)
 
 ;; default hooks.
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-
-;; uniquify buffers.
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
-
-;; diff.
-(require 'ediff)
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-(setq diff-switches "-u")
 
 ;; winner-mode.
 (winner-mode 1)
@@ -33,11 +36,6 @@
 ;; make {back,for}ward-paragraph easier to use
 (global-set-key (kbd "M-[") 'backward-paragraph)
 (global-set-key (kbd "M-]") 'forward-paragraph)
-
-;; enable some disabled commands.
-(put 'narrow-to-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
 
 ;; better narrow indirect support
 (defun narrow-to-region-indirect (start end)
@@ -138,11 +136,6 @@ with the first matching buffer's major mode."
    (car occur-revert-arguments)))
 (define-key occur-mode-map "m" 'occur-multi-occur)
 (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
-
-;; A saner ediff
-(setq ediff-diff-options "-w")
-(setq ediff-split-window-function 'split-window-horizontally)
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ;; Nic says eval-expression-print-level needs to be set to nil (turned off) so
 ;; that you can always see what's happening.

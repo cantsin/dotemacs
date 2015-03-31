@@ -37,7 +37,7 @@
     (kill-line arg)
     (read-only-mode nil)))
 (setq-default kill-read-only-ok t) ;; required for copy-line.
-(global-set-key "\C-c\C-k" 'copy-line)
+(global-set-key (kbd "C-c C-k") 'copy-line)
 
 ;; improve control-a
 (defun smarter-move-beginning-of-line (arg)
@@ -97,6 +97,11 @@ point reaches the beginning or end of the buffer, stop there."
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines t)
 (set-default 'sentence-end-double-space nil)
+
+;; enable some disabled commands.
+(put 'narrow-to-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
 
 ;; UTF-8.
 (setq locale-coding-system 'utf-8)
