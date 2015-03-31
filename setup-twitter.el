@@ -3,22 +3,26 @@
 ;;; set twitter defaults.
 
 ;;; Code:
-(require 'twittering-mode)
+(require 'use-package)
 
-(setq twittering-cert-file "/etc/ssl/certs/ca-certificates.crt")
-(setq twittering-use-master-password t)
-(setq twittering-url-show-status nil)
+(defun cantsin/twitter-setup ()
+  (setq twittering-cert-file "/etc/ssl/certs/ca-certificates.crt"
+        twittering-use-master-password t
+        twittering-url-show-status nil
+        twittering-tinyurl-service 'bit.ly)
+  (add-hook 'twittering-mode
+            '(lambda () (visual-line-mode))))
 
-(setq twittering-tinyurl-service 'bit.ly)
-
-;; swap p,n with j,k
-(define-key twittering-mode-map (kbd "n") 'twittering-goto-next-status)
-(define-key twittering-mode-map (kbd "p") 'twittering-goto-previous-status)
-(define-key twittering-mode-map (kbd "j") 'twittering-goto-next-status-of-user)
-(define-key twittering-mode-map (kbd "k") 'twittering-goto-previous-status-of-user)
-
-(add-hook 'twittering-mode
-          '(lambda () (visual-line-mode)))
+(use-package twittering-mode
+  :ensure t
+  :defer t
+  ;; swap p,n with j,k
+  ;; :bind (:map twittering-mode-map
+  ;;             (("n" . twittering-goto-next-status)
+  ;;              ("p" . twittering-goto-previous-status)
+  ;;              ("j" . twittering-goto-next-status-of-user)
+  ;;              ("k" . twittering-goto-previous-status-of-user)))
+  :init (cantsin/twitter-setup))
 
 (provide 'setup-twitter)
 ;;; setup-twitter.el ends here
