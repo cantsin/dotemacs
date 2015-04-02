@@ -30,7 +30,8 @@
             (lambda () (org-bullets-mode 1)))
   (add-hook 'org-after-todo-state-change-hook
             (lambda () (org-update-statistics-cookies t)))
-  (add-hook 'org-mode-hook 'org-table-stripes-enable)
+  (add-hook 'org-mode-hook
+            'org-table-stripes-enable)
   (add-hook 'org-mode-hook
             #'(lambda () (setq electric-indent-mode nil))))
 

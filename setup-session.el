@@ -2,10 +2,8 @@
 ;;; Commentary:
 ;;; Setup session.
 ;;; Code:
-(require 'session)
-(add-hook 'after-init-hook 'session-initialize)
+(require 'use-package)
 
-(require 'org)
 (defun maybe-reveal ()
   "Reveal contents depending on mode."
   (when (and (or (memq major-mode '(org-mode outline-mode))
@@ -16,14 +14,18 @@
         (org-reveal)
       (show-subtree))))
 
-;; fix org oddities
-(when (require 'session nil t)
+(defun cantsin/session-setup ()
+  ;; fix org oddities
   (add-hook 'after-init-hook 'session-initialize)
   (add-hook 'session-after-jump-to-last-change-hook 'maybe-reveal)
-  (add-to-list 'session-globals-exclude 'org-mark-ring))
+  (add-to-list 'session-globals-exclude 'org-mark-ring)
 
-;; fix for overflow
-(setq session-save-print-spec '(t nil 40000))
+  ;; fix for overflow
+  (setq session-save-print-spec '(t nil 40000)))
+
+(use-package session
+  :ensure t
+  :config (cantsin/session-setup))
 
 (provide 'setup-session)
 ;;; setup-session.el ends here
