@@ -21,14 +21,9 @@
       (delete-window))
     (defadvice git-commit-abort (after delete-window activate)
       (delete-window))
-    ;; these two force a new line to be inserted into a commit window,
-    ;; which stops the invalid style showing up.
-    ;; From: http://git.io/rPBE0Q
     (defun magit-commit-mode-init ()
-      (beginning-of-buffer)
-      (when (looking-at "\n")
-        (open-line 1)))
-
+      "always start at the beginning of the buffer."
+      (goto-char (point-min)))
     (add-hook 'git-commit-mode-hook 'magit-commit-mode-init)))
 
 (defun magit-toggle-whitespace ()
