@@ -35,15 +35,14 @@
   "Set up mu4e."
   (use-package smtpmail
     :ensure t)
-  (use-package mu4e-contrib
-    :ensure t)
+  (use-package mu4e-contrib)
   (add-hook 'mu4e-compose-pre-hook 'cantsin/mu4e-set-account)
   (add-hook 'mu4e-view-mode-hook
             '(lambda () (progn
                      (visual-line-mode)
                      (mu4e-view-toggle-hide-cited)))))
 
-(defun cantsin/mu4e-setup ()
+(defun cantsin/mu4e-config ()
   "Set up mu4e."
   (defvar my-mu4e-account-alist 'nil)
   (add-to-list 'mu4e-headers-actions
