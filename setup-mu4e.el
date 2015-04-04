@@ -2,40 +2,9 @@
 ;;; Commentary:
 ;;; Setup mu4e.
 ;;; Code:
-(require 'mu4e)
+(require 'use-package)
 
-;; don't save messages to Sent Messages, Gmail/IMAP takes care of this
-(setq mu4e-sent-messages-behavior 'delete)
-(setq message-kill-buffer-on-exit t)
-(setq mu4e-use-fancy-chars t)
-(setq mu4e-headers-leave-behavior 'apply)
-(setq mu4e-confirm-quit nil)
-
-(defvar my-mu4e-account-alist 'nil)
-
-(require 'smtpmail)
-
-(setq mu4e-get-mail-command "offlineimap")
-(setq mu4e-update-interval 300)
-
-(defun archive-email (msg)
-  "Archive a gmail MSG."
-  (let* ((maildir (mu4e-message-field msg :maildir))
-         (root (save-match-data
-                 (string-match "\\(/[^/]+\\)/.*" maildir)
-                 (match-string 1 maildir)))
-         (allmail (concat root "/" "[Gmail].All Mail")))
-    (mu4e-mark-set 'move allmail)))
-
-(add-to-list 'mu4e-headers-actions
-             '("Archive email" . archive-email) t)
-
-(fset 'my-move-to-archive "AA")
-
-(define-key mu4e-headers-mode-map (kbd "a")
-  'my-move-to-archive)
-
-(defun my-mu4e-set-account ()
+(defun cantsin/mu4e-set-account ()
   "Set the account for composing a message."
   (let* ((account
           (if mu4e-compose-parent-message
@@ -53,15 +22,48 @@
               account-vars)
       (error "No email account found"))))
 
-(add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
+(defun archive-email (msg)
+  "Archive a gmail MSG."
+  (let* ((maildir (mu4e-message-field msg :maildir))
+         (root (save-match-data
+                 (string-match "\\(/[^/]+\\)/.*" maildir)
+                 (match-string 1 maildir)))
+         (allmail (concat root "/" "[Gmail].All Mail")))
+    (mu4e-mark-set 'move allmail)))
 
-(add-hook 'mu4e-view-mode-hook
-          '(lambda () (progn
-                        (visual-line-mode)
-                        (mu4e-view-toggle-hide-cited))))
+(defun cantsin/mu4e-init ()
+  "Set up mu4e."
+  (use-package smtpmail
+    :ensure t)
+  (use-package mu4e-contrib
+    :ensure t)
+  (add-hook 'mu4e-compose-pre-hook 'cantsin/mu4e-set-account)
+  (add-hook 'mu4e-view-mode-hook
+            '(lambda () (progn
+                     (visual-line-mode)
+                     (mu4e-view-toggle-hide-cited)))))
 
-(require 'mu4e-contrib)
-(setq mu4e-html2text-command 'mu4e-shr2text)
+(defun cantsin/mu4e-setup ()
+  "Set up mu4e."
+  (defvar my-mu4e-account-alist 'nil)
+  (add-to-list 'mu4e-headers-actions
+               '("Archive email" . archive-email) t)
+  (fset 'my-move-to-archive "AA")
+  (define-key mu4e-headers-mode-map (kbd "a")
+    'my-move-to-archive)
+  (setq mu4e-html2text-command 'mu4e-shr2text
+        mu4e-sent-messages-behavior 'delete
+        message-kill-buffer-on-exit t
+        mu4e-use-fancy-chars t
+        mu4e-headers-leave-behavior 'apply
+        mu4e-confirm-quit nil
+        mu4e-get-mail-command "offlineimap"
+        mu4e-update-interval 300))
+
+(use-package mu4e
+  :defer t
+  :init (cantsin/mu4e-init)
+  :config (cantsin/mu4e-config))
 
 (provide 'setup-mu4e)
 ;;; setup-mu4e.el ends here
