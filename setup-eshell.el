@@ -2,16 +2,7 @@
 ;;; Commentary:
 ;;; Setup eshell.
 ;;; Code:
-(require 'eshell)
-(require 'em-smart)
-(require 'em-prompt)
-(require 'em-dirs)
-
-(require 'tramp) ;; lets "sudo" work for some reason
-
-(setq eshell-where-to-jump 'begin)
-(setq eshell-review-quick-commands nil)
-(setq eshell-smart-space-goes-to-end t)
+(require 'use-package)
 
 (defun eshell/emacs (&rest args)
   "Open a file in Emacs.  Some habits die hard.  Pass on ARGS."
@@ -153,11 +144,8 @@ directory to make multiple eshell windows easier."
     (other-window 1)
     (eshell "new")
     (rename-buffer (concat "*eshell: " name "*"))
-
     (insert (concat "ls"))
     (eshell-send-input)))
-
-(global-set-key (kbd "C-!") 'eshell-here)
 
 (defun eshell/x ()
   "Quick way to exit."
@@ -165,22 +153,34 @@ directory to make multiple eshell windows easier."
   (eshell-send-input)
   (delete-window))
 
-(load "em-hist")           ; So the history vars are defined
-(if (boundp 'eshell-save-history-on-exit)
-    (setq eshell-save-history-on-exit t)) ; Don't ask, just save
-
-(defun eshell/ef (fname-regexp &rest dir) (ef fname-regexp default-directory))
-
-(setq eshell-highlight-prompt t)
-(setq eshell-prompt-regexp "\$ ")
-
 (defalias 'eshell/basename 'file-name-nondirectory)
 
-(eval-after-load 'esh-opt
-  (progn
-    (require 'eshell-prompt-extras)
-    (setq eshell-highlight-prompt nil
-          eshell-prompt-function 'epe-theme-lambda)))
+(defun cantsin/eshell-config ()
+  "Configure eshell."
+  (use-package em-smart)
+  (use-package em-prompt)
+  (use-package em-dirs)
+
+  (load "em-hist")           ; So the history vars are defined
+  (if (boundp 'eshell-save-history-on-exit)
+      (setq eshell-save-history-on-exit t)) ; Don't ask, just save
+
+  (eval-after-load 'esh-opt
+    (progn
+      (require 'eshell-prompt-extras)
+      (setq eshell-highlight-prompt nil
+            eshell-prompt-function 'epe-theme-lambda)))
+
+  (setq eshell-where-to-jump 'begin
+        eshell-review-quick-commands nil
+        eshell-smart-space-goes-to-end t
+        eshell-highlight-prompt t
+        eshell-prompt-regexp "\$ "))
+
+(use-package eshell
+  :defer t
+  :bind (("C-!" . eshell-here))
+  :config (cantsin/eshell-config))
 
 (provide 'setup-eshell)
 ;;; setup-eshell.el ends here
