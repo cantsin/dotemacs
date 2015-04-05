@@ -2,40 +2,7 @@
 ;;; Commentary:
 ;;; Setup all things ERC-related.
 ;;; Code:
-(require 'erc)
-(require 'erc-match)
-(require 'erc-join)
-(require 'erc-fill)
-(require 'erc-ring)
-(require 'erc-log)
-(require 'erc-netsplit)
-(require 'tls)
-(require 'znc)
-
-(erc-spelling-mode 1)
-(erc-autojoin-mode 1)
-(erc-match-mode 1)
-(erc-fill-mode t)
-(erc-ring-mode t)
-(erc-netsplit-mode t)
-(erc-timestamp-mode t)
-
-(setq erc-timestamp-format "[%D %r]")
-
-;; logging
-(setq erc-log-insert-log-on-open nil)
-(setq erc-log-channels-directory "~/.irc_logs/")
-(setq erc-save-buffer-on-part t)
-(setq erc-hide-timestamps nil)
-(setq erc-auto-query 'buffer)
-;; annoying when you have large channels
-(setq erc-hide-list '("JOIN" "PART" "QUIT"))
-
-(defadvice save-buffers-kill-emacs (before save-logs (arg) activate)
-  "Save the ERC logs."
-  (save-some-buffers t (lambda () (when (and (eq major-mode 'erc-mode)
-                                             (not (null buffer-file-name)))))))
-(add-hook 'erc-insert-post-hook 'erc-save-buffer-in-logs)
+(require 'use-package)
 
 ;;; Notify me when a keyword is matched (someone wants to reach me)
 (defvar my-erc-page-message "%s is calling your name."
@@ -88,7 +55,11 @@ NICK, MESSAGE."
              ;; or from those who abuse the system
              (my-erc-page-allowed nick))
     (my-erc-page-popup-notification nick)))
-(add-hook 'erc-text-matched-hook 'my-erc-page-me)
+
+(defadvice save-buffers-kill-emacs (before save-logs (arg) activate)
+  "Save the ERC logs."
+  (save-some-buffers t (lambda () (when (and (eq major-mode 'erc-mode)
+                                             (not (null buffer-file-name)))))))
 
 (defun my-erc-page-me-PRIVMSG (proc parsed)
   "Page the user if a PRIVMSG arrives.  PROC is not used.  PARSED is the message."
@@ -102,15 +73,41 @@ NICK, MESSAGE."
       nil)))
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
-;; add ERC to the menu.
-(require 'easymenu)
-(easy-menu-add-item nil '("tools") ["IRC with ERC" erc t])
-
 ;; custom command.
 (defun irc ()
   "Connect to IRC."
   (interactive)
   (znc-all))
+
+(defun cantsin/erc-setup ()
+  "Set up ERC."
+  (add-hook 'erc-text-matched-hook 'my-erc-page-me)
+  (add-hook 'erc-insert-post-hook 'erc-save-buffer-in-logs)
+
+  (erc-spelling-mode 1)
+  (erc-autojoin-mode 1)
+  (erc-match-mode 1)
+  (erc-fill-mode t)
+  (erc-ring-mode t)
+  (erc-netsplit-mode t)
+  (erc-timestamp-mode t))
+
+(defun cantsin/erc-config ()
+  "Configure ERC."
+  (setq  erc-timestamp-format "[%D %r]"
+         ;; logging
+         erc-log-insert-log-on-open nil
+         erc-log-channels-directory "~/.irc_logs/"
+         erc-save-buffer-on-part t
+         erc-hide-timestamps nil
+         erc-auto-query 'buffer
+         ;; annoying when you have large channels
+         erc-hide-list '("JOIN" "PART" "QUIT")))
+
+(use-package erc
+  :defer t
+  :init (cantsin/erc-setup)
+  :config (cantsin/erc-config))
 
 (provide 'setup-erc)
 ;;; setup-erc.el ends here
