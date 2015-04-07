@@ -28,7 +28,10 @@
 
 (defun cantsin/helm-setup ()
   "Set up helm."
-  (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+  (use-package helm-swoop)
+  (use-package helm-spaces)
+  (use-package helm-config)
+  (use-package helm-eshell)
   (add-hook 'eshell-mode-hook
             #'(lambda ()
                 (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
@@ -44,6 +47,7 @@
   (define-key helm-map (kbd "C-z")  'helm-select-action)
   (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
   (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+  (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t))
   (setq helm-spaces-new-space-query nil
