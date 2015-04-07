@@ -2,94 +2,7 @@
 ;;; Commentary:
 ;;; Setup helm.
 ;;; Code:
-
-(require 'helm)
-(require 'helm-config)
-(require 'helm-eshell)
-(require 'helm-swoop)
-(require 'helm-spaces)
-(require 'eshell)
-(require 'projectile)
-(require 'helm-projectile)
-
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-
-(global-set-key (kbd "C-c h SPC") 'helm-all-mark-rings)
-(global-set-key (kbd "C-c h o") 'helm-occur)
-(global-set-key (kbd "C-c h x") 'helm-register)
-(global-set-key (kbd "C-c h M-:") 'helm-eval-expression-with-eldoc)
-
-;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebihnd tab to do persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-;; spaces
-(global-set-key (kbd "C-c h SPC") 'helm-spaces)
-(setq helm-spaces-new-space-query nil)
-
-;; swoop
-(global-set-key (kbd "M-i") 'helm-swoop)
-(global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)
-(global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
-(global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
-
-;; When doing isearch, hand the word over to helm-swoop
-(define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
-;; From helm-swoop to helm-multi-swoop-all
-(define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
-
-;; Save buffer when helm-multi-swoop-edit complete
-(setq helm-multi-swoop-edit-save t)
-
-;; If this value is t, split window inside the current window
-(setq helm-swoop-split-with-multiple-windows nil)
-
-;; Split direcion. 'split-window-vertically or 'split-window-horizontally
-(setq helm-swoop-split-direction 'split-window-vertically)
-
-;; If nil, you can slightly boost invoke speed in exchange for text color
-(setq helm-swoop-speed-or-color nil)
-
-;; Optional face for each line number
-;; Face name is `helm-swoop-line-number-face`
-(setq helm-swoop-use-line-number-face t)
-
-
-(when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
-
-(setq helm-quick-update                     t ; do not display invisible candidates
-      helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-      helm-buffers-fuzzy-matching           t ; fuzzy matching buffer names when non--nil
-      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-      helm-ff-file-name-history-use-recentf t)
-
-(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-
-(add-hook 'eshell-mode-hook
-          #'(lambda ()
-              (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
-
-;; projectile
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
-(setq projectile-switch-project-action 'helm-projectile)
-(setq helm-projectile-sources-list '(helm-source-projectile-projects
-                                     helm-source-projectile-files-list))
-
-(setq projectile-use-git-grep t)
+(require 'use-package)
 
 ;; helm with ag
 (defun projectile-helm-ag ()
@@ -108,9 +21,68 @@
       (set-face-attribute 'helm-source-header nil :height 0.1)
     (set-face-attribute 'helm-source-header nil :height 1.0)))
 
-(add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
+;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+(global-unset-key (kbd "C-x c"))
 
-(helm-mode 1)
+(defun cantsin/helm-setup ()
+  "Set up helm."
+  (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+  (add-hook 'eshell-mode-hook
+            #'(lambda ()
+                (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
+  (add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
+  (projectile-global-mode)
+  (helm-projectile-on)
+  (helm-mode 1))
+
+(defun cantsin/helm-config ()
+  "Configure helm."
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-z")  'helm-select-action)
+  (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+  (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t))
+  (setq helm-spaces-new-space-query nil
+        helm-multi-swoop-edit-save t
+        helm-swoop-split-with-multiple-windows nil
+        helm-swoop-split-direction 'split-window-vertically
+        helm-swoop-speed-or-color nil
+        helm-swoop-use-line-number-face t
+        projectile-completion-system 'helm
+        projectile-switch-project-action 'helm-projectile
+        helm-projectile-sources-list '(helm-source-projectile-projects
+                                       helm-source-projectile-files-list)
+        projectile-use-git-grep t
+        helm-quick-update t
+        helm-split-window-in-side-p t
+        helm-buffers-fuzzy-matching t
+        helm-move-to-line-cycle-in-source t
+        helm-ff-search-library-in-sexp t
+        helm-scroll-amount 8
+        helm-ff-file-name-history-use-recentf t))
+
+(use-package helm
+  :ensure t
+  :bind (("M-x" . helm-M-x)
+         ("M-y" . helm-show-kill-ring)
+         ("C-x b" . helm-mini)
+         ("C-x C-f" . helm-find-files)
+         ("C-c h" . helm-command-prefix)
+         ("C-c h SPC" . helm-all-mark-rings)
+         ("C-c h o" . helm-occur)
+         ("C-c h x" . helm-register)
+         ("C-c h M-:" . helm-eval-expression-with-eldoc)
+         ("M-i" . helm-swoop)
+         ("M-I" . helm-swoop-back-to-last-point)
+         ("C-c M-i" . helm-multi-swoop)
+         ("C-x M-i" . helm-multi-swoop-all)
+         ("C-c h SPC" . helm-spaces))
+  :config (cantsin/helm-config)
+  :init (cantsin/helm-setup))
 
 (provide 'setup-helm)
 ;;; setup-helm.el ends here
