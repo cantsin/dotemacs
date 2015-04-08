@@ -112,22 +112,6 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
-;; elm-repl
-(setenv "PATH" (concat (getenv "PATH") ":~/.cabal/bin"))
-(setq exec-path (append exec-path '("~/.cabal/bin")))
-
-(require 'go-mode)
-(add-hook 'before-save-hook 'gofmt-before-save)
-(add-hook 'go-mode-hook '(lambda ()
-  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
-(add-hook 'go-mode-hook '(lambda ()
-  (local-set-key (kbd "C-c C-f") 'gofmt)))
-(add-hook 'before-save-hook 'gofmt-before-save)
-;; go get code.google.com/p/go.tools/cmd/godoc
-(add-hook 'go-mode-hook '(lambda ()
-  (local-set-key (kbd "C-c C-k") 'godoc)))
-;; go get code.google.com/p/rog-go/exp/cmd/godef
-
 ;; auto disassemble llvm when opening .bc files
 (require 'autodisass-llvm-bitcode)
 
