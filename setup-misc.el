@@ -298,5 +298,9 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (require 'window-purpose)
 (purpose-mode)
 
+(require 'typo)
+(typo-global-mode 1)
+(add-hook 'text-mode-hook 'typo-mode)
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
