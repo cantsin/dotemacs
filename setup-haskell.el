@@ -27,4 +27,5 @@
   :defer t
   :init (cantsin/setup-haskell))
 
+(provide 'setup-haskell)
 ;;; setup-haskell.el ends here

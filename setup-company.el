@@ -29,6 +29,8 @@
 
 (use-package company
   :init (global-company-mode t)
+  :diminish " co"
   :config (cantsin/setup-company))
 
+(provide 'setup-company)
 ;;; setup-company.el ends here

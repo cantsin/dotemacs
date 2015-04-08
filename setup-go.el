@@ -22,4 +22,5 @@
   :ensure t
   :init (cantsin/setup-go))
 
+(provide 'setup-go)
 ;;; setup-go.el ends here

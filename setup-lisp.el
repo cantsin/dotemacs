@@ -69,4 +69,5 @@
   :defer t
   :config (cantsin/setup-paren))
 
+(provide 'setup-lisp)
 ;;; setup-lisp.el ends here

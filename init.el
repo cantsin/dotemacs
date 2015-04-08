@@ -241,6 +241,10 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'setup-org)
 (require 'setup-twitter)
 (require 'setup-languages)
+(require 'setup-company)
+(require 'setup-lisp)
+(require 'setup-haskell)
+(require 'setup-go)
 (require 'setup-session)
 
 ;; diminish mode ftw
@@ -248,7 +252,6 @@ point reaches the beginning or end of the buffer, stop there."
 (diminish 'eldoc-mode)
 ;;(diminish 'magit-auto-revert-mode)
 (diminish 'projectile-mode " Proj")
-(diminish 'company-mode " co")
 (diminish 'helm-mode)
 (diminish 'abbrev-mode)
 
