@@ -32,6 +32,7 @@
   (use-package helm-spaces)
   (use-package helm-config)
   (use-package helm-eshell)
+  (use-package helm-gtags)
   (add-hook 'eshell-mode-hook
             #'(lambda ()
                 (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))

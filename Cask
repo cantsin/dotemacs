@@ -52,6 +52,7 @@
 (depends-on "helm")
 (depends-on "helm-ag")
 (depends-on "helm-company")
+(depends-on "helm-gtags")
 (depends-on "helm-hoogle")
 (depends-on "helm-projectile")
 (depends-on "helm-spaces")
