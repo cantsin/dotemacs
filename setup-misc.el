@@ -20,9 +20,6 @@
 ;; default hooks.
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
-;; winner-mode.
-(winner-mode 1)
-
 ;; expand-mode.
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
