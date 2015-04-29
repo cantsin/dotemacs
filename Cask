@@ -48,6 +48,7 @@
 (depends-on "git-rebase-mode")
 (depends-on "gitconfig")
 (depends-on "gitignore-mode")
+(depends-on "glsl-mode")
 (depends-on "go-mode")
 (depends-on "haskell-mode")
 (depends-on "helm")
