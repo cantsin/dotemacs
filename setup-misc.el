@@ -227,9 +227,9 @@ prefix argument."
          (call-interactively ',function))
        ',name)))
 
-(global-set-key [remap paredit-kill] (bol-with-prefix paredit-kill))
+;(global-set-key [remap paredit-kill] (bol-with-prefix paredit-kill))
 (global-set-key [remap org-kill-line] (bol-with-prefix org-kill-line))
-(global-set-key [remap kill-line] (bol-with-prefix paredit-kill))
+;(global-set-key [remap kill-line] (bol-with-prefix paredit-kill))
 
 (require 'multiple-cursors)
 
