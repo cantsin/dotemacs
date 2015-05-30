@@ -48,6 +48,7 @@
         org-enforce-todo-checkbox-dependencies t
         org-use-fast-todo-selection t
         org-archive-location ".archived.org::* From %s")
+  (setq org-columns-default-format "%60ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM")
   (setq org-stuck-projects
         '("TODO={.+}/-DONE" nil nil "SCHEDULED:\\|DEADLINE:"))
   (setq org-capture-templates
