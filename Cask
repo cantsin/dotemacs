@@ -76,6 +76,7 @@
 (depends-on "moe-theme")
 (depends-on "multiple-cursors")
 (depends-on "notmuch")
+(depends-on "ocodo-svg-modelines")
 (depends-on "offlineimap")
 (depends-on "omnisharp")
 (depends-on "openwith")
