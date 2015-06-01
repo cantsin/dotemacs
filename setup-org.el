@@ -69,6 +69,10 @@
                (not
                 (org-entry-get nil "PRIORITY"))
                (point-at-eol)))))))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((sh . t)
+     (python . t)))
   (org-clock-persistence-insinuate))
 
 (use-package org
