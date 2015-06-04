@@ -14,6 +14,9 @@
  '(mu4e-view-show-images t)
  '(org-agenda-file-regexp "\\`[^._].*\\.org\\'")
  '(org-agenda-files nil)
+ '(org-default-priority 53)
+ '(org-highest-priority 49)
+ '(org-lowest-priority 57)
  '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
