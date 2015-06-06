@@ -5,6 +5,7 @@
 (require 'use-package)
 
 (setq hydra-is-helpful t)
+(setq projectile-switch-project-action 'projectile-find-file-dwim)
 
 (defhydra hydra-window (global-map "C-x o"
                         :idle 0.0
@@ -12,8 +13,8 @@
   "
      Create               Delete              Move                     Misc
 ------------------------------------------------------------------------------------------
-_v_: vertical          _o_: only           _s_: swap                _b_: balance
-_h_: horizontal        _d_: window
+_|_: vertical          _o_: only           _s_: swap                _b_: balance
+_: horizontal        _d_: window
 _N_: new frame         _f_: frame
 "
   ("h" windmove-left)
@@ -24,11 +25,11 @@ _N_: new frame         _f_: frame
   ("J" hydra-move-splitter-down)
   ("K" hydra-move-splitter-up)
   ("L" hydra-move-splitter-right)
-  ("v" (lambda ()
+  ("|" (lambda ()
          (interactive)
          (split-window-right)
          (windmove-right)))
-  ("h" (lambda ()
+  ("_" (lambda ()
          (interactive)
          (split-window-below)
          (windmove-down)))

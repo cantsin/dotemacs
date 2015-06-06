@@ -244,6 +244,7 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'setup-company)
 (require 'setup-lisp)
 (require 'setup-haskell)
+(require 'setup-projectile)
 (require 'setup-go)
 (require 'setup-session)
 
