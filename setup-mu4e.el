@@ -23,12 +23,14 @@
       (error "No email account found"))))
 
 (defun archive-email (msg)
-  "Archive a gmail MSG."
+  "Archive a MSG."
+  (message "archive-email called")
   (let* ((maildir (mu4e-message-field msg :maildir))
          (root (save-match-data
                  (string-match "\\(/[^/]+\\)/.*" maildir)
                  (match-string 1 maildir)))
-         (allmail (concat root "/" "[Gmail].All Mail")))
+         (message root)
+         (allmail (concat root "/" "Archive")))
     (mu4e-mark-set 'move allmail)))
 
 (defun cantsin/mu4e-init ()
@@ -42,21 +44,30 @@
                      (visual-line-mode)
                      (mu4e-view-toggle-hide-cited)))))
 
+(defun mu4e-in-new-frame ()
+  "Start mu4e in new frame."
+  (interactive)
+  (select-frame (make-frame))
+  (mu4e))
+
 (defun cantsin/mu4e-config ()
   "Set up mu4e."
   (defvar my-mu4e-account-alist 'nil)
   (add-to-list 'mu4e-headers-actions
                '("Archive email" . archive-email) t)
-  (fset 'my-move-to-archive "AA")
-  (define-key mu4e-headers-mode-map (kbd "a")
+  (add-to-list 'mu4e-headers-actions
+               '("in browser" . mu4e-action-view-in-browser) t)
+  (fset 'my-move-to-archive "aA")
+  (define-key mu4e-headers-mode-map (kbd "e")
     'my-move-to-archive)
-  (setq mu4e-html2text-command 'mu4e-shr2text
-        mu4e-sent-messages-behavior 'delete
+  (setq message-send-mail-function 'smtpmail-send-it
         message-kill-buffer-on-exit t
+        mu4e-html2text-command 'mu4e-shr2text
+        mu4e-sent-messages-behavior 'delete
         mu4e-use-fancy-chars t
         mu4e-headers-leave-behavior 'apply
         mu4e-confirm-quit nil
-        mu4e-get-mail-command "offlineimap"
+        mu4e-get-mail-command "mbsync -a"
         mu4e-update-interval 300))
 
 (use-package mu4e
