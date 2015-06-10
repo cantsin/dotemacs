@@ -109,7 +109,7 @@ point reaches the beginning or end of the buffer, stop there."
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
-(global-prettify-symbols-mode 1)
+(add-hook 'text-mode-hook 'prettify-symbols-mode)
 
 ;; cask/pallet to manage our installed packages.
 (require 'cask "~/.cask/cask.el")
