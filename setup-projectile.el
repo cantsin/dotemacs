@@ -5,6 +5,8 @@
 (require 'use-package)
 
 (setq hydra-is-helpful t)
+(setq hydra-lv t)
+(setq lv-use-separator t)
 (setq projectile-switch-project-action 'projectile-find-file-dwim)
 
 (defhydra hydra-window (global-map "C-x o"
@@ -41,15 +43,8 @@ _N_: new frame         _f_: frame
   ("f" delete-frame :exit t)
   ("q" nil))
 
-(defhydra hydra-projectile-other-window (:color teal)
-  "projectile-other-window"
-  ("f"  projectile-find-file-other-window        "file")
-  ("g"  projectile-find-file-dwim-other-window   "file dwim")
-  ("d"  projectile-find-dir-other-window         "dir")
-  ("b"  projectile-switch-to-buffer-other-window "buffer")
-  ("q"  nil                                      "cancel" :color blue))
-
-(defhydra hydra-projectile (:color teal
+(defhydra hydra-projectile (:idle 0.0
+                            :color teal
                             :hint nil)
   "
      PROJECTILE: %(projectile-project-root)
