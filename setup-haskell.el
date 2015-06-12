@@ -28,6 +28,13 @@
    '(haskell-process-log t)
    '(haskell-tags-on-save t)
    '(haskell-process-type 'cabal-repl))
+  (load-library "inf-haskell")
+  (defun my-inf-haskell-hook ()
+    (setq comint-prompt-regexp
+          (concat comint-prompt-regexp "\\|^.> ")))
+  (add-to-list 'inferior-haskell-mode-hook 'my-inf-haskell-hook)
+  (eval-after-load 'flycheck
+    '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
   (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
   (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
   (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
