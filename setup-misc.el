@@ -362,6 +362,11 @@ With prefix P, create local abbrev.  Otherwise it will be global."
         :font-family "sans-serif"
         :fill (if (smt/window-active-p) "#60ACB1" "#365E63")))
 
+(condition-case nil
+    (load-file (let ((coding-system-for-read 'utf-8))
+                 (shell-command-to-string "agda-mode locate")))
+  (error nil))
+
 (defun my/name-of-buffers (n)
   "Return the names of the first N buffers from `buffer-list'."
   (let ((bns
