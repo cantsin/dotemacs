@@ -37,6 +37,7 @@
 
 (defun cantsin/org-config ()
   "Set up org."
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
   (setq org-use-speed-commands t
         org-clock-persist 'history
         org-confirm-babel-evaluate nil
@@ -73,6 +74,7 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((sh . t)
+     (ipython . t)
      (python . t)))
   (org-clock-persistence-insinuate))
 

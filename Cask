@@ -77,6 +77,7 @@
 (depends-on "moe-theme")
 (depends-on "multiple-cursors")
 (depends-on "notmuch")
+(depends-on "ob-ipython")
 (depends-on "ocodo-svg-modelines")
 (depends-on "offlineimap")
 (depends-on "omnisharp")
