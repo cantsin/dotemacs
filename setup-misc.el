@@ -49,30 +49,6 @@ region (delimited by START and END), indirectly."
 ;; disable overwrite-mode because it is really annoying.
 (define-key global-map [(insert)] nil)
 
-;; openwith
-(require 'openwith)
-(setq openwith-associations
-      (list
-       (list (openwith-make-extension-regexp
-              '("mp4" "avi" "mov" "flv"
-                "ogm" "ogg" "mkv"))
-             "mplayer"
-             '(file))
-       (list (openwith-make-extension-regexp
-              '("xbm" "pbm" "pgm" "ppm" "pnm"
-                "png" "bmp" "tif")) ;; gif/jpg not included; we want to inline these
-             "feh"
-             '(file))
-       (list (openwith-make-extension-regexp
-              '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
-             "libreoffice"
-             '(file))
-       (list (openwith-make-extension-regexp
-              '("pdf" "ps" "ps.gz" "dvi"))
-             "evince"
-             '(file))))
-(openwith-mode 1)
-
 (defun visit-eshell-buffer ()
   "Create or visit an eshell buffer."
   (interactive)
@@ -401,7 +377,7 @@ With prefix P, create local abbrev.  Otherwise it will be global."
    (nth (1- arg) my/last-buffers)))
 
 (global-set-key
- "\C-o"
+ "\C-c C-o"
  (defhydra my/switch-to-buffer (:exit t
                                 :body-pre (setq my/last-buffers
                                                 (my/name-of-buffers 5)))

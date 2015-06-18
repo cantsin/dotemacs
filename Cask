@@ -81,7 +81,6 @@
 (depends-on "ocodo-svg-modelines")
 (depends-on "offlineimap")
 (depends-on "omnisharp")
-(depends-on "openwith")
 (depends-on "org")
 (depends-on "org-bullets")
 (depends-on "org-journal")
