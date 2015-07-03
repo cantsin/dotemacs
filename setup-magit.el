@@ -100,6 +100,7 @@
     (set-face-foreground 'diff-added "#00cc33")
     (set-face-foreground 'diff-removed "#ff0000")
 
+    (setq magit-last-seen-setup-instructions "1.4.0")
     (setq magit-default-tracking-name-function 'magit-default-tracking-name-branch-only
           magit-status-buffer-switch-function 'switch-to-buffer
           magit-diff-refine-hunk t
