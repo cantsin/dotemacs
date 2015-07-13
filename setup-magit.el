@@ -56,7 +56,6 @@
         (setq magit-git-executable "C:\\Program Files (x86)\\Git\\bin\\git.exe"))
 
     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-    (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
 
     (use-package magit-gh-pulls
       :ensure t
