@@ -8,23 +8,7 @@
   "Set up magit properly."
   (progn
     ;; we no longer need vc-git
-    (delete 'Git vc-handled-backends)
-    ;; make magit status go full-screen but remember previous window
-    (defadvice magit-status (around magit-fullscreen activate)
-      (window-configuration-to-register :magit-fullscreen)
-      ad-do-it
-      (delete-other-windows))
-    ;; Close popup when commiting - this stops the commit window
-    ;; hanging around
-    ;; From: http://git.io/rPBE0Q
-    (defadvice git-commit-commit (after delete-window activate)
-      (delete-window))
-    (defadvice git-commit-abort (after delete-window activate)
-      (delete-window))
-    (defun magit-commit-mode-init ()
-      "always start at the beginning of the buffer."
-      (goto-char (point-min)))
-    (add-hook 'git-commit-mode-hook 'magit-commit-mode-init)))
+    (delete 'Git vc-handled-backends)))
 
 (defun magit-toggle-whitespace ()
   "Toggle whitespace."
@@ -44,12 +28,6 @@
   (interactive)
   (setq magit-diff-options (remove "-w" magit-diff-options))
   (magit-refresh))
-
-(defun magit-quit-session ()
-  "Restore the previous window configuration, kill magit buffer."
-  (interactive)
-  (kill-buffer)
-  (jump-to-register :magit-fullscreen))
 
 (defun load-gh-pulls-mode ()
   "Start `magit-gh-pulls-mode' only after a manual request."
@@ -74,15 +52,6 @@
 (defun cantsin/magit-config ()
   "Configure magit appropriately."
   (progn
-    ;; restore previously hidden windows
-    (defadvice magit-quit-window (around magit-restore-screen activate)
-      (let ((current-mode major-mode))
-        ad-do-it
-        ;; we only want to jump to register when the last seen buffer
-        ;; was a magit-status buffer.
-        (when (eq 'magit-status-mode current-mode)
-          (jump-to-register :magit-fullscreen))))
-
     (if (eq system-type 'windows-nt)
         (setq magit-git-executable "C:\\Program Files (x86)\\Git\\bin\\git.exe"))
 
