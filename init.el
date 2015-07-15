@@ -152,16 +152,22 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; save buffers on buffer switch
 (defadvice switch-to-buffer (before save-buffer-now activate)
+  "Switch to buffer."
   (when buffer-file-name (save-buffer)))
 (defadvice other-window (before other-window-now activate)
+  "Other window."
   (when buffer-file-name (save-buffer)))
 (defadvice windmove-up (before other-window-now activate)
+  "Move up."
   (when buffer-file-name (save-buffer)))
 (defadvice windmove-down (before other-window-now activate)
+  "Move down."
   (when buffer-file-name (save-buffer)))
 (defadvice windmove-left (before other-window-now activate)
+  "Move left."
   (when buffer-file-name (save-buffer)))
 (defadvice windmove-right (before other-window-now activate)
+  "Move right."
   (when buffer-file-name (save-buffer)))
 
 ;; theme.

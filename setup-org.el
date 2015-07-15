@@ -49,22 +49,21 @@
         org-enforce-todo-checkbox-dependencies t
         org-use-fast-todo-selection t
         org-agenda-start-on-weekday 6
-        org-archive-location ".archived.org::* From %s")
-  (setq org-columns-default-format "%60ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM")
-  (setq org-stuck-projects
-        '("TODO={.+}/-DONE" nil nil "SCHEDULED:\\|DEADLINE:"))
-  (setq org-capture-templates
+        org-archive-location ".archived.org::* From %s"
+        org-columns-default-format "%60ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM"
+        org-stuck-projects '("TODO={.+}/-DONE" nil nil "SCHEDULED:\\|DEADLINE:")
+        org-capture-templates
         '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
            "* TODO %?\n  %i\n  %a")
           ("r" "respond" entry (file org-default-notes-file)
-           "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n\n")))
-  (setq org-todo-keywords
+           "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n\n"))
+        org-todo-keywords
         '((sequence "TODO(t)" "PENDING(p)" "|" "DONE(d)")
           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
           (sequence "|" "FUTURE(l)")
-          (sequence "|" "CANCELED(c)")))
+          (sequence "|" "CANCELED(c)"))
   ;; set up shortcut for priorities
-  (setq org-agenda-custom-commands
+        org-agenda-custom-commands
         '(("p" "Agenda for all priorities" agenda ""
            ((org-agenda-skip-function
              '(and
