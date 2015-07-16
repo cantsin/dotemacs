@@ -16,7 +16,7 @@
      Create               Delete              Move                     Misc
 ------------------------------------------------------------------------------------------
 _|_: vertical          _o_: only           _s_: swap                _b_: balance
-_: horizontal        _d_: window
+_v_: horizontal        _d_: window
 _N_: new frame         _f_: frame
 "
   ("h" windmove-left)
@@ -31,7 +31,7 @@ _N_: new frame         _f_: frame
          (interactive)
          (split-window-right)
          (windmove-right)))
-  ("_" (lambda ()
+  ("v" (lambda ()
          (interactive)
          (split-window-below)
          (windmove-down)))
