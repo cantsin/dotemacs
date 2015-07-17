@@ -389,5 +389,8 @@ _o_ther buffers: %s(my/number-names my/last-buffers)
    ("O" my/switch-to-buffer-other-window "other window")
    ("<escape>" nil)))
 
+(require 'js-comint)
+(setq inferior-js-program-command "node --interactive")
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here

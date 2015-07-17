@@ -64,6 +64,7 @@
 (depends-on "ido-ubiquitous")
 (depends-on "ido-vertical-mode")
 (depends-on "jedi")
+(depends-on "js-comint")
 (depends-on "json-mode")
 (depends-on "key-chord")
 (depends-on "kv")
