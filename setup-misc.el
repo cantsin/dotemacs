@@ -392,5 +392,7 @@ _o_ther buffers: %s(my/number-names my/last-buffers)
 (require 'js-comint)
 (setq inferior-js-program-command "node --interactive")
 
+(global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
+
 (provide 'setup-misc)
 ;;; setup-misc.el ends here
