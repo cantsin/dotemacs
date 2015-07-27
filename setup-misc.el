@@ -20,10 +20,6 @@
 ;; default hooks.
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
-;; expand-mode.
-(require 'expand-region)
-(global-set-key (kbd "C-=") 'er/expand-region)
-
 ;; toggle refill-mode on/off
 (global-set-key (kbd "C-c q") 'refill-mode)
 
@@ -48,18 +44,6 @@ region (delimited by START and END), indirectly."
 
 ;; disable overwrite-mode because it is really annoying.
 (define-key global-map [(insert)] nil)
-
-(defun visit-eshell-buffer ()
-  "Create or visit an eshell buffer."
-  (interactive)
-  (if (not (get-buffer "*eshell*"))
-      (progn
-        (split-window-sensibly (selected-window))
-        (other-window 1)
-        (eshell))
-    (switch-to-buffer-other-window "*eshell*")))
-
-(global-set-key (kbd "C-c t") 'visit-eshell-buffer)
 
 ;; indent region, defun, or buffer
 (defun indent-buffer ()
@@ -145,20 +129,12 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
 ;; hugely useful
 (global-set-key (kbd "C-x p") 'proced)
 
-;; visual-regexp.
-(require 'visual-regexp)
-(define-key global-map (kbd "C-c r") 'vr/replace)
-(define-key global-map (kbd "C-c q") 'vr/query-replace)
-
-(require 'ace-jump-mode)
-
 ;; key chords. should be used sparingly.
 (require 'key-chord)
 (key-chord-define-global ",," 'helm-mini)
 (key-chord-define-global ",." '(lambda ()
                                  (interactive)
                                  (switch-to-buffer (other-buffer (current-buffer) 1))))
-(key-chord-define-global "jj" 'ace-jump-word-mode)
 (key-chord-mode +1)
 
 (defun url-decode-region (start end)
