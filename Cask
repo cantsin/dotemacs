@@ -3,6 +3,7 @@
 
 (depends-on "ace-jump-mode")
 (depends-on "ace-window")
+(depends-on "ag")
 (depends-on "alchemist")
 (depends-on "arduino-mode")
 (depends-on "ascii")
