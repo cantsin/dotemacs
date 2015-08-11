@@ -8,9 +8,9 @@
   :defer t
   :config (setq lua-indent-level 2))
 
-;; auto disassemble llvm when opening .bc files
-(use-package autodisass-llvm-bitcode
-  :defer t)
+(use-package js
+  :defer t
+  :config (setq js-indent-level 2))
 
 (use-package alchemist
   :defer t
@@ -30,12 +30,37 @@
   :defer t
   :config (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
 
-(setq js-indent-level 2)
-(setq c-basic-offset 4)
-(c-set-offset 'substatement-open 0)
+(use-package c-mode
+  :defer t
+  :config (progn
+            (setq c-basic-offset 4)
+            (c-set-offset 'substatement-open 0)))
 
-;; (load-file (let ((coding-system-for-read 'utf-8))
-;;                 (shell-command-to-string "agda-mode locate")))
+(use-package whitespace
+  :ensure t
+  :config (setq whitespace-style '(face trailing lines-tail tabs)
+                whitespace-line-column 80
+                global-whitespace-cleanup-mode t))
+
+(use-package compile
+  :defer t
+  :config (setq compilation-scroll-output t))
+
+(use-package restclient-mode
+  :defer t
+  :config (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode)))
+
+;; auto disassemble llvm when opening .bc files
+(use-package autodisass-llvm-bitcode
+  :defer t)
+
+(defun load-agda ()
+  "Load agda-mode on demand."
+  (interactive)
+  (condition-case nil
+      (load-file (let ((coding-system-for-read 'utf-8))
+                   (shell-command-to-string "agda-mode locate")))
+    (error nil)))
 
 (provide 'setup-languages)
 ;;; setup-languages.el ends here

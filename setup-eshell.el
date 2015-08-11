@@ -160,14 +160,14 @@ directory to make multiple eshell windows easier."
   (use-package em-smart)
   (use-package em-prompt)
   (use-package em-dirs)
+  (use-package eshell-prompt-extras)
 
-  (load "em-hist")           ; So the history vars are defined
+  (load "em-hist") ; So the history vars are defined
   (if (boundp 'eshell-save-history-on-exit)
       (setq eshell-save-history-on-exit t)) ; Don't ask, just save
 
   (eval-after-load 'esh-opt
     (progn
-      (require 'eshell-prompt-extras)
       (setq eshell-highlight-prompt nil
             eshell-prompt-function 'epe-theme-lambda)))
 

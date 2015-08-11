@@ -77,5 +77,15 @@
         :font-family "sans-serif"
         :fill (if (smt/window-active-p) "#60ACB1" "#365E63")))
 
+(use-package moe-theme
+  :ensure t
+  :config (progn
+            (moe-dark)
+            (moe-theme-set-color 'orange)))
+
+;; (use-package powerline
+;;   :ensure t
+;;   :init (powerline-default-theme))
+
 (provide 'setup-theme)
 ;;; setup-theme.el ends here

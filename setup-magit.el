@@ -29,10 +29,11 @@
   (setq magit-diff-options (remove "-w" magit-diff-options))
   (magit-refresh))
 
+(use-package magit-gh-pulls
+  :defer t)
 (defun load-gh-pulls-mode ()
   "Start `magit-gh-pulls-mode' only after a manual request."
   (interactive)
-  (require 'magit-gh-pulls)
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
   (magit-gh-pulls-mode 1)
   (magit-gh-pulls-reload))
@@ -84,6 +85,14 @@
          ("C-c f" . magit-grep))
   :init (cantsin/magit-init)
   :config (cantsin/magit-config))
+
+(use-package ediff
+  :defer t
+  :config (setq diff-switches "-u"
+                ediff-diff-options "-w"
+                ediff-window-setup-function 'ediff-setup-windows-plain
+                ediff-split-window-function 'split-window-horizontally
+                ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (provide 'setup-magit)
 ;;; setup-magit.el ends here

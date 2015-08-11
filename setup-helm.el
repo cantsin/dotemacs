@@ -4,27 +4,11 @@
 ;;; Code:
 (require 'use-package)
 
-;; helm with ag
-(defun projectile-helm-ag ()
-  "Use projectile with helm-ag."
-  (interactive)
-  (helm-do-ag (projectile-project-root)))
-(global-set-key (kbd "C-c h s") 'projectile-helm-ag)
-(custom-set-variables
- '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
- '(helm-ag-command-option "--all-text")
- '(helm-ag-insert-at-point 'symbol))
-
 (defun helm-toggle-header-line ()
   "Toggle the header line."
   (if (= (length helm-sources) 1)
       (set-face-attribute 'helm-source-header nil :height 0.1)
     (set-face-attribute 'helm-source-header nil :height 1.0)))
-
-;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-unset-key (kbd "C-x c"))
 
 (defun cantsin/helm-setup ()
   "Set up helm."

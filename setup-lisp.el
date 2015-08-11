@@ -21,8 +21,6 @@
 
 (defun cantsin/setup-elisp ()
   "Set up elisp."
-  (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp) ;; pretty-print evals.
-  (global-set-key [remap eval-expression] 'pp-eval-expression) ;; pretty-print evals.
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   (add-hook 'lisp-mode-hook 'paredit-mode)
@@ -34,6 +32,9 @@
     :diminish t
     :config (add-hook 'emacs-lisp-mode-hook
                       (lambda () (elisp-slime-nav-mode t)))))
+
+(use-package eldoc
+  :defer t)
 
 (use-package elisp
   :defer t

@@ -1,10 +1,80 @@
 ;;; setup-misc -- Summary
 ;;; Commentary:
-;;; Override key bindings.
+;;; Override global key bindings.
 ;;; Code:
 (require 'use-package)
 
+;; The default "C-x c" is too close to "C-x C-c", which quits Emacs.
+(global-unset-key (kbd "C-x c"))
+
+;; disable overwrite-mode because it is really annoying.
+(define-key global-map [(insert)] nil)
+
+(use-package smex)
+(global-set-key (kbd "M-x") (lambda ()
+                              (interactive)
+                              (or (boundp 'smex-cache)
+                                  (smex-initialize))
+                              (global-set-key [(meta x)] 'smex)
+                              (smex)))
+
+(global-set-key (kbd "C-c M-x") (lambda ()
+                                  (interactive)
+                                  (or (boundp 'smex-cache)
+                                      (smex-initialize))
+                                  (global-set-key [(shift meta x)] 'smex-major-mode-commands)
+                                  (smex-major-mode-commands)))
+
+;; remap backspace key to something more sensible
+(global-set-key (kbd "C-?") 'help-command)
+(global-set-key (kbd "M-?") 'mark-paragraph)
+(global-set-key (kbd "C-h") 'delete-backward-char)
+(global-set-key (kbd "M-h") 'backward-kill-word)
+
+;; easy access!
+(defun find-user-init-file ()
+  "Edit the `user-init-file', in another window."
+  (interactive)
+  (find-file user-init-file))
+(global-set-key (kbd "C-c I") 'find-user-init-file)
+
+;; this should be already part of emacs.
+(defun copy-line (&optional arg)
+  "Copy the line, passing on ARG."
+  (interactive "P")
+  (save-excursion
+    (read-only-mode t)
+    (kill-line arg)
+    (read-only-mode nil)))
+(setq-default kill-read-only-ok t) ;; required for copy-line.
+(global-set-key (kbd "C-c C-k") 'copy-line)
+
+;; improve control-a
+(defun smarter-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.
+
+Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.
+
+If ARG is not nil or 1, move forward ARG - 1 lines first.  If
+point reaches the beginning or end of the buffer, stop there."
+  (interactive "^p")
+  (setq arg (or arg 1))
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+(global-set-key [remap move-beginning-of-line]
+                'smarter-move-beginning-of-line)
+
 (defun cantsin/key-init ()
+  "Initialize key chords."
   (key-chord-define-global ",," 'helm-mini)
   (key-chord-define-global ",." '(lambda ()
                                    (interactive)
@@ -16,6 +86,7 @@
   :init (cantsin/key-init))
 
 (defun cantsin/mc-init ()
+  "Initialize multiple cursors."
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -26,6 +97,7 @@
   :init (cantsin/mc-init))
 
 (defun cantsin/writegood-init ()
+  "Initialize write good mode."
   (global-set-key "\C-cw" 'writegood-mode)
   (global-set-key "\C-c\C-gg" 'writegood-grade-level)
   (global-set-key "\C-c\C-ge" 'writegood-reading-ease))
@@ -154,9 +226,6 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (global-set-key (kbd "M-[") 'backward-paragraph)
 (global-set-key (kbd "M-]") 'forward-paragraph)
 
-;; disable overwrite-mode because it is really annoying.
-(define-key global-map [(insert)] nil)
-
 ;; conveniently join lines.
 (global-set-key (kbd "M-j")
                 (lambda ()
@@ -168,6 +237,20 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 
 ;; quick search.
 (global-set-key (kbd "M-g s") 'helm-ag)
+
+;; pretty-print evals.
+(global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
+(global-set-key [remap eval-expression] 'pp-eval-expression)
+
+;; easy-kill
+(global-set-key [remap kill-ring-save] 'easy-kill)
+(global-set-key [remap mark-sexp] 'easy-mark)
+
+;; windmove
+(global-set-key [(control H)] 'windmove-left)
+(global-set-key [(control J)] 'windmove-down)
+(global-set-key [(control K)] 'windmove-up)
+(global-set-key [(control L)] 'windmove-right)
 
 (provide 'setup-keys)
 ;;; setup-keys.el ends here
