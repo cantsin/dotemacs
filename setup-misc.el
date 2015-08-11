@@ -15,12 +15,40 @@
 (use-package uniquify
   :config (setq uniquify-buffer-name-style 'forward))
 
-(require 'eldoc)
+(use-package eldoc
+  :defer t)
 
-;; default hooks.
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(use-package wgrep
+  :defer t
+  :config (setq wgrep-enable-key "r"
+                wgrep-auto-save-buffer t))
 
-(setq eval-expression-print-level nil)
+;; turn off annoying ffap behavior
+(use-package ffap
+  :defer t
+  :config (setq ffap-alist nil
+                ffap-machine-p-known 'accept
+                ffap-require-prefix nil
+                ffap-gopher-regexp nil
+                ffap-url-regexp nil
+                ffap-ftp-regexp nil
+                ffap-ftp-sans-slash-regexp nil
+                ffap-rfs-regexp nil
+                ffap-shell-prompt-regexp nil))
+(defun ffap-file-at-point nil
+  "Turn off ffap file-at-point completely."
+  nil)
+
+(use-package window-purpose
+  :init (purpose-mode))
+
+(add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode))
+
+;; agda.
+(condition-case nil
+    (load-file (let ((coding-system-for-read 'utf-8))
+                 (shell-command-to-string "agda-mode locate")))
+  (error nil))
 
 (defadvice pop-to-mark-command (around ensure-new-position activate)
   "When popping the mark, continue popping until the cursor will move \\
@@ -33,19 +61,12 @@ Also, if the last command was a copy - skip past all the expand-region cruft."
     (dotimes (i 10)
       (when (= p (point)) ad-do-it))))
 
-;; more whitespace stuff.
-(setq global-whitespace-cleanup-mode t)
-
 (defun url-decode-region (start end)
   "URL decode a region from START to END."
   (interactive "r")
   (let ((text (url-unhex-string (buffer-substring start end))))
     (delete-region start end)
     (insert text)))
-
-(require 'wgrep)
-(setq wgrep-enable-key "r")
-(setq wgrep-auto-save-buffer t)
 
 (require 'epg)
 (defun epg--check-error-for-decrypt (context)
@@ -60,48 +81,6 @@ signature\" and is yet otherwise successful."
                 (equal errors '((exit))))
       (signal 'epg-error
 	      (list "Can't decrypt" (epg-errors-to-string errors))))))
-
-(setq save-abbrevs t)
-(setq-default abbrev-mode t)
-
-;; Restclient
-(add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode))
-
-;; turn off annoying ffap behavior
-(require 'ffap)
-(setq ffap-alist nil
-      ffap-machine-p-known 'accept
-      ffap-require-prefix nil
-      ffap-gopher-regexp nil
-      ffap-url-regexp nil
-      ffap-ftp-regexp nil
-      ffap-ftp-sans-slash-regexp nil
-      ffap-rfs-regexp nil
-      ffap-shell-prompt-regexp nil)
-(defun ffap-file-at-point nil
-  "Turn off ffap file-at-point completely."
-  nil)
-
-(setq ispell-personal-dictionary (concat user-emacs-directory "personal-dict"))
-
-(require 'tiny)
-(tiny-setup-default)
-
-;; purpose
-(require 'window-purpose)
-(purpose-mode)
-
-(require 'typo)
-(typo-global-mode 1)
-(add-hook 'text-mode-hook 'typo-mode)
-
-(condition-case nil
-    (load-file (let ((coding-system-for-read 'utf-8))
-                 (shell-command-to-string "agda-mode locate")))
-  (error nil))
-
-(require 'js-comint)
-(setq inferior-js-program-command "node --interactive")
 
 (provide 'setup-misc)
 ;;; setup-misc.el ends here

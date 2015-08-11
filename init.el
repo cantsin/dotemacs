@@ -110,6 +110,7 @@ point reaches the beginning or end of the buffer, stop there."
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 (add-hook 'text-mode-hook 'prettify-symbols-mode)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;; cask/pallet to manage our installed packages.
 (require 'cask "~/.cask/cask.el")
@@ -207,6 +208,7 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'whitespace)
 (setq whitespace-style '(face trailing lines-tail tabs))
 (setq whitespace-line-column 80)
+(setq global-whitespace-cleanup-mode t)
 
 ;; compile settings.
 (require 'compile)
@@ -215,6 +217,9 @@ point reaches the beginning or end of the buffer, stop there."
 ;; save our customizations elsewhere.
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
+
+;; ispell.
+(setq ispell-personal-dictionary (concat user-emacs-directory "personal-dict"))
 
 ;; save/restore emacs configuration.
 (desktop-save-mode)
