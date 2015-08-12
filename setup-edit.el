@@ -38,10 +38,11 @@
   :defer t
   :diminish "")
 
-;; (require 'yasnippet)
-;; (setq yas-snippet-dirs
-;;       '("~/.emacs.d/.cask/24.5.1/elpa/yasnippet-20150415.244/snippets/"))
-;; (yas-global-mode 1)
+(use-package yasnippet
+  :ensure t
+  :defer t
+  :init (progn
+          (yas-global-mode 1)))
 
 (provide 'setup-edit)
 ;;; setup-edit.el ends here

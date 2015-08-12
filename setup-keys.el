@@ -237,5 +237,9 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (global-set-key [(control K)] 'windmove-up)
 (global-set-key [(control L)] 'windmove-right)
 
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
+
 (provide 'setup-keys)
 ;;; setup-keys.el ends here
