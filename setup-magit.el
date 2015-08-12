@@ -64,13 +64,32 @@
                 (define-key magit-mode-map "#gg" 'load-gh-pulls-mode)
                 (define-key magit-mode-map "V" 'visit-pull-request-url)))
 
+    ;; magit sometimes does not return to the previous buffer correctly
+    (setq previous-buffer-under-magit nil)
+    (defadvice magit-mode-display-buffer (before cache-buffer-behind-magit activate)
+      "Set previous buffer."
+      (when (not (string-prefix-p "*magit" (buffer-name)))
+        (setq previous-buffer-under-magit (current-buffer))))
+    (defadvice magit-mode-quit-window (after restore-buffer-behind-magit activate)
+      "Switch to previous buffer."
+      (when previous-buffer-under-magit
+        (switch-to-buffer previous-buffer-under-magit)
+        (setq previous-buffer-under-magit nil)))
+
+    (add-hook 'global-git-commit-mode-hook
+              '(lambda ()
+                 (progn
+                   (beginning-of-buffer)
+                   (end-of-line)))
+              t)
+
     ;; magit settings
     (set-face-foreground 'diff-context "#666666")
     (set-face-foreground 'diff-added "#00cc33")
     (set-face-foreground 'diff-removed "#ff0000")
 
-    (setq magit-last-seen-setup-instructions "1.4.0")
-    (setq magit-default-tracking-name-function 'magit-default-tracking-name-branch-only
+    (setq magit-last-seen-setup-instructions "1.4.0"
+          magit-default-tracking-name-function 'magit-default-tracking-name-branch-only
           magit-status-buffer-switch-function 'switch-to-buffer
           magit-diff-refine-hunk t
           magit-rewrite-inclusive 'ask
@@ -81,8 +100,7 @@
   :ensure t
   :commands magit-get-top-dir
   :bind (("C-c g" . magit-status)
-         ("C-c C-g l" . magit-file-log)
-         ("C-c f" . magit-grep))
+         ("C-c C-g l" . magit-file-log))
   :init (cantsin/magit-init)
   :config (cantsin/magit-config))
 

@@ -19,6 +19,7 @@
 
 (use-package alchemist
   :defer t
+  :ensure t
   :config (setq alchemist-project-compile-when-needed t))
 
 (defun cantsin/setup-jedi ()
@@ -28,18 +29,14 @@
 
 (use-package jedi
   :defer t
+  :ensure t
   :config (cantsin/setup-jedi))
 
 ;; Github README.mds.
-(use-package gfm-mode
+(use-package markdown-mode
   :defer t
+  :ensure t
   :config (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
-
-(use-package c-mode
-  :defer t
-  :config (progn
-            (setq c-basic-offset 4)
-            (c-set-offset 'substatement-open 0)))
 
 (use-package whitespace
   :ensure t
@@ -49,14 +46,17 @@
 
 (use-package compile
   :defer t
+  :ensure t
   :config (setq compilation-scroll-output t))
 
-(use-package restclient-mode
+(use-package restclient
   :defer t
+  :ensure t
   :config (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode)))
 
 ;; auto disassemble llvm when opening .bc files
 (use-package autodisass-llvm-bitcode
+  :ensure t
   :defer t)
 
 (defun load-agda ()
@@ -67,7 +67,10 @@
                    (shell-command-to-string "agda-mode locate")))
     (error nil)))
 
+;; built-ins.
 (add-hook 'makefile-mode-hook 'indent-tabs-mode)
+(setq c-basic-offset 4)
+(c-set-offset 'substatement-open 0)
 
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
