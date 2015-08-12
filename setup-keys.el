@@ -221,7 +221,7 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
 
 ;; quick search.
-(global-set-key (kbd "M-g s") 'helm-projectile-grep)
+(global-set-key (kbd "M-g s") 'helm-git-grep)
 
 ;; pretty-print evals.
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
