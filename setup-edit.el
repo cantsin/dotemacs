@@ -48,5 +48,10 @@
   :ensure t
   :defer t)
 
+(when (equal window-system 'w32)
+  (progn
+    (add-to-list 'exec-path "c:/Program Files (x86)/Aspell/bin")
+    (setq ispell-program-name "aspell")))
+
 (provide 'setup-edit)
 ;;; setup-edit.el ends here

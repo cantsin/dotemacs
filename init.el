@@ -108,8 +108,13 @@
                          (t
                           "[no file]")))))
 
+;; for some reason this is required on windows.
+(when (equal window-system 'w32)
+  (let ((default-directory (concat user-emacs-directory ".cask/")))
+    (normal-top-level-add-subdirs-to-load-path)))
+
 ;; cask/pallet to manage our installed packages.
-(require 'cask "~/.cask/cask.el")
+(require 'cask)
 (cask-initialize)
 (require 'pallet)
 (pallet-mode t)
