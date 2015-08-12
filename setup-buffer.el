@@ -47,15 +47,6 @@
   "Move right."
   (when buffer-file-name (save-buffer)))
 
-;; diminish mode ftw
-(use-package diminish
-  :ensure t
-  :init (progn
-          (diminish 'eldoc-mode)
-          (diminish 'projectile-mode " Proj")
-          (diminish 'helm-mode)
-          (diminish 'abbrev-mode)))
-
 ;; save point.
 (use-package saveplace
   :ensure t

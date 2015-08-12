@@ -34,6 +34,10 @@
   :init (setq ispell-personal-dictionary
               (concat user-emacs-directory "personal-dict")))
 
+(use-package abbrev
+  :defer t
+  :diminish "")
+
 ;; (require 'yasnippet)
 ;; (setq yas-snippet-dirs
 ;;       '("~/.emacs.d/.cask/24.5.1/elpa/yasnippet-20150415.244/snippets/"))

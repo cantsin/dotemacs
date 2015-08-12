@@ -6,6 +6,7 @@
 (require 'use-package)
 
 (defun cantsin/twitter-setup ()
+  "Setup twitter."
   (setq twittering-cert-file "/etc/ssl/certs/ca-certificates.crt"
         twittering-use-master-password t
         twittering-url-show-status nil
@@ -22,7 +23,7 @@
   ;;              ("p" . twittering-goto-previous-status)
   ;;              ("j" . twittering-goto-next-status-of-user)
   ;;              ("k" . twittering-goto-previous-status-of-user)))
-  :init (cantsin/twitter-setup))
+  :config (cantsin/twitter-setup))
 
 (provide 'setup-twitter)
 ;;; setup-twitter.el ends here

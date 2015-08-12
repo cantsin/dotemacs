@@ -56,6 +56,7 @@
 
 (use-package helm
   :ensure t
+  :diminish ""
   :bind (("M-x" . helm-M-x)
          ("M-y" . helm-show-kill-ring)
          ("C-x b" . helm-mini)

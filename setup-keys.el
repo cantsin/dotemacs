@@ -10,21 +10,6 @@
 ;; disable overwrite-mode because it is really annoying.
 (define-key global-map [(insert)] nil)
 
-(use-package smex)
-(global-set-key (kbd "M-x") (lambda ()
-                              (interactive)
-                              (or (boundp 'smex-cache)
-                                  (smex-initialize))
-                              (global-set-key [(meta x)] 'smex)
-                              (smex)))
-
-(global-set-key (kbd "C-c M-x") (lambda ()
-                                  (interactive)
-                                  (or (boundp 'smex-cache)
-                                      (smex-initialize))
-                                  (global-set-key [(shift meta x)] 'smex-major-mode-commands)
-                                  (smex-major-mode-commands)))
-
 ;; remap backspace key to something more sensible
 (global-set-key (kbd "C-?") 'help-command)
 (global-set-key (kbd "M-?") 'mark-paragraph)
@@ -236,7 +221,7 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
 
 ;; quick search.
-(global-set-key (kbd "M-g s") 'helm-ag)
+(global-set-key (kbd "M-g s") 'helm-projectile-grep)
 
 ;; pretty-print evals.
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)

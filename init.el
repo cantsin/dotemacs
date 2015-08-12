@@ -5,8 +5,8 @@
 ;;; Code:
 
 ;; Turn off mouse interface early in startup to avoid momentary display
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 ;; use C-mouse-3 to pop up entire menu-bar as popup menu
 
@@ -16,36 +16,36 @@
 (global-subword-mode 1)
 
 ;; various settings.
-(setq inhibit-splash-screen t
+(setq column-number-mode t
+      echo-keystrokes 0.1
+      fill-column 80
+      font-lock-maximum-decoration t
+      inhibit-splash-screen t
       inhibit-startup-message t
       initial-scratch-message nil
-      use-file-dialog nil
-      use-dialog-box nil
-      visible-bell '1
-      truncate-lines t
-      truncate-partial-width-windows t
-      make-backup-files nil
-      font-lock-maximum-decoration t
       line-number-mode t
-      column-number-mode t
+      make-backup-files nil
+      mouse-yank-at-point t
       read-buffer-completion-ignore-case t
       read-file-name-completion-ignore-case t
-      show-trailing-whitespace t
-      echo-keystrokes 0.1
-      shift-select-mode nil
       sentence-end-double-space t
-      mouse-yank-at-point t
-      x-select-enable-clipboard t
-      fill-column 80
+      shift-select-mode nil
+      show-trailing-whitespace t
+      truncate-lines t
+      truncate-partial-width-windows t
+      uniquify-buffer-name-style 'forward
+      use-dialog-box nil
+      use-file-dialog nil
       vc-make-backup-files t
-      uniquify-buffer-name-style 'forward)
+      visible-bell '1
+      x-select-enable-clipboard t)
 
-(fset 'yes-or-no-p 'y-or-n-p)
+(auto-compression-mode t)
 (blink-cursor-mode 0)
 (delete-selection-mode)
-(auto-compression-mode t)
-(tooltip-mode nil)
+(fset 'yes-or-no-p 'y-or-n-p)
 (hl-line-mode t)
+(tooltip-mode nil)
 
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines t)
@@ -69,13 +69,22 @@
 	  'executable-make-buffer-file-executable-if-script-p)
 (add-hook 'before-save-hook
           'delete-trailing-whitespace)
-(add-hook 'makefile-mode-hook
-          'indent-tabs-mode)
+(add-hook 'focus-out-hook
+          '(lambda ()
+             (interactive)
+             (save-some-buffers t)))
+
+;; wrapping.
 (add-hook 'text-mode-hook
           'turn-on-auto-fill)
-(add-hook 'focus-out-hook '(lambda ()
-                             (interactive)
-                             (save-some-buffers t)))
+(add-hook 'html-mode-hook
+          '(lambda ()
+             (turn-off-auto-fill)
+             (visual-line-mode)))
+(add-hook 'markdown-mode-hook
+          '(lambda ()
+             (turn-off-auto-fill)
+             (visual-line-mode)))
 
 ;; write backup files to its own directory
 (setq backup-directory-alist
@@ -111,7 +120,6 @@
 (require 'setup-buffer)
 (require 'setup-fly)
 (require 'setup-magit)
-(require 'setup-edit)
 (require 'setup-dired)
 (require 'setup-helm)
 (require 'setup-erc)
@@ -124,6 +132,7 @@
 (require 'setup-lisp)
 (require 'setup-haskell)
 (require 'setup-projectile)
+(require 'setup-edit)
 (require 'setup-session)
 (require 'setup-keys)
 (require 'setup-functions)

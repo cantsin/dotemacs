@@ -4,6 +4,10 @@
 ;;; Code:
 (require 'use-package)
 
+(use-package projectile
+  :ensure t
+  :diminish " Proj")
+
 (setq hydra-is-helpful t)
 (setq hydra-lv t)
 (setq lv-use-separator t)

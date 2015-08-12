@@ -6,7 +6,7 @@
 
 (use-package purscheck
   :defer t
-  :init (add-to-list 'load-path "purscheck.el")) ;; custom
+  :config (add-to-list 'load-path "purscheck.el")) ;; custom
 
 (defun cantsin/setup-purescript ()
   "Set up purescript."
@@ -28,11 +28,6 @@
    '(haskell-process-log t)
    '(haskell-tags-on-save t)
    '(haskell-process-type 'cabal-repl))
-  (load-library "inf-haskell")
-  (defun my-inf-haskell-hook ()
-    (setq comint-prompt-regexp
-          (concat comint-prompt-regexp "\\|^.> ")))
-  (add-to-list 'inferior-haskell-mode-hook 'my-inf-haskell-hook)
   (eval-after-load 'flycheck
     '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
   (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
@@ -50,11 +45,19 @@
   (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-indent))
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+  (eval-after-load 'haskell-mode
+    '(progn
+       (load-library "inf-haskell")
+       (defun my-inf-haskell-hook ()
+         (setq comint-prompt-regexp
+               (concat comint-prompt-regexp "\\|^.> ")))
+       (add-to-list 'inferior-haskell-mode-hook 'my-inf-haskell-hook))))
 
 (use-package haskell-mode
+  :ensure t
   :defer t
-  :init (cantsin/setup-haskell))
+  :config (cantsin/config-haskell))
 
 (provide 'setup-haskell)
 ;;; setup-haskell.el ends here

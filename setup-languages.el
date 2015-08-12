@@ -6,11 +6,16 @@
 
 (use-package lua-mode
   :defer t
+  :ensure t
   :config (setq lua-indent-level 2))
 
-(use-package js
+(use-package js2-mode
   :defer t
-  :config (setq js-indent-level 2))
+  :ensure t
+  :config (progn
+            (setq js-indent-level 2)
+            (add-hook 'js-mode-hook 'js2-minor-mode)
+            (add-hook 'js2-mode-hook 'ac-js2-mode)))
 
 (use-package alchemist
   :defer t
@@ -61,6 +66,8 @@
       (load-file (let ((coding-system-for-read 'utf-8))
                    (shell-command-to-string "agda-mode locate")))
     (error nil)))
+
+(add-hook 'makefile-mode-hook 'indent-tabs-mode)
 
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
