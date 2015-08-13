@@ -7,20 +7,19 @@
 (use-package lua-mode
   :defer t
   :ensure t
-  :config (setq lua-indent-level 2))
+  :init (setq lua-indent-level 2))
 
 (use-package js2-mode
   :defer t
   :ensure t
-  :config (progn
-            (setq js-indent-level 2)
-            (add-hook 'js-mode-hook 'js2-minor-mode)
-            (add-hook 'js2-mode-hook 'ac-js2-mode)))
+  :init (progn
+          (setq js-indent-level 2)
+          (add-hook 'js-mode-hook 'js2-minor-mode)))
 
 (use-package alchemist
   :defer t
   :ensure t
-  :config (setq alchemist-project-compile-when-needed t))
+  :init (setq alchemist-project-compile-when-needed t))
 
 (defun cantsin/setup-jedi ()
   "Configure jedi (python)."
@@ -36,23 +35,23 @@
 (use-package markdown-mode
   :defer t
   :ensure t
-  :config (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
+  :init (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
 
 (use-package whitespace
   :ensure t
-  :config (setq whitespace-style '(face trailing lines-tail tabs)
+  :init (setq whitespace-style '(face trailing lines-tail tabs)
                 whitespace-line-column 80
                 global-whitespace-cleanup-mode t))
 
 (use-package compile
   :defer t
   :ensure t
-  :config (setq compilation-scroll-output t))
+  :init (setq compilation-scroll-output t))
 
 (use-package restclient
   :defer t
   :ensure t
-  :config (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode)))
+  :init (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode)))
 
 ;; auto disassemble llvm when opening .bc files
 (use-package autodisass-llvm-bitcode

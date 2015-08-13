@@ -44,5 +44,9 @@
   :init (progn
           (yas-global-mode 1)))
 
+(use-package annotate
+  :ensure t
+  :defer t)
+
 (provide 'setup-edit)
 ;;; setup-edit.el ends here
