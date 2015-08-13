@@ -47,6 +47,7 @@
 (depends-on "flymake-lua")
 (depends-on "framemove")
 (depends-on "fsharp-mode")
+(depends-on "ggtags")
 (depends-on "gitconfig")
 (depends-on "gitignore-mode")
 (depends-on "glsl-mode")
