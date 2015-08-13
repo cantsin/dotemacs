@@ -14,18 +14,21 @@
         (org-reveal)
       (show-subtree))))
 
-(defun cantsin/session-setup ()
+(defun cantsin/session-init ()
+  "Initialize session variables."
+  ;; don't change edit position in the damn commit buffer/file.
+  (setq session-name-disable-regexp "\\(?:\\`'/tmp\\|\\.git/[A-Z_]+\\'\\)")
+  ;; fix for overflow
+  (setq session-save-print-spec '(t nil 40000))
+
   ;; fix org oddities
   (add-hook 'after-init-hook 'session-initialize)
   (add-hook 'session-after-jump-to-last-change-hook 'maybe-reveal)
-  (add-to-list 'session-globals-exclude 'org-mark-ring)
-
-  ;; fix for overflow
-  (setq session-save-print-spec '(t nil 40000)))
+  (add-to-list 'session-globals-exclude 'org-mark-ring))
 
 (use-package session
   :ensure t
-  :config (cantsin/session-setup))
+  :init (cantsin/session-init))
 
 (provide 'setup-session)
 ;;; setup-session.el ends here

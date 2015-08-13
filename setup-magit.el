@@ -83,9 +83,6 @@
                    (end-of-line)))
               t)
 
-    ;; don't change edit position in the damn commit buffer/file.
-    (setq session-name-disable-regexp "\\(?:\\`'\\.git/[A-Z_]+\\'\\)")
-
     ;; magit settings
     (set-face-foreground 'diff-context "#666666")
     (set-face-foreground 'diff-added "#00cc33")
