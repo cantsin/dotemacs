@@ -77,6 +77,7 @@
 (depends-on "magit")
 (depends-on "magit-gh-pulls")
 (depends-on "markdown-mode")
+(depends-on "markdown-mode+")
 (depends-on "moe-theme")
 (depends-on "multiple-cursors")
 (depends-on "notmuch")

@@ -28,8 +28,7 @@
 			(throw 'exit t)))))))
         (progn
          (goto-char pos)
-         (backward-word))
-      (message "No word to correct before point"))))
+         (backward-word)))))
 
 ;; combine flyspell and flycheck with the same command
 (defun fly-display-error-or-next-error ()
