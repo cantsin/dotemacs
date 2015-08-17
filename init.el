@@ -133,7 +133,6 @@
 (require 'setup-twitter)
 (require 'setup-company)
 (require 'setup-languages)
-(require 'setup-go)
 (require 'setup-lisp)
 (require 'setup-haskell)
 (require 'setup-projectile)
