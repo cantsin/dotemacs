@@ -22,6 +22,7 @@
 (depends-on "company-go")
 (depends-on "csharp-mode")
 (depends-on "dash")
+(depends-on "deft")
 (depends-on "diminish")
 (depends-on "dockerfile-mode")
 (depends-on "easy-kill")

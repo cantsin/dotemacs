@@ -63,5 +63,25 @@
   :ensure t
   :init (purpose-mode))
 
+(defun bjm-deft-save-windows (orig-fun &rest args)
+  "Advice to save windows -- ORIG-FUN ARGS."
+  (setq bjm-pre-deft-window-config (current-window-configuration))
+  (apply orig-fun args))
+
+(defun bjm-quit-deft ()
+  "Save buffer, kill buffer, kill deft buffer, and restore window config to the way it was before deft was invoked."
+  (interactive)
+  (save-buffer)
+  (kill-this-buffer)
+  (switch-to-buffer "*Deft*")
+  (kill-this-buffer)
+  (when (window-configuration-p bjm-pre-deft-window-config)
+    (set-window-configuration bjm-pre-deft-window-config)))
+
+(use-package deft
+  :init (advice-add 'deft :around #'bjm-deft-save-windows)
+  :bind (("C-c q" . bjm-quit-deft)
+         ("C-c d" . deft-new-file))
+
 (provide 'setup-buffer)
 ;;; setup-buffer.el ends here
