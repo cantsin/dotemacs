@@ -81,7 +81,7 @@
 (use-package deft
   :init (advice-add 'deft :around #'bjm-deft-save-windows)
   :bind (("C-c q" . bjm-quit-deft)
-         ("C-c d" . deft-new-file))
+         ("C-c d" . deft-new-file)))
 
 (provide 'setup-buffer)
 ;;; setup-buffer.el ends here
