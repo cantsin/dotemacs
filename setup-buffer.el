@@ -4,6 +4,18 @@
 ;;; Code:
 (require 'use-package)
 
+;; wrapping.
+(add-hook 'text-mode-hook
+          'turn-on-auto-fill)
+(add-hook 'html-mode-hook
+          '(lambda ()
+             (turn-off-auto-fill)
+             (visual-line-mode)))
+(add-hook 'markdown-mode-hook
+          '(lambda ()
+             (turn-off-auto-fill)
+             (visual-line-mode)))
+
 ;; turn off annoying ffap behavior
 (use-package ffap
   :defer t

@@ -74,18 +74,6 @@
              (interactive)
              (save-some-buffers t)))
 
-;; wrapping.
-(add-hook 'text-mode-hook
-          'turn-on-auto-fill)
-(add-hook 'html-mode-hook
-          '(lambda ()
-             (turn-off-auto-fill)
-             (visual-line-mode)))
-(add-hook 'markdown-mode-hook
-          '(lambda ()
-             (turn-off-auto-fill)
-             (visual-line-mode)))
-
 ;; write backup files to its own directory
 (setq backup-directory-alist
       `(("." . ,(expand-file-name
