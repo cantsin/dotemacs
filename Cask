@@ -3,7 +3,6 @@
 
 (depends-on "ace-jump-mode")
 (depends-on "alchemist")
-(depends-on "annotate")
 (depends-on "arduino-mode")
 (depends-on "ascii")
 (depends-on "auto-complete-rst")

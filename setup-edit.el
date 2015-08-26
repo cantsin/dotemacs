@@ -44,10 +44,6 @@
   :init (progn
           (yas-global-mode 1)))
 
-(use-package annotate
-  :ensure t
-  :defer t)
-
 (when (equal window-system 'w32)
   (progn
     (add-to-list 'exec-path "c:/Program Files (x86)/Aspell/bin")
