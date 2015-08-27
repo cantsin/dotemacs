@@ -95,5 +95,16 @@
   :bind (("C-c q" . bjm-quit-deft)
          ("C-c d" . deft-new-file)))
 
+;; markdown modifications
+(require 'markdown-mode)
+(defconst markdown-regex-footnote-inline
+  "\\(\\^\\[.+?\\]\\)"
+  "Regular expression for a footnote inline marker ^[fn].")
+(defface markdown-footnote-inline-face
+  '((t (:inherit font-lock-keyword-face)))
+  "Face for footnote markers."
+  :group 'markdown-faces)
+(add-to-list 'markdown-mode-font-lock-keywords-basic
+             (cons markdown-regex-footnote-inline 'markdown-footnote-face))
 (provide 'setup-buffer)
 ;;; setup-buffer.el ends here
