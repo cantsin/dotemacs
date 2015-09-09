@@ -128,7 +128,7 @@
 (require 'setup-functions)
 
 ;; load only if available
-(if (file-exists-p "~/.emacs.d/setup-private.el")
+(if (file-exists-p (concat user-emacs-directory "setup-private.el"))
     (require 'setup-private))
 (when (require 'mu4e nil 'noerror)
   (require 'setup-mu4e))

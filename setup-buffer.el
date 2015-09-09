@@ -106,5 +106,12 @@
   :group 'markdown-faces)
 (add-to-list 'markdown-mode-font-lock-keywords-basic
              (cons markdown-regex-footnote-inline 'markdown-footnote-face))
+
+;; TODO: set to white
+(defun add-quotes-to-font-lock-keywords ()
+  "In markdown, set quote font lock."
+  (font-lock-add-keywords nil '(("\"\\(\\(?:.\\|\n\\)*?[^\\]\\)\"" 0 font-lock-string-face))))
+(add-hook 'markdown-mode-hook 'add-quotes-to-font-lock-keywords)
+
 (provide 'setup-buffer)
 ;;; setup-buffer.el ends here
