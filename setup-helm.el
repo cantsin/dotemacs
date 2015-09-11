@@ -74,5 +74,16 @@
   :config (cantsin/helm-config)
   :init (cantsin/helm-setup))
 
+(use-package swiper
+  :ensure t
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
+
+(use-package ivy
+  :config (progn
+            (ivy-mode 1)
+            (setq ivy-use-virtual-buffers t)
+            (global-set-key (kbd "C-c C-r") 'ivy-resume)))
+
 (provide 'setup-helm)
 ;;; setup-helm.el ends here
