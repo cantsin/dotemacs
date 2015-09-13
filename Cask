@@ -103,7 +103,6 @@
 (depends-on "smart-compile")
 (depends-on "solarized-theme")
 (depends-on "stripe-buffer")
-(depends-on "swiper-helm")
 (depends-on "synonyms")
 (depends-on "tagedit")
 (depends-on "toml-mode")
