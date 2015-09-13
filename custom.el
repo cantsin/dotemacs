@@ -30,4 +30,5 @@
  '(agda2-highlight-primitive-type-face ((t (:foreground "yellow"))))
  '(agda2-highlight-record-face ((t (:foreground "deep sky blue"))))
  '(flyspell-duplicate ((t (:inherit warning :foreground "pale turquoise" :weight bold))))
+ '(markdown-blockquote-face ((t (:background "gray19" :foreground "#ff8700" :slant italic))))
  '(stripe-hl-line ((t (:background "dark violet" :foreground "unspecified-bg")))))
