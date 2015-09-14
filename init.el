@@ -3,6 +3,7 @@
 ;;; set generic defaults then default to setup-* modules
 
 ;;; Code:
+(set gc-cons-threshold 100000000)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
