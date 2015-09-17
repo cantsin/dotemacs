@@ -113,5 +113,9 @@
   (font-lock-add-keywords nil '(("\"\\(\\(?:.\\|\n\\)*?[^\\]\\)\"" 0 font-lock-string-face))))
 (add-hook 'markdown-mode-hook 'add-quotes-to-font-lock-keywords)
 
+(use-package avy
+  :bind (("C-c j" . avy-goto-word-or-subword-1)
+         ("s-y" . ace-window)))
+
 (provide 'setup-buffer)
 ;;; setup-buffer.el ends here
