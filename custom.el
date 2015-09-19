@@ -16,6 +16,7 @@
  '(org-agenda-files nil)
  '(org-default-priority 53)
  '(org-highest-priority 49)
+ '(org-log-done (quote time))
  '(org-lowest-priority 57)
  '(session-use-package t nil (session)))
 (custom-set-faces
@@ -31,4 +32,5 @@
  '(agda2-highlight-record-face ((t (:foreground "deep sky blue"))))
  '(flyspell-duplicate ((t (:inherit warning :foreground "pale turquoise" :weight bold))))
  '(markdown-blockquote-face ((t (:background "gray19" :foreground "#ff8700" :slant italic))))
+ '(markdown-inline-code-face ((t (:background "gray19" :foreground "#5fafd7"))))
  '(stripe-hl-line ((t (:background "dark violet" :foreground "unspecified-bg")))))
