@@ -13,40 +13,6 @@
 (setq lv-use-separator t)
 (setq projectile-switch-project-action 'projectile-find-file-dwim)
 
-(defhydra hydra-window (global-map "C-x o"
-                        :idle 0.0
-                        :color red)
-  "
-     Create               Delete              Move                     Misc
-------------------------------------------------------------------------------------------
-_|_: vertical          _o_: only           _s_: swap                _b_: balance
-_v_: horizontal        _d_: window
-_N_: new frame         _f_: frame
-"
-  ("h" windmove-left)
-  ("j" windmove-down)
-  ("k" windmove-up)
-  ("l" windmove-right)
-  ("H" hydra-move-splitter-left)
-  ("J" hydra-move-splitter-down)
-  ("K" hydra-move-splitter-up)
-  ("L" hydra-move-splitter-right)
-  ("|" (lambda ()
-         (interactive)
-         (split-window-right)
-         (windmove-right)))
-  ("v" (lambda ()
-         (interactive)
-         (split-window-below)
-         (windmove-down)))
-  ("s" flop-frame)
-  ("o" delete-other-windows :exit t)
-  ("N" make-frame :exit t)
-  ("b" balance-windows)
-  ("d" delete-window)
-  ("f" delete-frame :exit t)
-  ("q" nil))
-
 (defhydra hydra-projectile (:idle 0.0
                             :color teal
                             :hint nil)

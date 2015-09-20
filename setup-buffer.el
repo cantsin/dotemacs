@@ -71,10 +71,6 @@
   :ensure t
   :init (desktop-save-mode))
 
-(use-package window-purpose
-  :ensure t
-  :init (purpose-mode))
-
 (defun bjm-deft-save-windows (orig-fun &rest args)
   "Advice to save windows -- ORIG-FUN ARGS."
   (setq bjm-pre-deft-window-config (current-window-configuration))
