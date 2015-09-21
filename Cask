@@ -101,6 +101,7 @@
 (depends-on "session")
 (depends-on "skewer-mode")
 (depends-on "smart-compile")
+(depends-on "smartparens")
 (depends-on "solarized-theme")
 (depends-on "stripe-buffer")
 (depends-on "synonyms")
