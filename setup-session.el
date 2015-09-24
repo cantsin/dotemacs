@@ -24,7 +24,8 @@
   ;; fix org oddities
   (add-hook 'after-init-hook 'session-initialize)
   (add-hook 'session-after-jump-to-last-change-hook 'maybe-reveal)
-  (add-to-list 'session-globals-exclude 'org-mark-ring))
+  ;;(add-to-list 'session-globals-exclude 'org-mark-ring)
+  )
 
 (use-package session
   :ensure t

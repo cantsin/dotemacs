@@ -8,9 +8,6 @@
  '(erc-modules
    (quote
     (autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp spelling track)))
- '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
- '(helm-ag-command-option "--all-text")
- '(helm-ag-insert-at-point (quote symbol))
  '(mu4e-view-show-images t)
  '(org-agenda-file-regexp "\\`[^._].*\\.org\\'")
  '(org-agenda-files nil)
