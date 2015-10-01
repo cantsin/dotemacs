@@ -18,6 +18,24 @@
   :ensure t
   :config (cantsin/setup-purescript))
 
+(defun flymake-haskell-init ()
+  "Generate a tempfile, run `hslint` on it, and delete file."
+  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+         (local-file  (file-relative-name
+                       temp-file
+                       (file-name-directory buffer-file-name))))
+    (list "hslint" (list local-file))))
+
+(defun flymake-haskell-enable ()
+  "Enables 'flymake-mode' for haskell."
+  (when (and buffer-file-name
+             (file-writable-p
+              (file-name-directory buffer-file-name))
+             (file-writable-p buffer-file-name))
+    (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+    (flymake-mode t)))
+
 (defun cantsin/setup-haskell ()
   "Set up haskell."
   (use-package haskell-interactive-mode)
@@ -45,7 +63,12 @@
   (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+  (eval-after-load 'haskell-mode
+    '(progn
+       (require 'flymake)
+       (push '("\\.l?hs\\'" flymake-haskell-init) flymake-allowed-file-name-masks)
+       (add-hook 'haskell-mode-hook 'flymake-haskell-enable)))
   (eval-after-load 'haskell-mode
     '(progn
        (load-library "inf-haskell")
@@ -57,7 +80,7 @@
 (use-package haskell-mode
   :ensure t
   :defer t
-  :config (cantsin/config-haskell))
+  :config (cantsin/setup-haskell))
 
 (provide 'setup-haskell)
 ;;; setup-haskell.el ends here
