@@ -29,7 +29,11 @@
 
   ;; Auto refresh dired, but be quiet about it
   (use-package autorevert)
-  (setq dired-listing-switches "-alk"
+  (setq dired-listing-switches "-alhv"
+        dired-dwim-target t
+        dired-clean-up-buffers-too t
+        setq dired-recursive-copies 'always
+        setq dired-recursive-deletes 'top
         global-auto-revert-non-file-buffers t
         auto-revert-verbose nil))
 
