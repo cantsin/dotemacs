@@ -32,8 +32,8 @@
   (setq dired-listing-switches "-alhv"
         dired-dwim-target t
         dired-clean-up-buffers-too t
-        setq dired-recursive-copies 'always
-        setq dired-recursive-deletes 'top
+        dired-recursive-copies 'always
+        dired-recursive-deletes 'top
         global-auto-revert-non-file-buffers t
         auto-revert-verbose nil))
 
