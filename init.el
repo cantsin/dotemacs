@@ -127,6 +127,7 @@
 (require 'setup-session)
 (require 'setup-keys)
 (require 'setup-functions)
+(require 'setup-elfeed)
 
 ;; load only if available
 (if (file-exists-p (concat user-emacs-directory "setup-private.el"))

@@ -25,6 +25,8 @@
 (depends-on "dockerfile-mode")
 (depends-on "easy-kill")
 (depends-on "easy-kill-extras")
+(depends-on "elfeed")
+(depends-on "elfeed-org")
 (depends-on "elisp-slime-nav")
 (depends-on "elixir-mode")
 (depends-on "elixir-yasnippets")
