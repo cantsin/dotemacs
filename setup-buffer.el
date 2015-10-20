@@ -123,5 +123,8 @@
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
 (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
 
+(use-package pdf-tools
+  :config (pdf-tools-install))
+
 (provide 'setup-buffer)
 ;;; setup-buffer.el ends here

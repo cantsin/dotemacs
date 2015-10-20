@@ -88,6 +88,7 @@
 (depends-on "pandoc-mode")
 (depends-on "paradox")
 (depends-on "paredit")
+(depends-on "pdf-tools")
 (depends-on "pkg-info")
 (depends-on "popup")
 (depends-on "powerline")
