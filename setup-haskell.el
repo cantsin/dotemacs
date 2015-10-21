@@ -11,6 +11,16 @@
 (defun cantsin/setup-purescript ()
   "Set up purescript."
   (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
+  (add-hook 'purescript-mode-hook 'turn-on-purescript-unicode-input-method)
+  (define-key purescript-mode-map (kbd "C-c C-c") 'purescript-compile)
+  (define-key purescript-mode-map (kbd "C-x C-d") nil)
+  (define-key purescript-mode-map (kbd "C-c C-z") 'purescript-interactive-switch)
+  (define-key purescript-mode-map (kbd "C-c C-l") 'purescript-process-load-file)
+  (define-key purescript-mode-map (kbd "C-c C-b") 'purescript-interactive-switch)
+  (define-key purescript-mode-map (kbd "C-c C-t") 'purescript-process-do-type)
+  (define-key purescript-mode-map (kbd "C-c C-i") 'purescript-process-do-info)
+  (define-key purescript-mode-map (kbd "C-c M-.") nil)
+  (define-key purescript-mode-map (kbd "C-c C-d") nil)
   (load "purescript-mode-autoloads"))
 
 (use-package purescript-mode
