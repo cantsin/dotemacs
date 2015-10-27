@@ -26,6 +26,7 @@
     :ensure t)
   (use-package stripe-buffer
     :ensure t)
+  (setq org-default-notes-file "~/todos.org/notes.org")
   (add-hook 'org-mode-hook
             (lambda () (org-bullets-mode 1)))
   (add-hook 'org-after-todo-state-change-hook
@@ -38,8 +39,7 @@
 (defun cantsin/org-config ()
   "Set up org."
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
-  (setq org-default-notes-file "~/todos.org/notes.org"
-        org-agenda-files '("~/todos.org/")
+  (setq org-agenda-files '("~/todos.org/")
         org-use-speed-commands t
         org-clock-persist 'history
         org-confirm-babel-evaluate nil
