@@ -115,6 +115,7 @@
 (depends-on "twittering-mode")
 (depends-on "typo")
 (depends-on "use-package")
+(depends-on "web-mode")
 (depends-on "wgrep")
 (depends-on "whitespace-cleanup-mode")
 (depends-on "writegood-mode")

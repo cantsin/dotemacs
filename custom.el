@@ -10,7 +10,6 @@
     (autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp spelling track)))
  '(mu4e-view-show-images t)
  '(org-agenda-file-regexp "\\`[^._].*\\.org\\'")
- '(org-agenda-files nil)
  '(org-default-priority 53)
  '(org-highest-priority 49)
  '(org-log-done (quote time))
