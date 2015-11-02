@@ -80,6 +80,8 @@
 
 (use-package org
   :bind (("C-c l" . org-store-link)
+         ("M-p" . org-previous-visible-heading)
+         ("M-n" . org-next-visible-heading)
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb)
