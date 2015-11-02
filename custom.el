@@ -8,6 +8,13 @@
  '(erc-modules
    (quote
     (autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp spelling track)))
+ '(ledger-reports
+   (quote
+    (("equity" "ledger equity")
+     ("bal" "ledger -f %(ledger-file) bal")
+     ("reg" "ledger -f %(ledger-file) reg")
+     ("payee" "ledger -f %(ledger-file) reg @%(payee)")
+     ("account" "ledger -f %(ledger-file) reg %(account)"))))
  '(mu4e-view-show-images t)
  '(org-agenda-file-regexp "\\`[^._].*\\.org\\'")
  '(org-default-priority 53)
