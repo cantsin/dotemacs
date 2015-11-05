@@ -31,6 +31,8 @@
 (depends-on "elixir-mode")
 (depends-on "elixir-yasnippets")
 (depends-on "elm-mode")
+(depends-on "ember-mode")
+(depends-on "ember-yasnippets")
 (depends-on "epl")
 (depends-on "erc-image")
 (depends-on "eshell-prompt-extras")
