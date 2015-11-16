@@ -120,8 +120,13 @@
   (progn
     (show-smartparens-global-mode t)))
 
+(add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
+
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
 (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
+
+(use-package swiper
+  :bind (("\C-s" . swiper)))
 
 (use-package pdf-tools
   :config (pdf-tools-install))
