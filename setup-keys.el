@@ -63,7 +63,7 @@ point reaches the beginning or end of the buffer, stop there."
   (key-chord-define-global ",," 'helm-mini)
   (key-chord-define-global ",." '(lambda ()
                                    (interactive)
-                                   (switch-to-buffer (other-buffer (current-buffer) 1))))
+                                   (switch-to-buffer (first (first (window-prev-buffers))))))
   (key-chord-mode +1))
 
 (use-package key-chord
