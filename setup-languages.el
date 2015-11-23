@@ -27,6 +27,10 @@
   :ensure t
   :init (setq lua-indent-level 2))
 
+(use-package tern
+  :defer t
+  :init (add-hook 'js-mode-hook (lambda () (tern-mode t))))
+
 (use-package js2-mode
   :defer t
   :ensure t

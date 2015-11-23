@@ -126,7 +126,7 @@
 (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
 
 (use-package swiper
-  :bind (("\C-s" . swiper)))
+  :bind (("\C-c s" . swiper)))
 
 (use-package pdf-tools
   :config (pdf-tools-install))

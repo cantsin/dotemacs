@@ -114,6 +114,7 @@
 (depends-on "swiper-helm")
 (depends-on "synonyms")
 (depends-on "tagedit")
+(depends-on "tern")
 (depends-on "toml-mode")
 (depends-on "tuareg")
 (depends-on "twittering-mode")
