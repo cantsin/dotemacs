@@ -55,5 +55,39 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 (add-to-list 'projectile-other-file-alist '("js" "hbs"))
 (add-to-list 'projectile-other-file-alist '("hbs" "js"))
 
+(defun projectile-select-files (project-files &optional arg)
+  "Select a list of files based on filename at point.
+
+With a prefix ARG invalidates the cache first."
+  (projectile-maybe-invalidate-cache arg)
+  (let* ((file (if (region-active-p)
+                   (buffer-substring (region-beginning) (region-end))
+                 (or (thing-at-point 'filename) "")))
+         ;; don't bother with relative paths in js2-mode
+         (file (if (and (eq major-mode 'js2-mode) (string-match "\\.\\./" file))
+                   (substring file 3) file))
+         (file (if (and (eq major-mode 'js2-mode) (string-match "\\./" file))
+                   (substring file 2) file))
+         (file (if (string-match "\\.?\\./" file)
+                   (file-relative-name (file-truename file) (projectile-project-root))
+                 file))
+         ;; if nothing is found in js2-mode, then append a 'lib/' after the first slash
+         (file (if (and (eq major-mode 'js2-mode)
+                        (string-match "/" file)
+                        (eq nil (-filter (lambda (project-file)
+                                           (string-match file project-file))
+                                         project-files)))
+                   (let* ((x (split-string file "/"))
+                          (fst (car x))
+                          (lst (cadr x)))
+                     (mapconcat 'identity `(,fst "lib" ,lst) "/"))
+                 file))
+         (files (if file
+                    (-filter (lambda (project-file)
+                               (string-match file project-file))
+                             project-files)
+                  nil)))
+    files))
+
 (provide 'setup-projectile)
 ;;; setup-projectile.el ends here

@@ -35,6 +35,7 @@
   :defer t
   :ensure t
   :init (progn
+          (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
           (setq js-indent-level 2)
           (add-hook 'js-mode-hook 'js2-minor-mode)))
 
