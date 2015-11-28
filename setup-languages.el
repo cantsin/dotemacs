@@ -38,7 +38,7 @@
           (setq js-indent-level 2)
           (add-hook 'js-mode-hook 'js2-minor-mode)))
 
-(defun init-web ()
+(defun config-web ()
   "Set up web-mode."
   (smartparens-mode 0)
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
@@ -49,7 +49,7 @@
 
 (use-package web-mode
   :defer t
-  :init (cantsin/init-web))
+  :config (cantsin/config-web))
 
 (use-package alchemist
   :defer t

@@ -18,6 +18,7 @@
 (depends-on "company")
 (depends-on "company-ghc")
 (depends-on "company-go")
+(depends-on "company-tern")
 (depends-on "csharp-mode")
 (depends-on "dash")
 (depends-on "deft")

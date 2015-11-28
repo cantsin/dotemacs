@@ -52,5 +52,8 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("`"   hydra-projectile-other-window/body "other window")
   ("q"   nil "cancel" :color blue))
 
+(add-to-list 'projectile-other-file-alist '("js" "hbs"))
+(add-to-list 'projectile-other-file-alist '("hbs" "js"))
+
 (provide 'setup-projectile)
 ;;; setup-projectile.el ends here

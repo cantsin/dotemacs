@@ -11,7 +11,6 @@
   (define-key company-active-map (kbd "C-p")
     (lambda () (interactive) (company-complete-common-or-cycle -1)))
   (add-hook 'after-init-hook 'global-company-mode)
-  (add-to-list 'company-backends 'company-ghc)
   (setq company-idle-delay 1.5
         company-minimum-prefix-length 2
         company-show-numbers t
@@ -25,7 +24,9 @@
                                (list #'company-dabbrev-code
                                      #'company-keywords)
                                #'company-files
-                               #'company-dabbrev)))
+                               #'company-dabbrev))
+  (add-to-list 'company-backends 'company-ghc)
+  (add-to-list 'company-backends 'company-tern))
 
 (use-package company
   :init (global-company-mode t)
