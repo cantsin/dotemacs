@@ -39,7 +39,7 @@
           (setq js-indent-level 2)
           (add-hook 'js-mode-hook 'js2-minor-mode)))
 
-(defun config-web ()
+(defun cantsin/config-web ()
   "Set up web-mode."
   (smartparens-mode 0)
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
