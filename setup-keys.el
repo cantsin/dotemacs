@@ -16,6 +16,9 @@
 (global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "M-h") 'backward-kill-word)
 
+(global-set-key (kbd "<mouse-9>") 'next-buffer)
+(global-set-key (kbd "<mouse-8>") 'previous-buffer)
+
 ;; easy access!
 (defun find-user-init-file ()
   "Edit the `user-init-file', in another window."
