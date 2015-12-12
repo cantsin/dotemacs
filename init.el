@@ -117,7 +117,6 @@
 (require 'setup-erc)
 (require 'setup-eshell)
 (require 'setup-org)
-(require 'setup-twitter)
 (require 'setup-company)
 (require 'setup-languages)
 (require 'setup-lisp)
