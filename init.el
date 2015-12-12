@@ -100,6 +100,10 @@
 (let ((default-directory (concat user-emacs-directory ".cask/")))
   (normal-top-level-add-subdirs-to-load-path))
 
+;; as of December 12 2015:
+;; https://github.com/syl20bnr/spacemacs/issues/3854
+(package-initialize)
+
 ;; cask/pallet to manage our installed packages.
 (require 'cask)
 (cask-initialize)
