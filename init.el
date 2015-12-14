@@ -111,7 +111,7 @@
 (pallet-mode t)
 
 ;; load our other setup files.
-(add-to-list 'load-path (concat user-emacs-directory "."))
+(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
 (require 'setup-theme)
 (require 'setup-buffer)
 (require 'setup-fly)
