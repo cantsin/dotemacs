@@ -39,11 +39,9 @@
   :diminish "")
 
 (use-package yasnippet
-  :ensure t
   :defer t
-  :init (progn
-          (yas-global-mode t)
-          (define-key yas-minor-mode-map (kbd "M-/") 'yas-expand)))
+  :config (progn
+            (define-key yas-minor-mode-map (kbd "M-/") 'yas-expand)))
 
 (when (equal window-system 'w32)
   (progn
