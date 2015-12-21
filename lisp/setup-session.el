@@ -29,6 +29,7 @@
 
 (use-package session
   :ensure t
+  :defer t
   :init (cantsin/session-init))
 
 (provide 'setup-session)

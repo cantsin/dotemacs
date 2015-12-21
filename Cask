@@ -73,7 +73,6 @@
 (depends-on "key-chord")
 (depends-on "kv")
 (depends-on "ledger-mode")
-(depends-on "loop")
 (depends-on "lua-mode")
 (depends-on "magit")
 (depends-on "magit-gh-pulls")

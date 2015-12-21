@@ -6,6 +6,7 @@
 
 (use-package projectile
   :ensure t
+  :init (projectile-global-mode)
   :diminish " Proj")
 
 (setq hydra-is-helpful t)

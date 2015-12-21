@@ -30,10 +30,12 @@
 ;;   nil)
 
 (use-package windmove
+  :defer t
   :ensure t)
 
 (use-package framemove
   :ensure t
+  :defer t
   :config (setq framemove-hook-into-windmove t))
 
 ;; save buffers on buffer switch
@@ -130,7 +132,7 @@
 
 (defmacro def-pairs (pairs)
   `(progn
-     ,@(loop for (key . val) in pairs
+     ,@(cl-loop for (key . val) in pairs
           collect
             `(defun ,(read (concat
                             "wrap-with-"

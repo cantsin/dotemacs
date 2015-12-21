@@ -6,6 +6,7 @@
 
 (defun cantsin/setup-company ()
   "Set up company."
+  (global-company-mode t)
   (define-key company-active-map (kbd "C-n")
     (lambda () (interactive) (company-complete-common-or-cycle 1)))
   (define-key company-active-map (kbd "C-p")
@@ -24,11 +25,9 @@
                                (list #'company-dabbrev-code
                                      #'company-keywords)
                                #'company-files
-                               #'company-dabbrev))
-  (add-to-list 'company-backends 'company-tern))
+                               #'company-dabbrev)))
 
 (use-package company
-  :init (global-company-mode t)
   :defer t
   :diminish " co"
   :config (cantsin/setup-company))

@@ -3,6 +3,20 @@
 ;;; set generic defaults then default to setup-* modules
 
 ;;; Code:
+
+;; as of December 12 2015:
+;; https://github.com/syl20bnr/spacemacs/issues/3854
+(package-initialize)
+
+;; cask/pallet to manage our installed packages.
+(let ((default-directory (concat user-emacs-directory ".cask/")))
+  (normal-top-level-add-subdirs-to-load-path))
+(require 'cask)
+(cask-initialize)
+;(benchmark-init/activate)
+(require 'pallet)
+(pallet-mode t)
+
 (setq gc-cons-threshold 100000000)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
@@ -96,19 +110,6 @@
                           (concat "{" dired-directory "}"))
                          (t
                           "[no file]")))))
-
-(let ((default-directory (concat user-emacs-directory ".cask/")))
-  (normal-top-level-add-subdirs-to-load-path))
-
-;; as of December 12 2015:
-;; https://github.com/syl20bnr/spacemacs/issues/3854
-(package-initialize)
-
-;; cask/pallet to manage our installed packages.
-(require 'cask)
-(cask-initialize)
-(require 'pallet)
-(pallet-mode t)
 
 ;; load our other setup files.
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))

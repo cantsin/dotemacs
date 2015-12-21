@@ -4,11 +4,12 @@
 ;;; Code:
 (require 'use-package)
 
-(use-package ocodo-svg-modelines
-  :config (ocodo-svg-modelines-init))
+(when (display-graphic-p)
+  (use-package ocodo-svg-modelines
+    :config (ocodo-svg-modelines-init))
 
-(use-package ocodo-mesh-retro-aqua-smt
-  :config (smt/set-theme 'ocodo-mesh-retro-aqua-smt))
+  (use-package ocodo-mesh-retro-aqua-smt
+    :config (smt/set-theme 'ocodo-mesh-retro-aqua-smt)))
 
 (defun ocodo-mesh-retro-aqua-smt-background (theme)
   "Override THEME."

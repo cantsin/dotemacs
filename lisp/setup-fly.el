@@ -109,6 +109,7 @@
                         (setq flycheck-emacs-lisp-load-path load-path))))
   (use-package flycheck-color-mode-line
     :ensure t
+    :defer t
     :init (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
 
 (use-package flycheck

@@ -38,7 +38,6 @@
 
 (defun cantsin/init-web ()
   "Set up web-mode."
-  (smartparens-mode 0)
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
@@ -47,7 +46,8 @@
 
 (use-package web-mode
   :defer t
-  :init (cantsin/init-web))
+  :init (cantsin/init-web)
+  :config (smartparens-mode 0))
 
 (use-package alchemist
   :defer t
@@ -102,8 +102,12 @@
 
 ;; built-ins.
 (add-hook 'makefile-mode-hook 'indent-tabs-mode)
-(setq c-basic-offset 4)
-(c-set-offset 'substatement-open 0)
+
+(use-package c-mode
+  :defer t
+  :config (progn
+            (setq c-basic-offset 4)
+            (c-set-offset 'substatement-open 0)))
 
 (provide 'setup-languages)
 ;;; setup-languages.el ends here

@@ -23,8 +23,10 @@
 (defun cantsin/org-init ()
   "Initialize org."
   (use-package org-bullets
+    :defer t
     :ensure t)
   (use-package stripe-buffer
+    :defer t
     :ensure t)
   (add-hook 'org-mode-hook
             (lambda () (org-bullets-mode 1)))

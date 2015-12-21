@@ -19,6 +19,7 @@
 (defun cantsin/dired-config ()
   "Set up dired."
   (use-package stripe-buffer
+    :defer t
     :ensure t)
   (add-hook 'dired-mode-hook 'stripe-listify-buffer)
 
@@ -28,7 +29,8 @@
     [remap end-of-buffer] 'dired-jump-to-bottom)
 
   ;; Auto refresh dired, but be quiet about it
-  (use-package autorevert)
+  (use-package autorevert
+    :defer t)
   (setq dired-listing-switches "-alhv"
         dired-dwim-target t
         dired-clean-up-buffers-too t
