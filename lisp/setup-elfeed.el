@@ -5,6 +5,7 @@
 (require 'use-package)
 
 (use-package elfeed-org
+  :defer t
   :config (progn
             (elfeed-org)
             (setq rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org"))))

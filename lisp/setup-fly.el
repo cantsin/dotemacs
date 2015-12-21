@@ -139,6 +139,7 @@
     (flymake-mode t)))
 
 (defun cantsin/setup-flymake ()
+  "Setup flymake."
   (add-hook 'web-mode-hook 'flymake-html-load)
   (add-hook 'html-mode-hook 'flymake-html-load)
   (add-hook 'nxml-mode-hook 'flymake-html-load)

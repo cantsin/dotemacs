@@ -38,6 +38,7 @@
         auto-revert-verbose nil))
 
 (use-package dired
+  :defer t
   :config (cantsin/dired-config))
 
 (provide 'setup-dired)

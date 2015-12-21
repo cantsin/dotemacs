@@ -11,10 +11,6 @@
           '(lambda ()
              (turn-off-auto-fill)
              (visual-line-mode)))
-(add-hook 'markdown-mode-hook
-          '(lambda ()
-             (turn-off-auto-fill)
-             (visual-line-mode)))
 
 ;;;; NB this breaks latest helm so disabling for now
 ;; turn off annoying ffap behavior
@@ -97,23 +93,36 @@
   :bind (("C-c q" . bjm-quit-deft)
          ("C-c d" . deft-new-file)))
 
-;; markdown modifications
-(require 'markdown-mode)
-(defconst markdown-regex-footnote-inline
-  "\\(\\^\\[.+?\\]\\)"
-  "Regular expression for a footnote inline marker ^[fn].")
-(defface markdown-footnote-inline-face
-  '((t (:inherit font-lock-keyword-face)))
-  "Face for footnote markers."
-  :group 'markdown-faces)
-(add-to-list 'markdown-mode-font-lock-keywords-basic
-             (cons markdown-regex-footnote-inline 'markdown-footnote-face))
+(defun cantsin/markdown-setup ()
+  "Initialize markdown."
+  (add-hook 'markdown-mode-hook
+            '(lambda ()
+               (turn-off-auto-fill)
+               (visual-line-mode)))
+  (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode))
 
-;; TODO: set to white
-(defun add-quotes-to-font-lock-keywords ()
-  "In markdown, set quote font lock."
-  (font-lock-add-keywords nil '(("\"\\(\\(?:.\\|\n\\)*?[^\\]\\)\"" 0 font-lock-string-face))))
-(add-hook 'markdown-mode-hook 'add-quotes-to-font-lock-keywords)
+(defun cantsin/markdown-config ()
+  "Set up markdown."
+  (defconst markdown-regex-footnote-inline
+    "\\(\\^\\[.+?\\]\\)"
+    "Regular expression for a footnote inline marker ^[fn].")
+  (defface markdown-footnote-inline-face
+    '((t (:inherit font-lock-keyword-face)))
+    "Face for footnote markers."
+    :group 'markdown-faces)
+  (add-to-list 'markdown-mode-font-lock-keywords-basic
+               (cons markdown-regex-footnote-inline 'markdown-footnote-face))
+
+  ;; TODO: set to white
+  (defun add-quotes-to-font-lock-keywords ()
+    "In markdown, set quote font lock."
+    (font-lock-add-keywords nil '(("\"\\(\\(?:.\\|\n\\)*?[^\\]\\)\"" 0 font-lock-string-face))))
+  (add-hook 'markdown-mode-hook 'add-quotes-to-font-lock-keywords))
+
+(use-package markdown
+  :defer t
+  :init (cantsin/markdown-setup)
+  :config (cantsin/markdown-config))
 
 (use-package avy
   :bind (("C-c j" . avy-goto-word-or-subword-1)
@@ -179,12 +188,12 @@
 (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
-(add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
 
 (use-package swiper
   :bind (("\C-c s" . swiper)))
 
 (use-package pdf-tools
+  :defer t
   :config (pdf-tools-install))
 
 (provide 'setup-buffer)

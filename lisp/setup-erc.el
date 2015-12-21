@@ -82,18 +82,17 @@ NICK, MESSAGE."
 (defun cantsin/erc-setup ()
   "Set up ERC."
   (add-hook 'erc-text-matched-hook 'my-erc-page-me)
-  (add-hook 'erc-insert-post-hook 'erc-save-buffer-in-logs)
+  (add-hook 'erc-insert-post-hook 'erc-save-buffer-in-logs))
 
+(defun cantsin/erc-config ()
+  "Configure ERC."
   (erc-spelling-mode 1)
   (erc-autojoin-mode 1)
   (erc-match-mode 1)
   (erc-fill-mode t)
   (erc-ring-mode t)
   (erc-netsplit-mode t)
-  (erc-timestamp-mode t))
-
-(defun cantsin/erc-config ()
-  "Configure ERC."
+  (erc-timestamp-mode t)
   (setq  erc-timestamp-format "[%D %r]"
          ;; logging
          erc-log-insert-log-on-open nil

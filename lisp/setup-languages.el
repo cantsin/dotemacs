@@ -27,10 +27,6 @@
   :ensure t
   :init (setq lua-indent-level 2))
 
-(use-package tern
-  :defer t
-  :init (add-hook 'js-mode-hook (lambda () (tern-mode t))))
-
 (use-package js2-mode
   :defer t
   :ensure t
@@ -40,7 +36,7 @@
           (setq js-indent-level 2)
           (add-hook 'js-mode-hook 'js2-minor-mode)))
 
-(defun cantsin/config-web ()
+(defun cantsin/init-web ()
   "Set up web-mode."
   (smartparens-mode 0)
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
@@ -51,7 +47,7 @@
 
 (use-package web-mode
   :defer t
-  :config (cantsin/config-web))
+  :init (cantsin/init-web))
 
 (use-package alchemist
   :defer t
@@ -76,6 +72,7 @@
 
 (use-package whitespace
   :ensure t
+  :defer t
   :init (setq whitespace-style '(face trailing lines-tail tabs)
                 whitespace-line-column 80
                 global-whitespace-cleanup-mode t))

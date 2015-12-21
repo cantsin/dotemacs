@@ -12,11 +12,6 @@
 
 (defun cantsin/helm-setup ()
   "Set up helm."
-  (use-package helm-swoop)
-  (use-package helm-spaces)
-  (use-package helm-config)
-  (use-package helm-eshell)
-  (use-package helm-gtags)
   (add-hook 'eshell-mode-hook
             #'(lambda ()
                 (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
@@ -27,6 +22,11 @@
 
 (defun cantsin/helm-config ()
   "Configure helm."
+  (use-package helm-swoop)
+  (use-package helm-spaces)
+  (use-package helm-config)
+  (use-package helm-eshell)
+  (use-package helm-gtags)
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-z")  'helm-select-action)
@@ -56,6 +56,7 @@
 
 (use-package helm
   :ensure t
+  :defer t
   :diminish ""
   :bind (("M-x" . helm-M-x)
          ("M-y" . helm-show-kill-ring)

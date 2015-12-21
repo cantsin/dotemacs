@@ -25,11 +25,11 @@
                                      #'company-keywords)
                                #'company-files
                                #'company-dabbrev))
-  (add-to-list 'company-backends 'company-ghc)
   (add-to-list 'company-backends 'company-tern))
 
 (use-package company
   :init (global-company-mode t)
+  :defer t
   :diminish " co"
   :config (cantsin/setup-company))
 

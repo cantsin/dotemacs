@@ -10,6 +10,7 @@
 
 (defun cantsin/setup-purescript ()
   "Set up purescript."
+  (add-to-list 'company-backends 'company-ghc)
   (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
   (add-hook 'purescript-mode-hook 'turn-on-purescript-unicode-input-method)
   (define-key purescript-mode-map (kbd "C-c C-c") 'purescript-compile)
@@ -48,8 +49,10 @@
 
 (defun cantsin/setup-haskell ()
   "Set up haskell."
-  (use-package haskell-interactive-mode)
-  (use-package haskell-process)
+  (use-package haskell-interactive-mode
+    :defer t)
+  (use-package haskell-process
+    :defer t)
   (custom-set-variables
    '(haskell-process-suggest-remove-import-lines t)
    '(haskell-process-auto-import-loaded-modules t)
