@@ -1,6 +1,6 @@
 /auto-save-list/*
 /url/cookies
-/setup-private.el
+/lisp/setup-private.el
 /eshell/
 /save-place
 *.elc

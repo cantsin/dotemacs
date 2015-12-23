@@ -42,8 +42,10 @@
 (defun cantsin/mu4e-config ()
   "Set up mu4e."
   (use-package smtpmail
+    :defer t
     :ensure t)
-  (use-package mu4e-contrib)
+  (use-package mu4e-contrib
+    :defer t)
   (add-hook 'mu4e-compose-pre-hook 'cantsin/mu4e-set-account)
   (add-hook 'mu4e-view-mode-hook
             '(lambda () (progn
