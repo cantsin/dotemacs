@@ -13,7 +13,7 @@
   (normal-top-level-add-subdirs-to-load-path))
 (require 'cask)
 (cask-initialize)
-;(benchmark-init/activate)
+;; (benchmark-init/activate)
 (require 'pallet)
 (pallet-mode t)
 
@@ -134,10 +134,10 @@
 (require 'setup-elfeed)
 
 ;; load only if available
-(if (file-exists-p (concat user-emacs-directory "setup-private.el"))
+(if (file-exists-p (concat user-emacs-directory "lisp/setup-private.el"))
     (require 'setup-private))
-(when (require 'mu4e nil 'noerror)
-  (require 'setup-mu4e))
+;; (when (require 'mu4e nil 'noerror)
+;;   (require 'setup-mu4e))
 
 ;; save our customizations elsewhere.
 (setq custom-file (concat user-emacs-directory "custom.el"))
