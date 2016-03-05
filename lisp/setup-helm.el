@@ -10,7 +10,7 @@
       (set-face-attribute 'helm-source-header nil :height 0.1)
     (set-face-attribute 'helm-source-header nil :height 1.0)))
 
-(defun cantsin/helm-setup ()
+(defun cantsin/helm-init ()
   "Set up helm."
   (helm-mode 1)
   (add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
@@ -77,8 +77,7 @@
          ("C-c M-i" . helm-multi-swoop)
          ("C-x M-i" . helm-multi-swoop-all))
   :config (cantsin/helm-config)
-  :init (cantsin/helm-setup)
-  )
+  :init (cantsin/helm-init))
 
 (provide 'setup-helm)
 ;;; setup-helm.el ends here

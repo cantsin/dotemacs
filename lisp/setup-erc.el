@@ -79,7 +79,7 @@ NICK, MESSAGE."
   (interactive)
   (znc-all))
 
-(defun cantsin/erc-setup ()
+(defun cantsin/erc-init ()
   "Set up ERC."
   (add-hook 'erc-text-matched-hook 'my-erc-page-me)
   (add-hook 'erc-insert-post-hook 'erc-save-buffer-in-logs))
@@ -105,7 +105,7 @@ NICK, MESSAGE."
 
 (use-package erc
   :defer t
-  :init (cantsin/erc-setup)
+  :init (cantsin/erc-init)
   :config (cantsin/erc-config))
 
 (provide 'setup-erc)

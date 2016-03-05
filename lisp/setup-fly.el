@@ -86,7 +86,7 @@
           ((< p spell-pos)
            (funcall spell-previous-error-function)))))
 
-(defun cantsin/flyspell-setup ()
+(defun cantsin/flyspell-init ()
   "Deferred setup of 'flyspell-mode'."
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
@@ -97,11 +97,11 @@
   :bind (("C-c s" . flyspell-correct-word-before-point)
          ("M-g n" . fly-goto-next-error)
          ("M-g p" . fly-goto-previous-error))
-  :init (cantsin/flyspell-setup)
+  :init (cantsin/flyspell-init)
   :config (setq ispell-program-name "/usr/bin/aspell")
   :diminish flyspell-mode)
 
-(defun cantsin/flycheck-setup ()
+(defun cantsin/flycheck-init ()
   "Deferred setup of 'flycheck-mode'."
   (global-flycheck-mode t)
   (add-hook 'emacs-lisp-mode-hook
@@ -116,7 +116,7 @@
   :ensure t
   :defer t
   :commands global-flycheck-mode
-  :init (cantsin/flycheck-setup))
+  :init (cantsin/flycheck-init))
 
 ;; validate open/closed braces in html.
 (defun flymake-html-init ()

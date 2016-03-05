@@ -85,7 +85,7 @@
   :bind (("C-c q" . bjm-quit-deft)
          ("C-c d" . deft-new-file)))
 
-(defun cantsin/markdown-setup ()
+(defun cantsin/markdown-init ()
   "Initialize markdown."
   (add-hook 'markdown-mode-hook
             '(lambda ()
@@ -113,7 +113,7 @@
 
 (use-package markdown
   :defer t
-  :init (cantsin/markdown-setup)
+  :init (cantsin/markdown-init)
   :config (cantsin/markdown-config))
 
 (use-package avy
@@ -139,13 +139,17 @@
             (double-quote . "\"")
             (back-quote   . "`")))
 
-(defun cantsin/smartparens-config ()
-  "Set up smartparens."
-  (show-smartparens-global-mode t)
+(defun cantsin/smartparens-init ()
+  "Initialize smartparens."
   ;; js2 support
+  (require 'smartparens)
   (add-to-list 'sp-sexp-suffix (list #'js2-mode 'regexp ""))
   (sp-with-modes '(js2-mode)
     (sp-local-pair "'" "'" :unless '(sp-in-comment-p))))
+
+(defun cantsin/smartparens-config ()
+  "Set up smartparens."
+  (show-smartparens-global-mode t))
 
 (use-package smartparens-config
   :ensure smartparens
@@ -181,6 +185,7 @@
          ("C-c \"" . wrap-with-double-quotes)
          ("C-c _"  . wrap-with-underscores)
          ("C-c `"  . wrap-with-back-quotes))
+  :init (cantsin/smartparens-init)
   :config (cantsin/smartparens-config))
 
 (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
