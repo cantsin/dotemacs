@@ -139,6 +139,14 @@
             (double-quote . "\"")
             (back-quote   . "`")))
 
+(defun cantsin/smartparens-config ()
+  "Set up smartparens."
+  (show-smartparens-global-mode t)
+  ;; js2 support
+  (add-to-list 'sp-sexp-suffix (list #'js2-mode 'regexp ""))
+  (sp-with-modes '(js2-mode)
+    (sp-local-pair "'" "'" :unless '(sp-in-comment-p))))
+
 (use-package smartparens-config
   :ensure smartparens
   :bind (("C-M-a" . sp-beginning-of-sexp)
@@ -173,9 +181,7 @@
          ("C-c \"" . wrap-with-double-quotes)
          ("C-c _"  . wrap-with-underscores)
          ("C-c `"  . wrap-with-back-quotes))
-  :config
-  (progn
-    (show-smartparens-global-mode t)))
+  :config (cantsin/smartparens-config))
 
 (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
