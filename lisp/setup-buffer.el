@@ -65,16 +65,6 @@
             (setq-default save-place t)
             (setq save-place-file (concat user-emacs-directory "places"))))
 
-;; save/restore emacs configuration.
-(use-package desktop
-  :ensure t
-  :config (progn (setq desktop-restore-eager 5)
-                 (add-hook 'desktop-after-read-hook
-                           '(lambda ()
-                              (setq desktop-dirname-tmp desktop-dirname)
-                              (desktop-remove)
-                              (setq desktop-dirname desktop-dirname-tmp)))))
-
 (defun bjm-deft-save-windows (orig-fun &rest args)
   "Advice to save windows -- ORIG-FUN ARGS."
   (setq bjm-pre-deft-window-config (current-window-configuration))
