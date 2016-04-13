@@ -109,5 +109,10 @@
             (setq c-basic-offset 4)
             (c-set-offset 'substatement-open 0)))
 
+(use-package fsharp-mode
+  :defer t
+  :config (progn
+            (setq fsharp-indent-offset 2)))
+
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
