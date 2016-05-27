@@ -192,6 +192,9 @@
 
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
 
+(use-package helm-dash
+  :config (setq helm-dash-browser-func 'eww))
+
 (use-package swiper
   :bind (("\C-c s" . swiper)))
 

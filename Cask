@@ -56,6 +56,7 @@
 (depends-on "haskell-mode")
 (depends-on "helm")
 (depends-on "helm-company")
+(depends-on "helm-dash")
 (depends-on "helm-git-grep")
 (depends-on "helm-gtags")
 (depends-on "helm-hoogle")
