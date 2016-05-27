@@ -121,6 +121,7 @@
 (depends-on "twittering-mode")
 (depends-on "typo")
 (depends-on "use-package")
+(depends-on "viking-mode")
 (depends-on "virtualenvwrapper")
 (depends-on "web-mode")
 (depends-on "wgrep")

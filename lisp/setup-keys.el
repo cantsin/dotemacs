@@ -223,6 +223,9 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 ;; avy.
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
 
+;; transpose sexps.
+(global-set-key (kbd "C-M-t") 'transpose-sexps)
+
 ;; quick search.
 (global-set-key (kbd "M-g s") 'helm-git-grep)
 

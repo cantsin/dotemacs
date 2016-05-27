@@ -167,7 +167,7 @@
          ("C-<left>"  . sp-backward-slurp-sexp)
          ("M-<left>"  . sp-backward-barf-sexp)
 
-         ("C-M-t" . sp-transpose-sexp)
+         ;; ("C-M-t" . sp-transpose-sexp)
          ("C-M-k" . sp-kill-sexp)
          ("C-k"   . sp-kill-hybrid-sexp)
          ("M-k"   . sp-backward-kill-sexp)
