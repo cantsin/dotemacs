@@ -202,5 +202,10 @@
   :defer t
   :config (pdf-tools-install))
 
+(require 'comint)
+(add-to-list 'comint-preoutput-filter-functions
+             (lambda (output)
+               (replace-regexp-in-string "\033\\[[0-9]+[A-Z]" "" output)))
+
 (provide 'setup-buffer)
 ;;; setup-buffer.el ends here
