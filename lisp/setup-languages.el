@@ -120,5 +120,20 @@
   :config (progn
             (setq fsharp-indent-offset 2)))
 
+(use-package nodejs-repl
+  :defer t
+  :config (setq nodejs-repl-arguments
+                 '("--use-strict"
+                   "--es_staging"
+                   "--harmony"
+                   "--harmony_shipping"
+                   "--harmony_modules"
+                   "--harmony_array_includes"
+                   "--harmony_regexps"
+                   "--harmony_arrow_functions"
+                   "--harmony_proxies"
+                   "--harmony_sloppy"
+                   "--harmony_tostring")))
+
 (provide 'setup-languages)
 ;;; setup-languages.el ends here

@@ -71,6 +71,7 @@
 (depends-on "hydra")
 (depends-on "jedi")
 (depends-on "js-comint")
+(depends-on "js3-mode")
 (depends-on "json-mode")
 (depends-on "jsx-mode")
 (depends-on "key-chord")
