@@ -109,7 +109,6 @@
 (depends-on "restclient")
 (depends-on "rust-mode")
 (depends-on "s")
-(depends-on "scala-mode2")
 (depends-on "scss-mode")
 (depends-on "session")
 (depends-on "skewer-mode")
