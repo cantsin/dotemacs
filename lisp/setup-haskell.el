@@ -29,6 +29,19 @@
   :ensure t
   :config (cantsin/setup-purescript))
 
+(defun cantsin/setup-elm ()
+  "Set up Elm."
+  (setq elm-tags-on-save t)
+  (setq elm-tags-exclude-elm-stuff nil)
+  (setq elm-format-on-save t)
+  (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
+  (add-to-list 'company-backends 'company-elm))
+
+(use-package elm-mode
+  :defer t
+  :ensure t
+  :config (cantsin/setup-elm))
+
 (defun flymake-haskell-init ()
   "Generate a tempfile, run `hslint` on it, and delete file."
   (let* ((temp-file   (flymake-init-create-temp-buffer-copy

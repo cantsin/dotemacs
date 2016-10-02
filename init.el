@@ -113,6 +113,9 @@
                          (t
                           "[no file]")))))
 
+(setenv "PATH" (concat (getenv "PATH") ":/home/james/bin"))
+(setq exec-path (append exec-path '("/home/james/bin")))
+
 ;; load our other setup files.
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
 (require 'setup-theme)
