@@ -141,8 +141,8 @@
 ;; load only if available
 (if (file-exists-p (concat user-emacs-directory "lisp/setup-private.el"))
     (require 'setup-private))
-;; (when (require 'mu4e nil 'noerror)
-;;   (require 'setup-mu4e))
+(when (require 'mu4e nil 'noerror)
+  (require 'setup-mu4e))
 
 ;; save our customizations elsewhere.
 (setq custom-file (concat user-emacs-directory "custom.el"))

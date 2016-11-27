@@ -67,7 +67,7 @@
         mu4e-headers-leave-behavior 'apply
         mu4e-confirm-quit nil
         mu4e-get-mail-command "mbsync -a"
-        mu4e-update-interval 300))
+        mu4e-update-interval 30))
 
 (use-package mu4e
   :defer t

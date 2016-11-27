@@ -43,6 +43,7 @@
   (setq org-default-notes-file "~/todos.org/notes.org"
         org-agenda-files '("~/todos.org/")
         org-clock-persist 'history
+        org-mu4e-link-query-in-headers-mode nil
         org-confirm-babel-evaluate nil
         org-src-fontify-natively t
         org-src-tab-acts-natively t
@@ -57,7 +58,7 @@
         org-stuck-projects '("TODO={.+}/-DONE" nil nil "SCHEDULED:\\|DEADLINE:")
         org-capture-templates
         '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-           "* TODO %?\n  %i\n  %a")
+           "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
           ("r" "respond" entry (file org-default-notes-file)
            "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n\n"))
         org-todo-keywords
