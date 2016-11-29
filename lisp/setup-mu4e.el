@@ -33,12 +33,6 @@
          (allmail (concat root "/" "Archive")))
     (mu4e-mark-set 'move allmail)))
 
-(defun mu4e-in-new-frame ()
-  "Start mu4e in new frame."
-  (interactive)
-  (select-frame (make-frame))
-  (mu4e))
-
 (defun cantsin/mu4e-config ()
   "Set up mu4e."
   (use-package smtpmail
@@ -47,10 +41,7 @@
   (use-package mu4e-contrib
     :defer t)
   (add-hook 'mu4e-compose-pre-hook 'cantsin/mu4e-set-account)
-  (add-hook 'mu4e-view-mode-hook
-            '(lambda () (progn
-                          (visual-line-mode)
-                          (mu4e-view-toggle-hide-cited))))
+  (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
   (defvar my-mu4e-account-alist 'nil)
   (add-to-list 'mu4e-headers-actions
                '("Archive email" . archive-email) t)
