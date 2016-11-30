@@ -238,10 +238,10 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (global-set-key [remap mark-sexp] 'easy-mark)
 
 ;; windmove
-(global-set-key [(control H)] 'windmove-left)
-(global-set-key [(control J)] 'windmove-down)
-(global-set-key [(control K)] 'windmove-up)
-(global-set-key [(control L)] 'windmove-right)
+(global-set-key [(control J)] 'windmove-left)
+(global-set-key [(control K)] 'windmove-down)
+(global-set-key [(control L)] 'windmove-up)
+(global-set-key [(control :)] 'windmove-right)
 
 (provide 'setup-keys)
 ;;; setup-keys.el ends here
