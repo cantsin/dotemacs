@@ -7,6 +7,10 @@
 ;; wrapping.
 (add-hook 'text-mode-hook
           'turn-on-auto-fill)
+(add-hook 'markdown-mode-hook
+          '(lambda ()
+             (modify-syntax-entry ?\" "\"" markdown-mode-syntax-table)
+             (writegood-mode)))
 (add-hook 'html-mode-hook
           '(lambda ()
              (turn-off-auto-fill)
