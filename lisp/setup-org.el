@@ -76,7 +76,7 @@
                (point-at-eol)))))))
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((sh . t)
+   '((shell . t)
      (ipython . t)
      (python . t)))
   (org-clock-persistence-insinuate))
