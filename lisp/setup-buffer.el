@@ -37,10 +37,10 @@
   :defer t
   :ensure t)
 
-(use-package framemove
-  :ensure t
-  :defer t
-  :config (setq framemove-hook-into-windmove t))
+;; (use-package framemove
+;;   :ensure t
+;;   :defer t
+;;   :config (setq framemove-hook-into-windmove t))
 
 ;; save buffers on buffer switch
 (defadvice switch-to-buffer (before save-buffer-now activate)
