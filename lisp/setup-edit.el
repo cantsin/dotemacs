@@ -29,12 +29,6 @@
   :defer t
   :config (easy-kill-config))
 
-(use-package ispell
-  :defer t
-  :ensure t
-  :init (setq ispell-personal-dictionary
-              (concat user-emacs-directory "personal-dict")))
-
 (use-package abbrev
   :defer t
   :diminish "")
@@ -43,11 +37,6 @@
   :defer t
   :config (progn
             (define-key yas-minor-mode-map (kbd "M-/") 'yas-expand)))
-
-(when (equal window-system 'w32)
-  (progn
-    (add-to-list 'exec-path "c:/Program Files (x86)/Aspell/bin")
-    (setq ispell-program-name "aspell")))
 
 (provide 'setup-edit)
 ;;; setup-edit.el ends here
