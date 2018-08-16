@@ -43,7 +43,6 @@
   (setq org-default-notes-file "~/todos.org/notes.org"
         org-agenda-files '("~/todos.org/")
         org-clock-persist 'history
-        org-mu4e-link-query-in-headers-mode nil
         org-confirm-babel-evaluate nil
         org-src-fontify-natively t
         org-src-tab-acts-natively t
@@ -77,7 +76,6 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell . t)
-     (ipython . t)
      (python . t)))
   (org-clock-persistence-insinuate))
 

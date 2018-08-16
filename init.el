@@ -124,7 +124,6 @@
 (require 'setup-magit)
 (require 'setup-dired)
 (require 'setup-helm)
-(require 'setup-erc)
 (require 'setup-eshell)
 (require 'setup-org)
 (require 'setup-company)
@@ -136,13 +135,10 @@
 (require 'setup-session)
 (require 'setup-keys)
 (require 'setup-functions)
-(require 'setup-elfeed)
 
 ;; load only if available
 (if (file-exists-p (concat user-emacs-directory "lisp/setup-private.el"))
     (require 'setup-private))
-(when (require 'mu4e nil 'noerror)
-  (require 'setup-mu4e))
 
 (defun my-idris-mode-hook ()
   ;; This makes it so that especially errors reuse their frames

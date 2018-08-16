@@ -17,8 +17,6 @@
   (add-hook 'go-mode-hook '(lambda ()
                              (local-set-key (kbd "C-c C-k") 'godoc))))
 
-(use-package alchemist)
-
 (use-package go-mode
   :defer t
   :ensure t
