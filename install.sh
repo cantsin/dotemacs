@@ -1,17 +1,19 @@
 #!/bin/bash
 
+RCFILE=~/.zshrc
+
 if [[ ! -e ~/.cask ]]
 then
     echo "Cloning Cask repo"
-    git clone git@github.com:cask/cask.git ~/.cask
+    git clone https://github.com/cask/cask.git ~/.cask
 fi
 
 if [[ $(grep "cask/bin" ~/.bash_profile) == "" ]]
 then
-    echo "Adding \$HOME/.cask/bin to \$PATH in ~/.bash_profile"
-    echo '' >> ~/.bash_profile
-    echo "# Added by ~/.emacs.d/install.sh" >> ~/.bash_profile
-    echo "export PATH=\$HOME/.cask/bin:\$PATH" >> ~/.bash_profile
+    echo "Adding \$HOME/.cask/bin to \$PATH in \$RCFILE"
+    echo '' >> $RCFILE
+    echo "# Added by ~/.emacs.d/install.sh" >> $RCFILE
+    echo "export PATH=\$HOME/.cask/bin:\$PATH" >> $RCFILE
 fi
 
 export PATH=$HOME/.cask/bin:$PATH
