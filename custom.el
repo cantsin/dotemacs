@@ -39,7 +39,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Liberation Mono" :foundry "unknown" :slant normal :weight normal :height 162 :width normal))))
+ '(default ((t (:family "Liberation Mono" :foundry "unknown" :slant normal :weight normal :height 122 :width normal))))
  '(agda2-highlight-datatype-face ((t (:foreground "yellow"))))
  '(agda2-highlight-function-face ((t (:foreground "gold"))))
  '(agda2-highlight-primitive-face ((t (:foreground "deep sky blue"))))
