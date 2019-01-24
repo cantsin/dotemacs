@@ -43,5 +43,7 @@
   :defer t
   :config (cantsin/dired-config))
 
+(require 'dired-x)
+
 (provide 'setup-dired)
 ;;; setup-dired.el ends here

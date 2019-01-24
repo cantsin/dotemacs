@@ -42,6 +42,7 @@
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
   (setq org-default-notes-file "~/todos.org/notes.org"
         org-agenda-files '("~/todos.org/")
+        org-journal-dir "~/workspace/journal"
         org-clock-persist 'history
         org-confirm-babel-evaluate nil
         org-src-fontify-natively t
