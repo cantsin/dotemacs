@@ -43,7 +43,6 @@
   (setq org-default-notes-file "~/todos.org/notes.org"
         org-agenda-files '("~/todos.org/")
         org-journal-dir "~/workspace/journal"
-        org-clock-persist 'history
         org-confirm-babel-evaluate nil
         org-src-fontify-natively t
         org-src-tab-acts-natively t
@@ -77,8 +76,7 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell . t)
-     (python . t)))
-  (org-clock-persistence-insinuate))
+     (python . t))))
 
 (use-package org
   :bind (("C-c l" . org-store-link)

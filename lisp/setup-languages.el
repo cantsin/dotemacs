@@ -22,10 +22,10 @@
   :ensure t
   :init (cantsin/setup-go))
 
-(use-package lua-mode
-  :defer t
-  :ensure t
-  :init (setq lua-indent-level 2))
+;; (use-package lua-mode
+;;   :defer t
+;;   :ensure t
+;;   :init (setq lua-indent-level 2))
 
 (use-package js2-mode
   :defer t

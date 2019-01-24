@@ -1,4 +1,0 @@
-(:name wc-mode
-       :desription "Word-count mode"
-       :type github
-       :pkgname "bnbeckwith/wc-mode")
