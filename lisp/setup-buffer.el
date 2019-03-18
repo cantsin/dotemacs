@@ -37,11 +37,6 @@
   :defer t
   :ensure t)
 
-;; (use-package framemove
-;;   :ensure t
-;;   :defer t
-;;   :config (setq framemove-hook-into-windmove t))
-
 ;; save buffers on buffer switch
 (defadvice switch-to-buffer (before save-buffer-now activate)
   "Switch to buffer."
@@ -114,9 +109,14 @@
   :init (cantsin/markdown-init)
   :config (cantsin/markdown-config))
 
+;; Github README.mds.
+(use-package markdown-mode
+  :defer t
+  :ensure t
+  :init (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
+
 (use-package avy
-  :bind (("C-c j" . avy-goto-word-or-subword-1)
-         ("s-y" . ace-window)))
+  :bind (("s-." . avy-goto-word-or-subword-1)))
 
 (defmacro def-pairs (pairs)
   `(progn
@@ -204,6 +204,17 @@
 (add-to-list 'comint-preoutput-filter-functions
              (lambda (output)
                (replace-regexp-in-string "\033\\[[0-9]+[A-Z]" "" output)))
+
+(use-package ws-butler
+  :defer t
+  :config (ws-butler-global-mode))
+
+(use-package whitespace
+  :ensure t
+  :defer t
+  :init (setq whitespace-style '(face trailing lines-tail tabs)
+              whitespace-line-column 80
+              global-whitespace-cleanup-mode t))
 
 (provide 'setup-buffer)
 ;;; setup-buffer.el ends here
