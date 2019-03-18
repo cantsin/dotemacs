@@ -29,15 +29,6 @@
   (setq magit-diff-options (remove "-w" magit-diff-options))
   (magit-refresh))
 
-(use-package magit-gh-pulls
-  :defer t)
-(defun load-gh-pulls-mode ()
-  "Start `magit-gh-pulls-mode' only after a manual request."
-  (interactive)
-  (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
-  (magit-gh-pulls-mode 1)
-  (magit-gh-pulls-reload))
-
 (defun visit-pull-request-url ()
   "Visit the current branch's PR on Github."
   (interactive)
@@ -57,12 +48,6 @@
         (setq magit-git-executable "C:\\Program Files (x86)\\Git\\bin\\git.exe"))
 
     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-
-    (use-package magit-gh-pulls
-      :ensure t
-      :config (progn
-                (define-key magit-mode-map "#gg" 'load-gh-pulls-mode)
-                (define-key magit-mode-map "V" 'visit-pull-request-url)))
 
     ;; magit sometimes does not return to the previous buffer correctly
     (setq previous-buffer-under-magit nil)

@@ -8,15 +8,6 @@
 ;; https://github.com/syl20bnr/spacemacs/issues/3854
 (package-initialize)
 
-;; cask/pallet to manage our installed packages.
-(let ((default-directory (concat user-emacs-directory ".cask/")))
-  (normal-top-level-add-subdirs-to-load-path))
-(require 'cask)
-(cask-initialize)
-;; (benchmark-init/activate)
-(require 'pallet)
-(pallet-mode t)
-
 (setq gc-cons-threshold 100000000)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
@@ -96,6 +87,12 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
+;; font setup
+(add-to-list 'default-frame-alist '(font . "Triplicate T3c-16"))
+(set-face-attribute 'default t :font "Triplicate T3c-16")
+(set-face-attribute 'default nil :font "Triplicate T3c-16")
+(set-frame-font "Triplicate T3c-16" nil t)
+
 ;; set window title!
 (setq-default frame-title-format
               '(:eval
@@ -124,8 +121,7 @@
 (require 'setup-magit)
 (require 'setup-dired)
 (require 'setup-helm)
-(require 'setup-erc)
-(require 'setup-eshell)
+; (require 'setup-eshell)
 (require 'setup-org)
 (require 'setup-company)
 (require 'setup-languages)
@@ -136,13 +132,9 @@
 (require 'setup-session)
 (require 'setup-keys)
 (require 'setup-functions)
-(require 'setup-elfeed)
 
-;; load only if available
 (if (file-exists-p (concat user-emacs-directory "lisp/setup-private.el"))
     (require 'setup-private))
-(when (require 'mu4e nil 'noerror)
-  (require 'setup-mu4e))
 
 ;; save our customizations elsewhere.
 (setq custom-file (concat user-emacs-directory "custom.el"))

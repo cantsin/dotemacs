@@ -1,9 +1,13 @@
-Yet another .emacs configuration
---------------------------------
+# .emacs.d
 
-My dot emacs configuration: somewhat minimal at the moment. After too
-many years, I finally scrapped my crufty emacs code and am slowly
-rebuilding my .emacs.d/ again.
+My emacs configuration; requires [Nix](https://nixos.org/nix/ "Nix").
 
-Uses both [marmalade](http://marmalade-repo.org/) and
-[el-get](https://github.com/dimitri/el-get).
+Run `nix-build` for the derivation. Or, using [Home
+Manager](https://github.com/rycee/home-manager/ "Home Manager"),
+
+```
+    programs.emacs = {
+        enable = true;
+        extraPackages = import ./packages.nix { inherit pkgs; };
+    }
+```

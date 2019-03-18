@@ -98,7 +98,6 @@
          ("M-g n" . fly-goto-next-error)
          ("M-g p" . fly-goto-previous-error))
   :init (cantsin/flyspell-init)
-  :config (setq ispell-program-name "/usr/bin/aspell")
   :diminish flyspell-mode)
 
 (defun cantsin/flycheck-init ()

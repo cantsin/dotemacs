@@ -188,22 +188,6 @@ prefix argument."
 (global-set-key [remap org-kill-line] (bol-with-prefix org-kill-line))
 ;(global-set-key [remap kill-line] (bol-with-prefix paredit-kill))
 
-;; use abbrev to memorize mistakes
-(defun endless/ispell-word-then-abbrev (p)
-  "Call `ispell-word'.  Then create an abbrev for the correction made.
-With prefix P, create local abbrev.  Otherwise it will be global."
-  (interactive "P")
-  (let ((bef (downcase (or (thing-at-point 'word) ""))) aft)
-    (call-interactively 'ispell-word)
-    (setq aft (downcase (or (thing-at-point 'word) "")))
-    (unless (string= aft bef)
-      (message "\"%s\" now expands to \"%s\" %sally"
-               bef aft (if p "loc" "glob"))
-      (define-abbrev
-        (if p local-abbrev-table global-abbrev-table)
-        bef aft))))
-(global-set-key (kbd "C-x C-i") 'endless/ispell-word-then-abbrev)
-
 ;; toggle refill-mode on/off
 (global-set-key (kbd "C-c q") 'refill-mode)
 
@@ -227,7 +211,7 @@ With prefix P, create local abbrev.  Otherwise it will be global."
 (global-set-key (kbd "C-M-t") 'transpose-sexps)
 
 ;; quick search.
-(global-set-key (kbd "M-g s") 'helm-git-grep)
+(global-set-key (kbd "M-g s") 'helm-projectile-rg)
 
 ;; pretty-print evals.
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)

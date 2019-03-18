@@ -28,6 +28,7 @@
   (use-package stripe-buffer
     :defer t
     :ensure t)
+  (require 'org-notmuch)
   (add-hook 'org-mode-hook
             (lambda () (org-bullets-mode 1)))
   (add-hook 'org-after-todo-state-change-hook
@@ -42,8 +43,7 @@
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
   (setq org-default-notes-file "~/todos.org/notes.org"
         org-agenda-files '("~/todos.org/")
-        org-clock-persist 'history
-        org-mu4e-link-query-in-headers-mode nil
+        org-journal-dir "~/journal"
         org-confirm-babel-evaluate nil
         org-src-fontify-natively t
         org-src-tab-acts-natively t
@@ -65,7 +65,7 @@
         '((sequence "TODO(t)" "PENDING(p)" "|" "DONE(d)")
           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
           (sequence "|" "FUTURE(l)")
-          (sequence "|" "CANCELED(c)"))
+          (sequence "|" "CANCELED(c)" "BLOCKED(x)"))
   ;; set up shortcut for priorities
         org-agenda-custom-commands
         '(("p" "Agenda for all priorities" agenda ""
@@ -76,10 +76,8 @@
                (point-at-eol)))))))
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((sh . t)
-     (ipython . t)
-     (python . t)))
-  (org-clock-persistence-insinuate))
+   '((shell . t)
+     (python . t))))
 
 (use-package org
   :bind (("C-c l" . org-store-link)
@@ -88,7 +86,8 @@
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb)
-         ("C-c e" . org-archive-subtree))
+         ("C-c e" . org-archive-subtree)
+         ("C-c l" . org-store-link))
   :init (cantsin/org-init)
   :config (cantsin/org-config))
 

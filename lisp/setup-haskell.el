@@ -4,31 +4,6 @@
 ;;; Code:
 (require 'use-package)
 
-(use-package purscheck
-  :defer t
-  :config (add-to-list 'load-path "purscheck.el")) ;; custom
-
-(defun cantsin/setup-purescript ()
-  "Set up purescript."
-  (add-to-list 'company-backends 'company-ghc)
-  (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
-  (add-hook 'purescript-mode-hook 'turn-on-purescript-unicode-input-method)
-  (define-key purescript-mode-map (kbd "C-c C-c") 'purescript-compile)
-  (define-key purescript-mode-map (kbd "C-x C-d") nil)
-  (define-key purescript-mode-map (kbd "C-c C-z") 'purescript-interactive-switch)
-  (define-key purescript-mode-map (kbd "C-c C-l") 'purescript-process-load-file)
-  (define-key purescript-mode-map (kbd "C-c C-b") 'purescript-interactive-switch)
-  (define-key purescript-mode-map (kbd "C-c C-t") 'purescript-process-do-type)
-  (define-key purescript-mode-map (kbd "C-c C-i") 'purescript-process-do-info)
-  (define-key purescript-mode-map (kbd "C-c M-.") nil)
-  (define-key purescript-mode-map (kbd "C-c C-d") nil)
-  (load "purescript-mode-autoloads"))
-
-(use-package purescript-mode
-  :defer t
-  :ensure t
-  :config (cantsin/setup-purescript))
-
 (defun cantsin/setup-elm ()
   "Set up Elm."
   (setq elm-tags-on-save t)
