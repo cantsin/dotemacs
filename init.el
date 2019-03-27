@@ -126,6 +126,7 @@
 (require 'setup-org)
 (require 'setup-company)
 (require 'setup-languages)
+(require 'setup-frontend)
 (require 'setup-lisp)
 (require 'setup-haskell)
 (require 'setup-projectile)

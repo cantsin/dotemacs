@@ -94,6 +94,7 @@
   restclient
   racer
   ripgrep
+  rjsx-mode
   rust-mode
   s
   scala-mode
