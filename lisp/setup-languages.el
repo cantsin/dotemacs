@@ -4,6 +4,14 @@
 ;;; Code:
 (require 'use-package)
 
+(use-package lsp-mode
+  :commands lsp)
+
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :init (progn
+           (add-hook 'lsp-mode-hook 'lsp-ui-mode)))
+
 ;; for external tools, need to install:
 ;; go get code.google.com/p/rog-go/exp/cmd/godef
 ;; go get code.google.com/p/go.tools/cmd/godoc
@@ -91,6 +99,7 @@
          (add-hook 'racer-mode-hook #'eldoc-mode)
          (add-hook 'racer-mode-hook #'company-mode)
          (add-hook 'rust-mode-hook #'racer-mode)
+         (add-hook 'rust-mode-hook #'lsp)
          (setq rust-format-on-save t)))
 
 (use-package nix-update

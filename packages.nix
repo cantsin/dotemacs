@@ -11,6 +11,8 @@
   company
   company-emacs-eclim
   company-ghc
+  company-lsp
+  dap-mode
   deft
   diminish
   dockerfile-mode
@@ -61,6 +63,8 @@
   jinja2-mode
   js2-mode
   json-mode
+  lsp-mode
+  lsp-ui
   key-chord
   kv
   ledger-mode

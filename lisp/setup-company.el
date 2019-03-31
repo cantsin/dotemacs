@@ -33,5 +33,8 @@
   :diminish " co"
   :config (cantsin/setup-company))
 
+(use-package company-lsp
+  :commands company-lsp)
+
 (provide 'setup-company)
 ;;; setup-company.el ends here
