@@ -9,6 +9,9 @@
 
 (use-package lsp-ui
   :commands lsp-ui-mode
+  :config (progn
+            (require 'lsp-ui-sideline)
+            (set-face-background 'lsp-ui-sideline-global "gray14"))
   :init (progn
            (add-hook 'lsp-mode-hook 'lsp-ui-mode)))
 
