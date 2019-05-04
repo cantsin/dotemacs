@@ -63,7 +63,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 (defun cantsin/key-init ()
   "Initialize key chords."
-  (key-chord-define-global ",," 'helm-mini)
+  (key-chord-define-global ",," 'ivy-switch-buffer)
   (key-chord-define-global ",." '(lambda ()
                                    (interactive)
                                    (switch-to-buffer (car (car (window-prev-buffers))))))
@@ -211,7 +211,7 @@ prefix argument."
 (global-set-key (kbd "C-M-t") 'transpose-sexps)
 
 ;; quick search.
-(global-set-key (kbd "M-g s") 'helm-projectile-rg)
+(global-set-key (kbd "M-g s") 'counsel-projectile-rg)
 
 ;; pretty-print evals.
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)

@@ -16,23 +16,6 @@
              (turn-off-auto-fill)
              (visual-line-mode)))
 
-;;;; NB this breaks latest helm so disabling for now
-;; turn off annoying ffap behavior
-;; (use-package ffap
-;;   :defer t
-;;   :config (setq ffap-alist nil
-;;                 ffap-machine-p-known 'accept
-;;                 ffap-require-prefix nil
-;;                 ffap-gopher-regexp nil
-;;                 ffap-url-regexp nil
-;;                 ffap-ftp-regexp nil
-;;                 ffap-ftp-sans-slash-regexp nil
-;;                 ffap-rfs-regexp nil
-;;                 ffap-shell-prompt-regexp nil))
-;; (defun ffap-file-at-point nil
-;;   "Turn off ffap file-at-point completely."
-;;   nil)
-
 (use-package windmove
   :defer t
   :ensure t)
@@ -189,9 +172,6 @@
 (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
-
-(use-package helm-dash
-  :config (setq helm-dash-browser-func 'eww))
 
 (use-package swiper
   :bind (("\C-c s" . swiper)))

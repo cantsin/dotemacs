@@ -7,12 +7,17 @@
 (use-package projectile
   :ensure t
   :init (projectile-global-mode)
-  :diminish " Proj")
+  :diminish " Proj"
+  :config
+  (setq projectile-switch-project-action 'projectile-find-file-dwim
+        projectile-completion-system 'ivy
+        projectile-switch-project-action 'counsel-projectile-find-file
+        projectile-use-git-grep t))
 
 (setq hydra-is-helpful t)
 (setq hydra-lv t)
 (setq lv-use-separator t)
-(setq projectile-switch-project-action 'projectile-find-file-dwim)
+
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 (defhydra hydra-projectile (:idle 0.0

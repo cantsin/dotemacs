@@ -3,8 +3,9 @@
   alchemist
   all-the-icons
   all-the-icons-dired
-  auto-yasnippet
+  all-the-icons-ivy
   autodisass-llvm-bitcode
+  auto-yasnippet
   avy
   cargo
   cask
@@ -14,6 +15,8 @@
   company-emacs-eclim
   company-ghc
   company-lsp
+  counsel
+  counsel-projectile
   dap-mode
   deft
   diminish
@@ -45,31 +48,20 @@
   go-mode
   handlebars-mode
   haskell-mode
-  helm
-  helm-company
-  helm-dash
-  helm-git-grep
-  helm-gtags
-  helm-hoogle
-  helm-idris
-  helm-make
-  helm-projectile
-  helm-rg
-  helm-spaces
-  helm-swoop
   ht
   htmlize
   hydra
   idris-mode
+  ivy
   jedi
   jinja2-mode
   js2-mode
   json-mode
-  lsp-mode
-  lsp-ui
   key-chord
   kv
   ledger-mode
+  lsp-mode
+  lsp-ui
   magit
   markdown-mode
   markdown-mode-plus
@@ -79,8 +71,8 @@
   multiple-cursors
   nix-mode
   nix-update
-  notmuch
   nodejs-repl
+  notmuch
   ocodo-svg-modelines
   org-bullets
   org-journal
@@ -96,9 +88,9 @@
   prodigy
   projectile
   puppet-mode
+  racer
   reason-mode
   restclient
-  racer
   ripgrep
   rjsx-mode
   rust-mode
@@ -110,7 +102,7 @@
   smartparens
   solarized-theme
   stripe-buffer
-  swiper-helm
+  swiper
   tagedit
   terraform-mode
   tide
