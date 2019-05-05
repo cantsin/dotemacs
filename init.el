@@ -94,18 +94,6 @@
 (set-face-attribute 'default nil :font "Triplicate T3c-16")
 (set-frame-font "Triplicate T3c-16" nil t)
 
-;; set window title!
-(setq-default frame-title-format
-              '(:eval
-                (format "emacs %s"
-                        (cond
-                         (buffer-file-truename
-                          buffer-file-truename)
-                         (dired-directory
-                          (concat "{" dired-directory "}"))
-                         (t
-                          "[no file]")))))
-
 (setenv "PATH" (concat (getenv "PATH") ":/home/james/bin"))
 (setq exec-path (append exec-path '("/home/james/bin")))
 

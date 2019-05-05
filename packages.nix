@@ -8,8 +8,6 @@
   auto-yasnippet
   avy
   cargo
-  cask
-  caskxy
   cider
   company
   company-emacs-eclim
@@ -35,8 +33,6 @@
   expand-region
   f
   flycheck
-  flycheck-cask
-  flycheck-color-mode-line
   flycheck-haskell
   flycheck-rust
   flymake-lua

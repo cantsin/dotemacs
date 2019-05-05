@@ -105,12 +105,7 @@
   (global-flycheck-mode t)
   (add-hook 'emacs-lisp-mode-hook
             (function (lambda ()
-                        (setq flycheck-emacs-lisp-load-path load-path))))
-  ;; TODO
-  (use-package flycheck-color-mode-line
-    :ensure t
-    :defer t
-    :init (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
+                        (setq flycheck-emacs-lisp-load-path load-path)))))
 
 (use-package flycheck
   :ensure t
