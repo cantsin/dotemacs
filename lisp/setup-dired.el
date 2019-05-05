@@ -45,9 +45,6 @@
   :defer t
   :config (cantsin/dired-config))
 
-;; if icons do not show up:
-;; M-x all-the-icons-install-fonts
-(use-package all-the-icons)
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
 

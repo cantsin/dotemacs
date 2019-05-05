@@ -4,12 +4,6 @@
 ;;; Code:
 (require 'use-package)
 
-(defun cantsin/magit-init ()
-  "Set up magit properly."
-  (progn
-    ;; we no longer need vc-git
-    (delete 'Git vc-handled-backends)))
-
 (defun magit-toggle-whitespace ()
   "Toggle whitespace."
   (interactive)
@@ -86,7 +80,6 @@
   :commands magit-get-top-dir
   :bind (("C-c g" . magit-status)
          ("C-c C-g l" . magit-file-log))
-  :init (cantsin/magit-init)
   :config (cantsin/magit-config))
 
 (use-package ediff

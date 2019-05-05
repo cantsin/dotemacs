@@ -73,7 +73,6 @@
   nix-update
   nodejs-repl
   notmuch
-  ocodo-svg-modelines
   org-bullets
   org-journal
   package-build
@@ -84,6 +83,7 @@
   pdf-tools
   pkg-info
   popup
+  powerline
   pretty-mode
   prodigy
   projectile

@@ -97,15 +97,10 @@
 ;; set window title!
 (setq-default frame-title-format
               '(:eval
-                (format "%s@%s: %s %s"
-                        (or (file-remote-p default-directory 'user)
-                            user-real-login-name)
-                        (or (file-remote-p default-directory 'host)
-                            system-name)
-                        (buffer-name)
+                (format "emacs %s"
                         (cond
                          (buffer-file-truename
-                          (concat "(" buffer-file-truename ")"))
+                          buffer-file-truename)
                          (dired-directory
                           (concat "{" dired-directory "}"))
                          (t
