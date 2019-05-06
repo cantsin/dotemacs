@@ -26,31 +26,39 @@
                 'face `(:foreground "LightGoldenrod" :background "gray17" :family ,(all-the-icons-faicon-family) :height 1.2)
                 'display '(raise -0.1)))
    (t
-    (propertize (format "%s" (all-the-icons-faicon "question-circle-o"))
+    (propertize (format "%s" (all-the-icons-faicon "minus-circle"))
                 'face `(:foreground "LightGoldenrod" :background "gray17" :family ,(all-the-icons-faicon-family) :height 1.2)
                 'display '(raise -0.1)))))
 
-;; TODO issue-opened octicon for flycheck issues
 (defun custom-modeline-flycheck-status ()
   "Set up flycheck status."
-  (let* ((text (pcase flycheck-last-status-change
-                (`finished (if flycheck-current-errors
-                               (let ((count (let-alist (flycheck-count-errors flycheck-current-errors)
-                                              (+ (or .warning 0) (or .error 0)))))
-                                 (format "✖ %s Issue%s" count (if (eq 1 count) "" "s")))
-                             "✔"))
-                (`running     "⟲")
-                (`no-checker  "⚠")
-                (`not-checked "✖") ;; magit
-                (`errored     "⚠")
-                (`interrupted "⛔")
-                (`suspicious  ""))))
-     (propertize text
-                 'help-echo "Show Flycheck Errors"
-                 'mouse-face '(:box 1)
-                 'face `(:foreground "gray90" :background "gray40")
-                 'local-map (make-mode-line-mouse-map
-                             'mouse-1 (lambda () (interactive) (flycheck-list-errors))))))
+  (let* ((count
+          (if flycheck-current-errors
+              (let ((n (let-alist (flycheck-count-errors flycheck-current-errors)
+                         (+ (or .warning 0) (or .error 0)))))
+                n)
+            0))
+         (string (if flycheck-current-errors
+                     (format "%s error%s" count (if (eq 1 count) "" "s"))
+                   ""))
+         (icon (pcase flycheck-last-status-change
+                 (`finished (if flycheck-current-errors "bug" "check"))
+                 (`running     "refresh")
+                 (`no-checker  "exclamation-triangle")
+                 (`not-checked "eye-slash")
+                 (`errored     "bolt")
+                 (`interrupted "exclamation-circle")
+                 (`suspicious  "commenting-o"))))
+    (format "%s %s"
+            (propertize (format "%s" (all-the-icons-faicon icon))
+                        'face `(:foreground "gray90" :background "gray40" :family ,(all-the-icons-faicon-family) :height 1.2)
+                        'display '(raise -0.1))
+            (propertize string
+                        'help-echo "Show Flycheck Errors"
+                        'mouse-face '(:box 1)
+                        'face `(:foreground "gray90" :background "gray40")
+                        'local-map (make-mode-line-mouse-map
+                                    'mouse-1 (lambda () (interactive) (flycheck-list-errors)))))))
 
 (defun custom-modeline-read-only ()
   "Customized modeline file status."
@@ -144,8 +152,6 @@
 
 (set-face-background 'mode-line "gray40")
 (set-face-background 'mode-line-inactive "gray40")
-
-;; TODO startup issue
 
 (provide 'setup-theme)
 ;;; setup-theme.el ends here

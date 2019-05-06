@@ -28,7 +28,6 @@
   epl
   erc-image
   eshell-prompt-extras
-  esup
   esxml
   expand-region
   f
