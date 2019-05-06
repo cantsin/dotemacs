@@ -54,18 +54,30 @@
                  'local-map (make-mode-line-mouse-map
                              'mouse-1 (lambda () (interactive) (flycheck-list-errors))))))
 
-;; TODO read only
+(defun custom-modeline-read-only ()
+  "Customized modeline file status."
+  (let* ((config-alist
+          '(("%"
+             all-the-icons-octicon-family
+             all-the-icons-octicon
+             "lock"
+             :height 1.2 :v-adjust 0.1)))
+         (result (cdr (assoc (format-mode-line "%*") config-alist))))
+    (format "%s "
+            (propertize (apply (cadr result) (cddr result))
+                        'face `(:foreground "gray90" :family ,(funcall (car result)))
+                        'display '(raise -0.1)))))
 
 (defun custom-modeline-file-and-icon ()
   "Customized modeline file."
   (format "%s%s"
-          (propertize (format "%s" (all-the-icons-icon-for-buffer))
-                      'help-echo (format "Major-mode: `%s`" major-mode)
-                      'face `(:foreground "gray90" :background "gray40" :family ,(all-the-icons-icon-family-for-buffer))
-                      'display '(raise -0.1))
-          (propertize (concat " " (buffer-name))
-                      'help-echo (buffer-file-name)
-                      'face `(:foreground "gray90" :background "gray40"))))
+             (propertize (format "%s" (all-the-icons-icon-for-buffer))
+                         'help-echo (format "Major-mode: `%s`" major-mode)
+                         'face `(:foreground "gray90" :background "gray40" :family ,(all-the-icons-icon-family-for-buffer))
+                         'display '(raise -0.1))
+             (propertize (concat " " (buffer-name))
+                         'help-echo (buffer-file-name)
+                         'face `(:foreground "gray90" :background "gray40"))))
 
 (defun custom-modeline-project ()
   "Customized modeline project."
@@ -121,6 +133,7 @@
                 (:eval (custom-modeline-project))
                 (:eval (powerline-arrow 'right "gray17" "gray40"))
 
+                (:eval (custom-modeline-read-only))
                 (:eval (custom-modeline-file-and-icon))
                 (:eval (powerline-arrow 'right "gray40" "gray17"))
 
