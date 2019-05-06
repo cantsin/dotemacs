@@ -4,7 +4,8 @@
 ;;; Code:
 (require 'use-package)
 
-(use-package ivy :ensure t
+(use-package ivy
+  :ensure t
   :diminish (ivy-mode . "")
   :bind
   (("M-y" . counsel-yank-pop)
@@ -31,7 +32,10 @@
 (use-package all-the-icons-ivy
   :ensure t
   :config
-  (all-the-icons-ivy-setup))
+  (progn
+    (all-the-icons-ivy-setup)
+    (setq all-the-icons-ivy-file-commands
+          '(counsel-find-file counsel-file-jump counsel-recentf counsel-projectile-find-file counsel-projectile-find-dir))))
 
 (provide 'setup-ivy)
 ;;; setup-ivy.el ends here
