@@ -40,13 +40,6 @@
   "Move right."
   (when buffer-file-name (save-buffer)))
 
-;; save point.
-(use-package saveplace
-  :ensure t
-  :config (progn
-            (setq-default save-place t)
-            (setq save-place-file (concat user-emacs-directory "places"))))
-
 (defun bjm-deft-save-windows (orig-fun &rest args)
   "Advice to save windows -- ORIG-FUN ARGS."
   (setq bjm-pre-deft-window-config (current-window-configuration))

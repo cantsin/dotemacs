@@ -25,7 +25,11 @@
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(define-key counsel-find-file-map (kbd "C-l") 'counsel-up-directory)
+
+(use-package counsel
+  :bind
+  (("C-l" . counsel-up-directory)
+   :map counsel-find-file-map))
 
 (use-package all-the-icons-ivy
   :ensure t

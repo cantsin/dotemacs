@@ -96,8 +96,6 @@
                        (format "%3d" (string-to-number (format-mode-line "%c"))))
                       'face `(:foreground "black" :background "LightGoldenrod" :weight bold))))
 
-;; TODO startup issue
-
 (defun powerline-arrow (where before after)
   "BEFORE color. AFTER color. WHERE direction. Draws an arrow."
   (format "%s%s%s"
@@ -149,8 +147,8 @@
 (set-face-background 'mode-line "gray40")
 (set-face-background 'mode-line-inactive "gray40")
 
-;; commit point
-;; C-x C-f then C-l does not work for backspace
+;; TODO startup issue
+;; TODO commit point
 
 (provide 'setup-theme)
 ;;; setup-theme.el ends here
