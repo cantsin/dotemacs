@@ -8,8 +8,6 @@
 ;; M-x all-the-icons-install-fonts
 (use-package all-the-icons)
 
-(use-package flycheck)
-
 (use-package powerline)
 
 (defun custom-modeline-vc ()
@@ -96,22 +94,6 @@
                        (format "%3d" (string-to-number (format-mode-line "%c"))))
                       'face `(:foreground "black" :background "LightGoldenrod" :weight bold))))
 
-(defun powerline-arrow (where before after)
-  "BEFORE color. AFTER color. WHERE direction. Draws an arrow."
-  (format "%s%s%s"
-          (propertize " "
-                      'face `(:background ,before))
-          (propertize (format "%s" (all-the-icons-alltheicon
-                                    (concat "arrow-" (symbol-name where))))
-                      'face `(:background ,(if (eq 'right where) after before)
-                              :foreground ,(if (eq 'right where) before after)
-                              :family ,(all-the-icons-alltheicon-family)
-                              :box nil
-                              :height 1.2)
-                 'display '(raise -0.05))
-          (propertize " "
-                      'face `(:background ,after))))
-
 (setq-default frame-title-format
               '(:eval
                 (format "emacs %s"
@@ -123,20 +105,36 @@
                          (t
                           (concat "(" (string-trim (buffer-name)) ")"))))))
 
+(defface golden-face '((t :background "LightGoldenrod")) "Theme." :group 'setup-theme-faces)
+(defface gray17-face '((t :background "gray17")) "Theme." :group 'setup-theme-faces)
+(defface gray40-face '((t :background "gray40")) "Theme." :group 'setup-theme-faces)
+
 (setq-default mode-line-format
               '("%e"
                 (:eval (custom-modeline-location))
-                (:eval (powerline-arrow 'right "LightGoldenrod" "gray17"))
+                (:eval (powerline-render (list
+                                          (powerline-raw " " 'golden-face)
+                                          (powerline-arrow-left 'golden-face 'gray17-face)
+                                          (powerline-raw " " 'gray17-face))))
 
                 (:eval (custom-modeline-project))
-                (:eval (powerline-arrow 'right "gray17" "gray40"))
+                (:eval (powerline-render (list
+                                          (powerline-raw " " 'gray17-face)
+                                          (powerline-arrow-left 'gray17-face 'gray40-face)
+                                          (powerline-raw " " 'gray40-face))))
 
                 (:eval (custom-modeline-read-only))
                 (:eval (custom-modeline-file-and-icon))
-                (:eval (powerline-arrow 'right "gray40" "gray17"))
+                (:eval (powerline-render (list
+                                          (powerline-raw " " 'gray40-face)
+                                          (powerline-arrow-left 'gray40-face 'gray17-face)
+                                          (powerline-raw " " 'gray17-face))))
 
                 (:eval (custom-modeline-vc))
-                (:eval (powerline-arrow 'left "gray17" "gray40"))
+                (:eval (powerline-render (list
+                                          (powerline-raw " " 'gray17-face)
+                                          (powerline-arrow-right 'gray17-face 'gray40-face)
+                                          (powerline-raw " " 'gray40-face))))
 
                 (:eval (custom-modeline-flycheck-status))))
 
@@ -147,7 +145,6 @@
 (set-face-background 'mode-line "gray40")
 (set-face-background 'mode-line-inactive "gray40")
 
-;; TODO powerline proper
 ;; TODO startup issue
 
 (provide 'setup-theme)
