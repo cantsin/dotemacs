@@ -147,8 +147,8 @@
 (set-face-background 'mode-line "gray40")
 (set-face-background 'mode-line-inactive "gray40")
 
+;; TODO powerline proper
 ;; TODO startup issue
-;; TODO commit point
 
 (provide 'setup-theme)
 ;;; setup-theme.el ends here

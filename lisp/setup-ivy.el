@@ -8,10 +8,8 @@
   :diminish (ivy-mode . "")
   :bind
   (("M-y" . counsel-yank-pop)
-   :map ivy-minibuffer-map
-   ("M-y" . ivy-next-line)
-   :map ivy-mode-map
-   ("C-'" . ivy-avy)))
+   :map ivy-minibuffer-map ("M-y" . ivy-next-line)
+   :map ivy-mode-map ("C-'" . ivy-avy)))
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t
@@ -28,8 +26,7 @@
 
 (use-package counsel
   :bind
-  (("C-l" . counsel-up-directory)
-   :map counsel-find-file-map))
+  (:map counsel-find-file-map ("C-l" . counsel-up-directory)))
 
 (use-package all-the-icons-ivy
   :ensure t

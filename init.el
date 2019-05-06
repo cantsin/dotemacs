@@ -114,7 +114,6 @@
 (require 'setup-haskell)
 (require 'setup-projectile)
 (require 'setup-edit)
-(require 'setup-session)
 (require 'setup-keys)
 (require 'setup-functions)
 
