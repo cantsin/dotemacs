@@ -149,8 +149,6 @@
 (set-face-background 'mode-line "gray40")
 (set-face-background 'mode-line-inactive "gray40")
 
-;; helm: yank
-;; previously repeated m-x commands
 ;; commit point
 ;; C-x C-f then C-l does not work for backspace
 

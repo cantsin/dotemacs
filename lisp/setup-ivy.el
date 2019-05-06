@@ -7,8 +7,11 @@
 (use-package ivy :ensure t
   :diminish (ivy-mode . "")
   :bind
-  (:map ivy-mode-map
-        ("C-'" . ivy-avy))
+  (("M-y" . counsel-yank-pop)
+   :map ivy-minibuffer-map
+   ("M-y" . ivy-next-line)
+   :map ivy-mode-map
+   ("C-'" . ivy-avy)))
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t
@@ -18,10 +21,11 @@
         ivy-initial-inputs-alist nil
         enable-recursive-minibuffers t)
   (setq ivy-re-builders-alist
-        '((t . ivy--regex-ignore-order))))
+        '((t . ivy--regex-ignore-order)))
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(define-key counsel-find-file-map (kbd "C-l") 'counsel-up-directory)
 
 (use-package all-the-icons-ivy
   :ensure t

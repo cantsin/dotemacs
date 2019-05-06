@@ -96,6 +96,7 @@
   session
   smart-compile
   smartparens
+  smex
   solarized-theme
   stripe-buffer
   swiper
