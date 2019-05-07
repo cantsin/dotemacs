@@ -143,8 +143,7 @@
 
 (use-package flymake
   :defer t
-  :init (cantsin/setup-flymake)
-  :config (setq flymake-gui-warnings-enabled nil))
+  :init (cantsin/setup-flymake))
 
 (provide 'setup-fly)
 ;;; setup-fly.el ends here
