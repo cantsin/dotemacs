@@ -11,6 +11,7 @@
   cider
   company
   company-emacs-eclim
+  company-irony
   company-ghc
   company-lsp
   counsel
@@ -32,6 +33,7 @@
   expand-region
   f
   flycheck
+  flycheck-irony
   flycheck-haskell
   flycheck-rust
   flymake-lua
@@ -47,6 +49,7 @@
   htmlize
   hydra
   idris-mode
+  irony
   ivy
   jedi
   jinja2-mode

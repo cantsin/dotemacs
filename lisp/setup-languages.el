@@ -109,5 +109,11 @@
 (use-package nix-update
   :defer t)
 
+(use-package irony
+  :config
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
