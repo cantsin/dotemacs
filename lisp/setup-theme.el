@@ -14,13 +14,13 @@
   "Set up VC if applicable."
   (cond
    (vc-mode
-      (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
-        (concat
-         (propertize (format "%s" (all-the-icons-octicon "git-branch"))
-                     'face `(:foreground "LightGoldenrod" :background "gray17" :family ,(all-the-icons-octicon-family) :height 1.2)
-                     'display '(raise -0.1))
-         (propertize (format " %s" branch)
-                     'face `(:foreground "LightGoldenrod" :background "gray17")))))
+    (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
+      (concat
+       (propertize (format "%s" (all-the-icons-octicon "git-branch"))
+                   'face `(:foreground "LightGoldenrod" :background "gray17" :family ,(all-the-icons-octicon-family) :height 1.2)
+                   'display '(raise -0.1))
+       (propertize (format " %s" branch)
+                   'face `(:foreground "LightGoldenrod" :background "gray17")))))
    ((string-prefix-p "magit" (buffer-name))
     (propertize (format "%s" (all-the-icons-faicon "git"))
                 'face `(:foreground "LightGoldenrod" :background "gray17" :family ,(all-the-icons-faicon-family) :height 1.2)
@@ -77,13 +77,13 @@
 (defun custom-modeline-file-and-icon ()
   "Customized modeline file."
   (format "%s%s"
-             (propertize (format "%s" (all-the-icons-icon-for-buffer))
-                         'help-echo (format "Major-mode: `%s`" major-mode)
-                         'face `(:foreground "gray90" :background "gray40" :family ,(all-the-icons-icon-family-for-buffer))
-                         'display '(raise -0.1))
-             (propertize (concat " " (buffer-name))
-                         'help-echo (buffer-file-name)
-                         'face `(:foreground "gray90" :background "gray40"))))
+          (propertize (format "%s" (all-the-icons-icon-for-buffer))
+                      'help-echo (format "Major-mode: `%s`" major-mode)
+                      'face `(:foreground "gray90" :background "gray40" :family ,(all-the-icons-icon-family-for-buffer))
+                      'display '(raise -0.1))
+          (propertize (concat " " (buffer-name))
+                      'help-echo (buffer-file-name)
+                      'face `(:foreground "gray90" :background "gray40"))))
 
 (defun custom-modeline-project ()
   "Customized modeline project."
@@ -100,7 +100,7 @@
                        (format "%3d" (string-to-number (format-mode-line "%l")))
                        ":"
                        (format "%3d" (string-to-number (format-mode-line "%c"))))
-                      'face `(:foreground "black" :background "LightGoldenrod" :weight bold))))
+                      'face `(:foreground "black" :background ,(if (powerline-selected-window-active) "LightGoldenrod" "LightSkyBlue") :weight bold))))
 
 (setq-default frame-title-format
               '(:eval
@@ -113,6 +113,7 @@
                          (t
                           (concat "(" (string-trim (buffer-name)) ")"))))))
 
+(defface inactive-face '((t :background "LightSkyBlue")) "Theme." :group 'setup-theme-faces)
 (defface golden-face '((t :background "LightGoldenrod")) "Theme." :group 'setup-theme-faces)
 (defface gray17-face '((t :background "gray17")) "Theme." :group 'setup-theme-faces)
 (defface gray40-face '((t :background "gray40")) "Theme." :group 'setup-theme-faces)
@@ -121,8 +122,8 @@
               '("%e"
                 (:eval (custom-modeline-location))
                 (:eval (powerline-render (list
-                                          (powerline-raw " " 'golden-face)
-                                          (powerline-arrow-left 'golden-face 'gray17-face)
+                                          (powerline-raw " " (if (powerline-selected-window-active) 'golden-face 'inactive-face))
+                                          (powerline-arrow-left (if (powerline-selected-window-active) 'golden-face 'inactive-face) 'gray17-face)
                                           (powerline-raw " " 'gray17-face))))
 
                 (:eval (custom-modeline-project))
