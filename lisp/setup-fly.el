@@ -103,6 +103,7 @@
 (defun cantsin/flycheck-init ()
   "Deferred setup of 'flycheck-mode'."
   (global-flycheck-mode t)
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (add-hook 'emacs-lisp-mode-hook
             (function (lambda ()
                         (setq flycheck-emacs-lisp-load-path load-path)))))
