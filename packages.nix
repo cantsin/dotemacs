@@ -52,6 +52,7 @@
   irony
   ivy
   ivy-hydra
+  ivy-rich
   jedi
   jinja2-mode
   js2-mode
