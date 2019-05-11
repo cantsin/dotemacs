@@ -62,17 +62,11 @@
 
 (defun custom-modeline-read-only ()
   "Customized modeline file status."
-  (let* ((config-alist
-          '(("%"
-             all-the-icons-octicon-family
-             all-the-icons-octicon
-             "lock"
-             :height 1.2 :v-adjust 0.1)))
-         (result (cdr (assoc (format-mode-line "%*") config-alist))))
-    (format "%s "
-            (propertize (apply (cadr result) (cddr result))
-                        'face `(:foreground "gray90" :family ,(funcall (car result)))
-                        'display '(raise -0.1)))))
+  (if (equal (format-mode-line "%*") "%")
+      (format "%s "
+              (propertize (all-the-icons-octicon "lock")
+                          'face `(:foreground "gray90" :family ,(all-the-icons-octicon-family) :height 1.2)
+                          'display '(raise -0.1)))))
 
 (defun custom-modeline-file-and-icon ()
   "Customized modeline file."
