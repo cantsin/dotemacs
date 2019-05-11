@@ -79,7 +79,9 @@
 
 (use-package swiper
   :config
-  (global-set-key (kbd "C-s") 'swiper))
+  (setq counsel-grep-base-command
+        "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
+  (global-set-key (kbd "C-s") 'counsel-grep-or-swiper))
 
 (provide 'setup-ivy)
 ;;; setup-ivy.el ends here

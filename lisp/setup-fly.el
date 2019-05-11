@@ -95,6 +95,7 @@
   :ensure t
   :defer t
   :bind (("C-c s" . flyspell-correct-word-before-point)
+         ("M-g l" . flycheck-list-errors)
          ("M-g n" . fly-goto-next-error)
          ("M-g p" . fly-goto-previous-error))
   :init (cantsin/flyspell-init)
