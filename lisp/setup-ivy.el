@@ -10,6 +10,7 @@
   :bind
   (("M-y" . counsel-yank-pop)
    :map ivy-minibuffer-map ("M-y" . ivy-next-line)
+   :map ivy-minibuffer-map ("C-o" . hydra-ivy/body)
    :map ivy-mode-map ("C-'" . ivy-avy)))
   :config
   (ivy-mode 1)
