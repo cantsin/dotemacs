@@ -77,5 +77,9 @@
   :bind
   (:map counsel-find-file-map ("C-l" . counsel-up-directory)))
 
+(use-package swiper
+  :config
+  (global-set-key (kbd "C-s") 'swiper))
+
 (provide 'setup-ivy)
 ;;; setup-ivy.el ends here
