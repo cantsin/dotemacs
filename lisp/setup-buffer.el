@@ -92,7 +92,10 @@
   :init (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
 
 (use-package avy
-  :bind (("s-." . avy-goto-word-or-subword-1)))
+  :bind (("M-g M-g" . avy-goto-line)
+         ("M-g w" . avy-goto-word-1))
+  :config
+  (key-chord-define-global "jj" 'avy-goto-char))
 
 (defmacro def-pairs (pairs)
   `(progn
