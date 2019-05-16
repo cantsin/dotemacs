@@ -105,6 +105,7 @@
   "Deferred setup of 'flycheck-mode'."
   (global-flycheck-mode t)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   (add-hook 'emacs-lisp-mode-hook
             (function (lambda ()
                         (setq flycheck-emacs-lisp-load-path load-path)))))

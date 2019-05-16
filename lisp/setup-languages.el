@@ -5,6 +5,7 @@
 (require 'use-package)
 
 (use-package lsp-mode
+  :bind (("M-." . lsp-find-definition))
   :commands lsp)
 
 (use-package lsp-ui
@@ -92,17 +93,10 @@
   :config (progn
             (setq fsharp-indent-offset 2)))
 
-(use-package racer-mode
-  :defer t)
-
 (use-package rust-mode
   :defer t
   :init
-  (progn (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-         (add-hook 'racer-mode-hook #'eldoc-mode)
-         (add-hook 'racer-mode-hook #'company-mode)
-         (add-hook 'rust-mode-hook #'cargo-minor-mode)
-         (add-hook 'rust-mode-hook #'racer-mode)
+  (progn (add-hook 'rust-mode-hook #'cargo-minor-mode)
          (add-hook 'rust-mode-hook #'lsp)
          (setq rust-format-on-save t)))
 

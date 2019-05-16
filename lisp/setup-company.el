@@ -31,6 +31,7 @@
 (use-package company
   :defer t
   :diminish " co"
+  :bind (("C-/" . company-complete))
   :config (cantsin/setup-company))
 
 (use-package company-lsp

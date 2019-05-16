@@ -88,7 +88,6 @@
   prodigy
   projectile
   puppet-mode
-  racer
   reason-mode
   restclient
   ripgrep
