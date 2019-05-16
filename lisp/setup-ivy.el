@@ -9,9 +9,11 @@
   :diminish (ivy-mode . "")
   :bind
   (("M-y" . counsel-yank-pop)
+   ("C-r" . swiper-isearch)
    :map ivy-minibuffer-map ("M-y" . ivy-next-line)
    :map ivy-minibuffer-map ("C-w" . ivy-yank-word)
    :map ivy-minibuffer-map ("C-o" . hydra-ivy/body)
+   :map ivy-minibuffer-map ("C-r" . ivy-previous-line)
    :map ivy-mode-map ("C-'" . ivy-avy)))
   :config
   (ivy-mode 1)
