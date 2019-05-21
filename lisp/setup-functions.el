@@ -35,5 +35,11 @@ signature\" and is yet otherwise successful."
       (signal 'epg-error
 	      (list "Can't decrypt" (epg-errors-to-string errors))))))
 
+(defun proced-format-args-nix (args)
+  "ARGS is a process name. Strip the Nix store prefix."
+  (replace-regexp-in-string "/nix/store/[^-]+-" "" args))
+
+(advice-add 'proced-format-args :filter-return #'proced-format-args-nix)
+
 (provide 'setup-functions)
 ;;; setup-functions.el ends here
