@@ -71,7 +71,9 @@
 (defun custom-modeline-file-and-icon ()
   "Customized modeline file."
   (format "%s%s"
-          (propertize (format "%s" (all-the-icons-icon-for-buffer))
+          (propertize (format "%s" (if (all-the-icons-icon-family-for-buffer)
+                                       (all-the-icons-icon-for-buffer)
+                                     (all-the-icons-faicon "question-circle-o")))
                       'help-echo (format "Major-mode: `%s`" major-mode)
                       'face `(:foreground "gray90" :background "gray40" :family ,(all-the-icons-icon-family-for-buffer))
                       'display '(raise -0.1))
