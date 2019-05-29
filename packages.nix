@@ -49,6 +49,7 @@
   htmlize
   hydra
   idris-mode
+  interleave
   irony
   ivy
   ivy-hydra
@@ -80,7 +81,6 @@
   pandoc-mode
   paradox
   paredit
-  pdf-tools
   pkg-info
   popup
   powerline
@@ -135,4 +135,5 @@
   }))
 ] ++ [
   epkgs.orgPackages.org-plus-contrib
+  epkgs.pdf-tools
 ])
