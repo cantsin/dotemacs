@@ -4,9 +4,7 @@
 
 ;;; Code:
 
-;; as of December 12 2015:
-;; https://github.com/syl20bnr/spacemacs/issues/3854
-(package-initialize)
+(unless package--initialized (package-initialize t))
 
 (setq gc-cons-threshold 100000000)
 
@@ -44,7 +42,7 @@
       use-file-dialog nil
       vc-make-backup-files t
       visible-bell '1
-      x-select-enable-clipboard t)
+      select-enable-clipboard t)
 
 (auto-compression-mode t)
 (blink-cursor-mode 0)
