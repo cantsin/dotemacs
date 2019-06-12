@@ -59,6 +59,23 @@
   :bind (("C-c q" . bjm-quit-deft)
          ("C-c d" . deft-new-file)))
 
+;; replace kill-ring-save.
+(use-package easy-kill
+  :demand t
+  :bind
+  (:map easy-kill-base-map ("C-d" . easy-kill-delete-region)
+   :map easy-kill-base-map ("DEL" . easy-kill-delete-region))
+  :config
+  (add-to-list 'easy-kill-alist '(?^ backward-line-edge ""))
+  (add-to-list 'easy-kill-alist '(?$ forward-line-edge ""))
+  (add-to-list 'easy-kill-alist '(?b buffer ""))
+  (add-to-list 'easy-kill-alist '(?< buffer-before-point ""))
+  (add-to-list 'easy-kill-alist '(?> buffer-after-point ""))
+  (add-to-list 'easy-kill-alist '(?f string-to-char-forward ""))
+  (add-to-list 'easy-kill-alist '(?F string-up-to-char-forward ""))
+  (add-to-list 'easy-kill-alist '(?t string-to-char-backward ""))
+  (add-to-list 'easy-kill-alist '(?T string-up-to-char-backward "")))
+
 (defun cantsin/markdown-init ()
   "Initialize markdown."
   (add-hook 'markdown-mode-hook
@@ -162,9 +179,6 @@
 (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
-
-(use-package swiper
-  :bind (("\C-c s" . swiper)))
 
 (use-package pdf-tools
   :defer t

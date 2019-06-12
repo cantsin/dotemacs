@@ -114,7 +114,6 @@
 (require 'setup-lisp)
 (require 'setup-haskell)
 (require 'setup-projectile)
-(require 'setup-edit)
 (require 'setup-keys)
 (require 'setup-functions)
 

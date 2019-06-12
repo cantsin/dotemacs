@@ -7,9 +7,7 @@
 (use-package ivy
   :demand t
   :bind
-  (("M-y" . counsel-yank-pop)
-   ("C-r" . swiper-isearch)
-   :map ivy-minibuffer-map ("M-y" . ivy-next-line)
+  (:map ivy-minibuffer-map ("M-y" . ivy-next-line)
    :map ivy-minibuffer-map ("C-w" . ivy-yank-word)
    :map ivy-minibuffer-map ("C-o" . hydra-ivy/body)
    :map ivy-minibuffer-map ("C-r" . ivy-previous-line)
@@ -24,17 +22,19 @@
         ivy-re-builders-alist
         '((t . ivy--regex-ignore-order))))
 
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-
 (use-package all-the-icons-ivy
+  :demand t
   :config
-  (progn
-    (all-the-icons-ivy-setup)
-    (setq all-the-icons-ivy-file-commands
-          '(counsel-find-file counsel-file-jump counsel-recentf counsel-projectile-find-file counsel-projectile-find-dir))))
+  (all-the-icons-ivy-setup)
+  (setq all-the-icons-ivy-file-commands
+        '(counsel-find-file
+          counsel-file-jump
+          counsel-recentf
+          counsel-projectile-find-file
+          counsel-projectile-find-dir)))
 
 (use-package ivy-rich
+  :demand t
   :preface
   (defun ivy-rich-switch-buffer-icon (candidate)
     "Returns an icon for the candidate out of `all-the-icons'."
@@ -46,7 +46,7 @@
           icon))))
   :config
   (setq ivy-format-function #'ivy-format-function-line)
-  (setq ivy-rich--display-transformers-list
+  (setq ivy-rich-display-transformers-list
         '(ivy-switch-buffer
           (:columns
            ((ivy-rich-switch-buffer-icon :width 2)
@@ -60,7 +60,7 @@
            (lambda (cand) (get-buffer cand)))
           counsel-M-x
           (:columns
-           ((counsel-M-x-transformer (:width 40))  ; thr original transfomer
+           ((counsel-M-x-transformer (:width 40))  ; the original transformer
             (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))  ; return the docstring of the command
           counsel-describe-function
           (:columns
@@ -74,18 +74,24 @@
   (ivy-rich-mode 1))
 
 (use-package counsel
+  :demand t
   :bind
+  (("M-x" . counsel-M-x)
+   ("C-x C-f" . counsel-find-file)
+   ("M-y" . counsel-yank-pop))
   (:map counsel-find-file-map ("C-l" . counsel-up-directory)))
 
 (use-package counsel-projectile
   :ensure counsel
-  :bind (("M-g s" . counsel-projectile-rg)))
-
-(use-package swiper
+  :bind (("M-g s" . counsel-projectile-rg))
   :config
   (setq counsel-grep-base-command
-        "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
-  (global-set-key (kbd "C-s") 'counsel-grep-or-swiper))
+        "rg -i -M 120 --no-heading --line-number --color never '%s' %s"))
+
+(use-package swiper
+  :demand t
+  :bind (("C-s" . swiper-isearch)
+         ("C-r" . swiper-isearch)))
 
 (provide 'setup-ivy)
 ;;; setup-ivy.el ends here

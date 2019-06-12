@@ -4,6 +4,14 @@
 ;;; Code:
 (require 'use-package)
 
+;; Auto refresh dired, but be quiet about it
+(use-package autorevert
+  :demand t)
+
+(use-package all-the-icons-dired
+  :demand t
+  :hook (dired-mode . all-the-icons-dired-mode))
+
 (defun dired-back-to-top ()
   "Skip the . and .. directories."
   (interactive)
@@ -16,22 +24,13 @@
   (goto-char (point-max))
   (dired-next-line -1))
 
-(defun cantsin/dired-config ()
-  "Set up dired."
-  (use-package stripe-buffer
-    :defer t
-    :config (progn
-              (set-face-background 'stripe-hl-line "dark violet")
-              (set-face-foreground 'stripe-hl-line "white")))
-  (add-hook 'dired-mode-hook 'stripe-listify-buffer)
-  (define-key dired-mode-map
-    [remap beginning-of-buffer] 'dired-back-to-top)
-  (define-key dired-mode-map
-    [remap end-of-buffer] 'dired-jump-to-bottom)
-
-  ;; Auto refresh dired, but be quiet about it
-  (use-package autorevert
-    :defer t)
+(use-package dired
+  :demand t
+  :hook (dired-mode . stripe-listify-buffer)
+  :bind
+  (:map dired-mode-map ([remap beginning-of-buffer] . dired-back-to-top)
+        :map dired-mode-map ([remap end-of-buffer] . dired-jump-to-bottom))
+  :config
   (setq dired-listing-switches "-alhv"
         dired-dwim-target t
         dired-clean-up-buffers-too t
@@ -40,14 +39,13 @@
         global-auto-revert-non-file-buffers t
         auto-revert-verbose nil))
 
-(use-package dired
-  :defer t
-  :config (cantsin/dired-config))
-
-(use-package all-the-icons-dired
-  :hook (dired-mode . all-the-icons-dired-mode))
-
 (require 'dired-x)
+
+(use-package stripe-buffer
+  :demand t
+  :config (progn
+            (set-face-background 'stripe-hl-line "dark violet")
+            (set-face-foreground 'stripe-hl-line "white")))
 
 (provide 'setup-dired)
 ;;; setup-dired.el ends here

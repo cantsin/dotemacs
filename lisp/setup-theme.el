@@ -145,12 +145,13 @@
 
                 (:eval (custom-modeline-flycheck-status))))
 
-(set-face-background 'mode-line "gray40")
-(set-face-background 'mode-line-inactive "gray40")
-
 (use-package moe-theme
   :demand t
   :config (moe-dark))
+
+;; must be after moe-theme
+(set-face-background 'mode-line "gray40")
+(set-face-background 'mode-line-inactive "gray40")
 
 (provide 'setup-theme)
 ;;; setup-theme.el ends here

@@ -86,18 +86,12 @@
           ((< p spell-pos)
            (funcall spell-previous-error-function)))))
 
-(defun cantsin/flyspell-init ()
-  "Deferred setup of 'flyspell-mode'."
+(use-package flyspell
+  :demand t
+  :bind (("C-c s" . flyspell-correct-word-before-point))
+  :init
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
-
-(use-package flyspell
-  :defer t
-  :bind (("C-c s" . flyspell-correct-word-before-point)
-         ("M-g l" . flycheck-list-errors)
-         ("M-g n" . fly-goto-next-error)
-         ("M-g p" . fly-goto-previous-error))
-  :init (cantsin/flyspell-init))
 
 (defun cantsin/flycheck-config ()
   "Deferred setup of 'flycheck-mode'."
@@ -108,46 +102,17 @@
                         (setq flycheck-emacs-lisp-load-path load-path)))))
 
 (use-package flycheck
-  :defer t
+  :demand t
   :commands global-flycheck-mode
+  :bind (("M-g l" . flycheck-list-errors)
+         ("M-g n" . fly-goto-next-error)
+         ("M-g p" . fly-goto-previous-error))
   :config (cantsin/flycheck-config))
 
 (use-package flycheck-rust
   :ensure flycheck
   :config
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
-;; validate open/closed braces in html.
-(defun flymake-html-init ()
-  "Initialize flymake for HTML."
-  (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                     'flymake-create-temp-inplace))
-         (local-file (file-relative-name
-                      temp-file
-                      (file-name-directory buffer-file-name))))
-    (list "tidy" (list local-file))))
-
-(defun flymake-html-load ()
-  "Load flymake for HTML."
-  (interactive)
-  (when (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
-    (set (make-local-variable 'flymake-allowed-file-name-masks)
-         '(("\\.html\\|\\.ctp\\|\\.ftl\\|\\.jsp\\|\\.php\\|\\.erb\\|\\.rhtml" flymake-html-init)))
-    (set (make-local-variable 'flymake-err-line-patterns)
-         ;; pick up errors and warnings for HTML5
-         '(("line \\([0-9]+\\) column \\([0-9]+\\) - \\(Warning\\|Error\\): \\(missing.*\\|discarding.*\\)" nil 1 2 4)))
-    (flymake-mode t)))
-
-(defun cantsin/setup-flymake ()
-  "Setup flymake."
-  (add-hook 'web-mode-hook 'flymake-html-load)
-  (add-hook 'html-mode-hook 'flymake-html-load)
-  (add-hook 'nxml-mode-hook 'flymake-html-load)
-  (add-hook 'php-mode-hook 'flymake-html-load))
-
-(use-package flymake
-  :defer t
-  :init (cantsin/setup-flymake))
 
 (provide 'setup-fly)
 ;;; setup-fly.el ends here
