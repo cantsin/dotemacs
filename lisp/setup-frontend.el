@@ -6,13 +6,11 @@
 
 (use-package js2-mode
   :defer t
-  :ensure t
   :init (progn
           (add-hook 'js-mode-hook 'js2-minor-mode)))
 
 (use-package rjsx-mode
   :defer t
-  :ensure t
   :init (progn
           (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
           (setq-default js2-basic-offset 2)
@@ -34,7 +32,7 @@
   :init (cantsin/init-web)
   :config (smartparens-mode 0))
 
-(defun cantsin/init-tide ()
+(defun cantsin/config-tide ()
   (defun setup-tide-mode ()
     (interactive)
     (tide-setup)
@@ -53,9 +51,9 @@
   (add-hook 'before-save-hook 'tide-format-before-save)
   (add-hook 'typescript-mode-hook #'setup-tide-mode))
 
-(use-package tide-mode
+(use-package tide
   :defer t
-  :init (cantsin/init-tide))
+  :config (cantsin/config-tide))
 
 (use-package nodejs-repl
   :defer t

@@ -61,38 +61,21 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key [remap move-beginning-of-line]
                 'smarter-move-beginning-of-line)
 
-(defun cantsin/key-init ()
-  "Initialize key chords."
+(use-package key-chord
+  :demand t
+  :config
+  (key-chord-mode +1)
   (key-chord-define-global ",," 'ivy-switch-buffer)
   (key-chord-define-global ",." '(lambda ()
                                    (interactive)
-                                   (switch-to-buffer (car (car (window-prev-buffers))))))
-  (key-chord-mode +1))
-
-(use-package key-chord
-  :defer t
-  :init (cantsin/key-init))
-
-(defun cantsin/mc-init ()
-  "Initialize multiple cursors."
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+                                   (switch-to-buffer (caar (window-prev-buffers)))))
+  (key-chord-define-global "jj" 'avy-goto-char))
 
 (use-package multiple-cursors
-  :defer t
-  :init (cantsin/mc-init))
-
-(defun cantsin/writegood-init ()
-  "Initialize write good mode."
-  (global-set-key "\C-cw" 'writegood-mode)
-  (global-set-key "\C-c\C-gg" 'writegood-grade-level)
-  (global-set-key "\C-c\C-ge" 'writegood-reading-ease))
-
-(use-package writegood-mode
-  :defer t
-  :init (cantsin/writegood-init))
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
 
 ;; better narrow indirect support
 (defun narrow-to-region-indirect (start end)
@@ -209,9 +192,6 @@ prefix argument."
 
 ;; transpose sexps.
 (global-set-key (kbd "C-M-t") 'transpose-sexps)
-
-;; quick search.
-(global-set-key (kbd "M-g s") 'counsel-projectile-rg)
 
 ;; pretty-print evals.
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)

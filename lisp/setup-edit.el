@@ -25,13 +25,11 @@
 
 ;; replace kill-ring-save.
 (use-package easy-kill
-  :ensure t
   :defer t
   :config (easy-kill-config))
 
 (use-package abbrev
-  :defer t
-  :diminish "")
+  :defer t)
 
 (use-package yasnippet
   :defer t

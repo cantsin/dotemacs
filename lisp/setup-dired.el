@@ -20,7 +20,6 @@
   "Set up dired."
   (use-package stripe-buffer
     :defer t
-    :ensure t
     :config (progn
               (set-face-background 'stripe-hl-line "dark violet")
               (set-face-foreground 'stripe-hl-line "white")))

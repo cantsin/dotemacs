@@ -76,7 +76,6 @@
           magit-set-upstream-on-push 'askifnotset)))
 
 (use-package magit
-  :ensure t
   :commands magit-get-top-dir
   :bind (("C-c g" . magit-status)
          ("C-c C-g l" . magit-file-log))

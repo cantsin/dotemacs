@@ -31,17 +31,14 @@
 
 (use-package go-mode
   :defer t
-  :ensure t
   :init (cantsin/setup-go))
 
 (use-package lua-mode
   :defer t
-  :ensure t
   :init (setq lua-indent-level 2))
 
 (use-package alchemist
   :defer t
-  :ensure t
   :init (setq alchemist-project-compile-when-needed t))
 
 (defun cantsin/setup-jedi ()
@@ -51,22 +48,18 @@
 
 (use-package jedi
   :defer t
-  :ensure t
   :config (cantsin/setup-jedi))
 
 (use-package compile
   :defer t
-  :ensure t
   :init (setq compilation-scroll-output t))
 
 (use-package restclient
   :defer t
-  :ensure t
   :init (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode)))
 
 ;; auto disassemble llvm when opening .bc files
 (use-package autodisass-llvm-bitcode
-  :ensure t
   :defer t)
 
 (defun load-agda ()
@@ -82,8 +75,7 @@
   (setq indent-tabs-mode t))
 (add-hook 'makefile-mode-hook 'my-makefile-hook)
 
-(use-package c-mode
-  :defer t
+(use-package cc-mode
   :config (progn
             (setq c-basic-offset 4)
             (c-set-offset 'substatement-open 0)))

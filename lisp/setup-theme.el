@@ -6,9 +6,11 @@
 
 ;; if icons do not show up:
 ;; M-x all-the-icons-install-fonts
-(use-package all-the-icons)
+(use-package all-the-icons
+  :demand t)
 
-(use-package powerline)
+(use-package powerline
+  :demand t)
 
 (defun custom-modeline-vc ()
   "Set up VC if applicable."
@@ -143,12 +145,12 @@
 
                 (:eval (custom-modeline-flycheck-status))))
 
-(use-package moe-theme
-  :ensure t
-  :config (moe-dark))
-
 (set-face-background 'mode-line "gray40")
 (set-face-background 'mode-line-inactive "gray40")
+
+(use-package moe-theme
+  :demand t
+  :config (moe-dark))
 
 (provide 'setup-theme)
 ;;; setup-theme.el ends here

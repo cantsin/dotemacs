@@ -17,8 +17,7 @@
              (visual-line-mode)))
 
 (use-package windmove
-  :defer t
-  :ensure t)
+  :defer t)
 
 ;; save buffers on buffer switch
 (defadvice switch-to-buffer (before save-buffer-now activate)
@@ -66,7 +65,8 @@
             '(lambda ()
                (turn-off-auto-fill)
                (visual-line-mode)))
-  (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode))
+  (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
+  (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
 
 (defun cantsin/markdown-config ()
   "Set up markdown."
@@ -80,22 +80,16 @@
   (add-to-list 'markdown-mode-font-lock-keywords-basic
                (cons markdown-regex-footnote-inline 'markdown-footnote-face)))
 
-(use-package markdown
+;; Github README.mds.
+(use-package markdown-mode
   :defer t
   :init (cantsin/markdown-init)
   :config (cantsin/markdown-config))
 
-;; Github README.mds.
-(use-package markdown-mode
-  :defer t
-  :ensure t
-  :init (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
-
 (use-package avy
+  :demand t
   :bind (("M-g M-g" . avy-goto-line)
-         ("M-g w" . avy-goto-word-1))
-  :config
-  (key-chord-define-global "jj" 'avy-goto-char))
+         ("M-g w" . avy-goto-word-1)))
 
 (defmacro def-pairs (pairs)
   `(progn
@@ -174,7 +168,10 @@
 
 (use-package pdf-tools
   :defer t
-  :config (pdf-tools-install))
+  :init (load "pdf-tools-autoloads" nil t)
+  :config
+  (pdf-tools-install)
+  (setq-default pdf-view-display-size 'fit-page))
 
 (require 'comint)
 (add-to-list 'comint-preoutput-filter-functions
@@ -186,7 +183,6 @@
   :config (ws-butler-global-mode))
 
 (use-package whitespace
-  :ensure t
   :defer t
   :init (setq whitespace-style '(face trailing lines-tail tabs)
               whitespace-line-column 80

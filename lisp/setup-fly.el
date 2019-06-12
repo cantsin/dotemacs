@@ -92,29 +92,30 @@
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
 (use-package flyspell
-  :ensure t
   :defer t
   :bind (("C-c s" . flyspell-correct-word-before-point)
          ("M-g l" . flycheck-list-errors)
          ("M-g n" . fly-goto-next-error)
          ("M-g p" . fly-goto-previous-error))
-  :init (cantsin/flyspell-init)
-  :diminish flyspell-mode)
+  :init (cantsin/flyspell-init))
 
-(defun cantsin/flycheck-init ()
+(defun cantsin/flycheck-config ()
   "Deferred setup of 'flycheck-mode'."
   (global-flycheck-mode t)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   (add-hook 'emacs-lisp-mode-hook
             (function (lambda ()
                         (setq flycheck-emacs-lisp-load-path load-path)))))
 
 (use-package flycheck
-  :ensure t
   :defer t
   :commands global-flycheck-mode
-  :init (cantsin/flycheck-init))
+  :config (cantsin/flycheck-config))
+
+(use-package flycheck-rust
+  :ensure flycheck
+  :config
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; validate open/closed braces in html.
 (defun flymake-html-init ()

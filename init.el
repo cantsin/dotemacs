@@ -4,7 +4,10 @@
 
 ;;; Code:
 
+(require 'package)
 (unless package--initialized (package-initialize t))
+(require 'use-package)
+(setq use-package-always-defer t)
 
 (setq gc-cons-threshold 100000000)
 

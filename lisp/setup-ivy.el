@@ -5,8 +5,7 @@
 (require 'use-package)
 
 (use-package ivy
-  :ensure t
-  :diminish (ivy-mode . "")
+  :demand t
   :bind
   (("M-y" . counsel-yank-pop)
    ("C-r" . swiper-isearch)
@@ -14,23 +13,21 @@
    :map ivy-minibuffer-map ("C-w" . ivy-yank-word)
    :map ivy-minibuffer-map ("C-o" . hydra-ivy/body)
    :map ivy-minibuffer-map ("C-r" . ivy-previous-line)
-   :map ivy-mode-map ("C-'" . ivy-avy)))
+   :map ivy-mode-map ("C-'" . ivy-avy))
   :config
-  (ivy-mode 1)
   (setq ivy-use-virtual-buffers t
         ivy-wrap t
         ivy-height 18
         ivy-count-format ""
         ivy-initial-inputs-alist nil
-        enable-recursive-minibuffers t)
-  (setq ivy-re-builders-alist
-        '((t . ivy--regex-ignore-order)))
+        enable-recursive-minibuffers t
+        ivy-re-builders-alist
+        '((t . ivy--regex-ignore-order))))
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
 (use-package all-the-icons-ivy
-  :ensure t
   :config
   (progn
     (all-the-icons-ivy-setup)
@@ -79,6 +76,10 @@
 (use-package counsel
   :bind
   (:map counsel-find-file-map ("C-l" . counsel-up-directory)))
+
+(use-package counsel-projectile
+  :ensure counsel
+  :bind (("M-g s" . counsel-projectile-rg)))
 
 (use-package swiper
   :config

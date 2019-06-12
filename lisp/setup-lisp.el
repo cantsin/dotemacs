@@ -29,7 +29,6 @@
   (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
   (use-package elisp-slime-nav
     :defer t
-    :diminish t
     :config (add-hook 'emacs-lisp-mode-hook
                       (lambda () (elisp-slime-nav-mode t)))))
 
@@ -57,7 +56,6 @@
 
 (use-package cider
   :defer t
-  :ensure t
   :config (cantsin/setup-cider))
 
 (defun cantsin/setup-paren ()
