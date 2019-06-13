@@ -106,7 +106,6 @@
 (require 'setup-magit)
 (require 'setup-dired)
 (require 'setup-ivy)
-; (require 'setup-eshell)
 (require 'setup-org)
 (require 'setup-company)
 (require 'setup-languages)

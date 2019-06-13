@@ -28,7 +28,6 @@
   ember-yasnippets
   epl
   erc-image
-  eshell-prompt-extras
   esxml
   expand-region
   f
