@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Override global key bindings.
 ;;; Code:
-(require 'use-package)
 
 ;; The default "C-x c" is too close to "C-x C-c", which quits Emacs.
 (global-unset-key (kbd "C-x c"))
@@ -60,22 +59,6 @@ point reaches the beginning or end of the buffer, stop there."
       (move-beginning-of-line 1))))
 (global-set-key [remap move-beginning-of-line]
                 'smarter-move-beginning-of-line)
-
-(use-package key-chord
-  :demand t
-  :config
-  (key-chord-mode +1)
-  (key-chord-define-global ",," 'ivy-switch-buffer)
-  (key-chord-define-global ",." '(lambda ()
-                                   (interactive)
-                                   (switch-to-buffer (caar (window-prev-buffers)))))
-  (key-chord-define-global "jj" 'avy-goto-char))
-
-(use-package multiple-cursors
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C->" . mc/mark-next-like-this)
-         ("C-<" . mc/mark-previous-like-this)
-         ("C-c C-<" . mc/mark-all-like-this)))
 
 ;; better narrow indirect support
 (defun narrow-to-region-indirect (start end)

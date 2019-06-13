@@ -4,36 +4,39 @@
 ;;; Code:
 (require 'use-package)
 
-(defun cantsin/setup-company ()
-  "Set up company."
+(defun next-company-completion ()
+  "Select the next completion item."
+  (interactive)
+  (company-complete-common-or-cycle 1))
+
+(defun prev-company-completion ()
+  "Select the previous completion item."
+  (interactive)
+  (company-complete-common-or-cycle -1))
+
+(use-package company
+  :demand t
+  :bind (("C-/" . company-complete)
+         :map company-active-map ("C-n" . next-company-completion)
+         :map company-active-map ("C-p" . prev-company-completion))
+  :config
   (global-company-mode t)
-  (define-key company-active-map (kbd "C-n")
-    (lambda () (interactive) (company-complete-common-or-cycle 1)))
-  (define-key company-active-map (kbd "C-p")
-    (lambda () (interactive) (company-complete-common-or-cycle -1)))
   (add-hook 'after-init-hook 'global-company-mode)
   (setq company-idle-delay 0.5
         company-tooltip-align-annotations t
         company-minimum-prefix-length 2
         company-show-numbers t
         company-selection-wrap-around t
-        company-dabbrev-ignore-case t
-        company-dabbrev-ignore-invisible t
-        company-dabbrev-downcase nil
-        company-backends (list #'company-css
-                               #'company-clang
-                               #'company-capf
-                               (list #'company-dabbrev-code
-                                     #'company-keywords)
+        company-backends (list #'company-lsp
                                #'company-files
+                               (list #'company-dabbrev-code
+                                     #'company-gtags
+                                     #'company-etags
+                                     #'company-keywords)
                                #'company-dabbrev)))
 
-(use-package company
-  :defer t
-  :bind (("C-/" . company-complete))
-  :config (cantsin/setup-company))
-
 (use-package company-lsp
+  :demand t
   :commands company-lsp)
 
 (provide 'setup-company)
