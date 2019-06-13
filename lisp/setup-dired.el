@@ -29,17 +29,18 @@
   :hook (dired-mode . stripe-listify-buffer)
   :bind
   (:map dired-mode-map ([remap beginning-of-buffer] . dired-back-to-top)
-        :map dired-mode-map ([remap end-of-buffer] . dired-jump-to-bottom))
+   :map dired-mode-map ([remap end-of-buffer] . dired-jump-to-bottom))
   :config
   (setq dired-listing-switches "-alhv"
         dired-dwim-target t
-        dired-clean-up-buffers-too t
         dired-recursive-copies 'always
         dired-recursive-deletes 'top
         global-auto-revert-non-file-buffers t
         auto-revert-verbose nil))
 
-(require 'dired-x)
+(use-package dired-x
+  :config
+  (setq dired-clean-up-buffers-too t))
 
 (use-package stripe-buffer
   :demand t
