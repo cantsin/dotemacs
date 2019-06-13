@@ -157,9 +157,6 @@ prefix argument."
 ;; toggle refill-mode on/off
 (global-set-key (kbd "C-c q") 'refill-mode)
 
-;; make footnotes easier to use
-(global-set-key (kbd "C-c f") 'org-footnote-action)
-
 ;; make {back,for}ward-paragraph easier to use
 (global-set-key (kbd "M-[") 'backward-paragraph)
 (global-set-key (kbd "M-]") 'forward-paragraph)

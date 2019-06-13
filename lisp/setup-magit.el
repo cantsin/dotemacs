@@ -28,7 +28,7 @@
 (use-package magit
   :commands magit-get-top-dir
   :bind (("C-c g" . magit-status)
-         ("C-c l" . magit-fetch-all))
+         ("C-c f" . magit-fetch-all))
   :config
   (setq magit-diff-refine-hunk t
         magit-process-popup-time 10)

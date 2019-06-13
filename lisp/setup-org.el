@@ -84,8 +84,7 @@
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb)
-         ("C-c e" . org-archive-subtree)
-         ("C-c l" . org-store-link))
+         ("C-c e" . org-archive-subtree))
   :init (cantsin/org-init)
   :config (cantsin/org-config))
 
