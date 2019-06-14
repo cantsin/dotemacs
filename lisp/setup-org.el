@@ -61,21 +61,25 @@
 (use-package org-agenda
   :defer t
   :config
-  org-agenda-start-on-weekday 6
-  org-stuck-projects '("TODO={.+}/-DONE" nil nil "SCHEDULED:\\|DEADLINE:")
-  org-capture-templates
-  '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-     "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
-    ("r" "respond" entry (file org-default-notes-file)
-     "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n\n"))
-  ;; set up shortcut for priorities
-  org-agenda-custom-commands
-  '(("p" "Agenda for all priorities" agenda ""
-     ((org-agenda-skip-function
-       '(and
-         (not
-          (org-entry-get nil "PRIORITY"))
-         (point-at-eol)))))))
+  (setq org-agenda-start-on-weekday 6
+        org-stuck-projects '("TODO={.+}/-DONE" nil nil "SCHEDULED:\\|DEADLINE:")
+        ;; set up shortcut for priorities
+        org-agenda-custom-commands
+        '(("p" "Agenda for all priorities" agenda ""
+           ((org-agenda-skip-function
+             '(and
+               (not
+                (org-entry-get nil "PRIORITY"))
+               (point-at-eol))))))))
+
+(use-package org-capture
+  :defer t
+  :config (setq org-capture-templates
+                '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
+                   "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
+                  ("r" "respond" entry (file org-default-notes-file)
+                   "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n\n"))
+                ))
 
 (use-package org-bullets
   :defer t

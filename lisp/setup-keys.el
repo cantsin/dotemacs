@@ -3,21 +3,6 @@
 ;;; Override global key bindings.
 ;;; Code:
 
-;; The default "C-x c" is too close to "C-x C-c", which quits Emacs.
-(global-unset-key (kbd "C-x c"))
-
-;; disable overwrite-mode because it is really annoying.
-(define-key global-map [(insert)] nil)
-
-;; remap backspace key to something more sensible
-(global-set-key (kbd "C-?") 'help-command)
-(global-set-key (kbd "M-?") 'mark-paragraph)
-(global-set-key (kbd "C-h") 'delete-backward-char)
-(global-set-key (kbd "M-h") 'backward-kill-word)
-
-(global-set-key (kbd "<mouse-9>") 'next-buffer)
-(global-set-key (kbd "<mouse-8>") 'previous-buffer)
-
 ;; easy access!
 (defun find-user-init-file ()
   "Edit the `user-init-file', in another window."
@@ -155,21 +140,11 @@ prefix argument."
 ;; toggle refill-mode on/off
 (global-set-key (kbd "C-c q") 'refill-mode)
 
-;; make {back,for}ward-paragraph easier to use
-(global-set-key (kbd "M-[") 'backward-paragraph)
-(global-set-key (kbd "M-]") 'forward-paragraph)
-
 ;; conveniently join lines.
 (global-set-key (kbd "M-j")
                 (lambda ()
                   (interactive)
                   (join-line -1)))
-
-;; avy.
-(global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
-
-;; transpose sexps.
-(global-set-key (kbd "C-M-t") 'transpose-sexps)
 
 ;; pretty-print evals.
 (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
@@ -180,10 +155,6 @@ prefix argument."
 (global-set-key [remap mark-sexp] 'easy-mark)
 
 ;; windmove
-(global-set-key [(control J)] 'windmove-left)
-(global-set-key [(control K)] 'windmove-down)
-(global-set-key [(control L)] 'windmove-up)
-(global-set-key [(control :)] 'windmove-right)
 
 (provide 'setup-keys)
 ;;; setup-keys.el ends here

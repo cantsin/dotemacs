@@ -82,6 +82,25 @@
              (interactive)
              (save-some-buffers t)))
 
+;; The default "C-x c" is too close to "C-x C-c", which quits Emacs.
+(global-unset-key (kbd "C-x c"))
+
+;; disable overwrite-mode because it is really annoying.
+(define-key global-map [(insert)] nil)
+
+;; remap backspace key to something more sensible
+(global-set-key (kbd "C-?") 'help-command)
+(global-set-key (kbd "M-?") 'mark-paragraph)
+(global-set-key (kbd "C-h") 'delete-backward-char)
+(global-set-key (kbd "M-h") 'backward-kill-word)
+
+;; make {back,for}ward-paragraph easier to use
+(global-set-key (kbd "M-[") 'backward-paragraph)
+(global-set-key (kbd "M-]") 'forward-paragraph)
+
+(global-set-key (kbd "<mouse-9>") 'next-buffer)
+(global-set-key (kbd "<mouse-8>") 'previous-buffer)
+
 ;; write backup files to its own directory
 (setq auto-save-default nil)
 (setq backup-directory-alist

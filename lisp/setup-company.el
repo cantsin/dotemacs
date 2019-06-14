@@ -22,7 +22,7 @@
   :config
   (global-company-mode t)
   (add-hook 'after-init-hook 'global-company-mode)
-  (setq company-idle-delay 0.5
+  (setq company-idle-delay 0
         company-tooltip-align-annotations t
         company-minimum-prefix-length 2
         company-show-numbers t

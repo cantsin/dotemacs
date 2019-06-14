@@ -6,7 +6,8 @@
 
 (use-package avy
   :demand t
-  :bind (("M-g M-g" . avy-goto-line)
+  :bind (("C-c j" . avy-goto-word-or-subword-1)
+         ("M-g M-g" . avy-goto-line)
          ("M-g w" . avy-goto-word-1)))
 
 (use-package comint
@@ -15,29 +16,20 @@
              (lambda (output)
                (replace-regexp-in-string "\033\\[[0-9]+[A-Z]" "" output))))
 
-;; wrapping.
-(add-hook 'text-mode-hook
-          'turn-on-auto-fill)
-(add-hook 'html-mode-hook
-          '(lambda ()
-             (turn-off-auto-fill)
-             (visual-line-mode)))
-
-;; save buffers on buffer switch
-(defadvice switch-to-buffer (before save-buffer-now activate)
-  "Switch to buffer."
-  (when buffer-file-name (save-buffer)))
-
-(defadvice other-window (before other-window-now activate)
-  "Other window."
-  (when buffer-file-name (save-buffer)))
-
 ;; replace kill-ring-save.
 (use-package easy-kill
   :demand t
   :bind
   (:map easy-kill-base-map ("C-d" . easy-kill-delete-region)
    :map easy-kill-base-map ("DEL" . easy-kill-delete-region)))
+
+(use-package html-mode
+  :defer t
+  :init
+  (add-hook 'html-mode-hook
+            '(lambda ()
+               (turn-off-auto-fill)
+               (visual-line-mode))))
 
 (use-package key-chord
   :demand t
@@ -49,34 +41,29 @@
                                    (switch-to-buffer (caar (window-prev-buffers)))))
   (key-chord-define-global "jj" 'avy-goto-char))
 
-(defun cantsin/markdown-init ()
-  "Initialize markdown."
-  (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
+(use-package ledger
+  :defer t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
+
+(use-package markdown-mode
+  :defer t
+  :init
   (add-hook 'markdown-mode-hook
             '(lambda ()
                (font-lock-add-keywords nil '(("\"\\(\\(?:.\\|\n\\)*?[^\\]\\)\"" 0 font-lock-string-face)))
                (turn-off-auto-fill)
                (visual-line-mode)
                (writegood-mode)))
-  (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
-
-(defun cantsin/markdown-config ()
-  "Set up markdown."
+  (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+  :config
   (defconst markdown-regex-footnote-inline
     "\\(\\^\\[.+?\\]\\)"
     "Regular expression for a footnote inline marker ^[fn].")
   (defface markdown-footnote-inline-face
     '((t (:inherit font-lock-keyword-face)))
     "Face for footnote markers."
-    :group 'markdown-faces)
-  (add-to-list 'markdown-mode-font-lock-keywords-basic
-               (cons markdown-regex-footnote-inline 'markdown-footnote-face)))
-
-;; Github README.mds.
-(use-package markdown-mode
-  :defer t
-  :init (cantsin/markdown-init)
-  :config (cantsin/markdown-config))
+    :group 'markdown-faces))
 
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
@@ -96,22 +83,8 @@
                (interactive "p")
                (sp-wrap-with-pair ,val)))))
 
-(def-pairs ((paren        . "(")
-            (bracket      . "[")
-            (brace        . "{")
-            (single-quote . "'")
-            (double-quote . "\"")
-            (back-quote   . "`")))
-
-(defun cantsin/smartparens-init ()
-  "Initialize smartparens."
-  ;; js2 support
-  (require 'smartparens)
-  (add-to-list 'sp-sexp-suffix (list #'js2-mode 'regexp ""))
-  (sp-with-modes '(js2-mode)
-    (sp-local-pair "'" "'" :unless '(sp-in-comment-p))))
-
 (use-package smartparens-config
+  :demand t
   :ensure smartparens
   :bind (("C-M-a" . sp-beginning-of-sexp)
          ("C-M-e" . sp-end-of-sexp)
@@ -127,7 +100,7 @@
          ("C-<left>"  . sp-backward-slurp-sexp)
          ("M-<left>"  . sp-backward-barf-sexp)
 
-         ;; ("C-M-t" . sp-transpose-sexp)
+         ("C-M-t" . sp-transpose-sexp)
          ("C-M-k" . sp-kill-sexp)
          ("C-k"   . sp-kill-hybrid-sexp)
          ("M-k"   . sp-backward-kill-sexp)
@@ -145,13 +118,14 @@
          ("C-c \"" . wrap-with-double-quotes)
          ("C-c _"  . wrap-with-underscores)
          ("C-c `"  . wrap-with-back-quotes))
-  :init (cantsin/smartparens-init)
   :config
+  (def-pairs ((paren        . "(")
+              (bracket      . "[")
+              (brace        . "{")
+              (double-quote . "\"")
+              (back-quote   . "`")))
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
   (show-smartparens-global-mode t))
-
-(add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
-
-(add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
 
 (use-package pdf-tools
   :defer t
@@ -159,6 +133,11 @@
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page))
+
+(use-package text-mode
+  :defer t
+  :init
+  (add-hook 'text-mode-hook 'turn-on-auto-fill))
 
 (use-package whitespace
   :defer t
@@ -168,19 +147,32 @@
 
 (use-package windmove
   :demand t
-  :config
+  :bind (("C-S-J" . windmove-left)
+         ("C-S-K" . windmove-down)
+         ("C-S-L" . windmove-up)
+         ([(control :)] . windmove-right))
+  :init
   (defadvice windmove-up (before other-window-now activate)
-  "Move up."
-  (when buffer-file-name (save-buffer)))
-(defadvice windmove-down (before other-window-now activate)
-  "Move down."
-  (when buffer-file-name (save-buffer)))
-(defadvice windmove-left (before other-window-now activate)
-  "Move left."
-  (when buffer-file-name (save-buffer)))
-(defadvice windmove-right (before other-window-now activate)
-  "Move right."
-  (when buffer-file-name (save-buffer))))
+    "Move up."
+    (when buffer-file-name (save-buffer)))
+  (defadvice windmove-down (before other-window-now activate)
+    "Move down."
+    (when buffer-file-name (save-buffer)))
+  (defadvice windmove-left (before other-window-now activate)
+    "Move left."
+    (when buffer-file-name (save-buffer)))
+  (defadvice windmove-right (before other-window-now activate)
+    "Move right."
+    (when buffer-file-name (save-buffer))))
+
+(use-package window
+  :init
+  (defadvice switch-to-buffer (before save-buffer-now activate)
+    "Save when switching to buffer."
+    (when buffer-file-name (save-buffer)))
+  (defadvice other-window (before other-window-now activate)
+    "Other window."
+    (when buffer-file-name (save-buffer))))
 
 (use-package ws-butler
   :defer t

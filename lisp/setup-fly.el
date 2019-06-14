@@ -93,21 +93,18 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
-(defun cantsin/flycheck-config ()
-  "Deferred setup of 'flycheck-mode'."
-  (global-flycheck-mode t)
-  (setq flycheck-check-syntax-automatically '(mode-enabled save))
-  (add-hook 'emacs-lisp-mode-hook
-            (function (lambda ()
-                        (setq flycheck-emacs-lisp-load-path load-path)))))
-
 (use-package flycheck
   :demand t
   :commands global-flycheck-mode
   :bind (("M-g l" . flycheck-list-errors)
          ("M-g n" . fly-goto-next-error)
          ("M-g p" . fly-goto-previous-error))
-  :config (cantsin/flycheck-config))
+  :config
+  (global-flycheck-mode t)
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
+  (add-hook 'emacs-lisp-mode-hook
+            (function (lambda ()
+                        (setq flycheck-emacs-lisp-load-path load-path)))))
 
 (use-package flycheck-rust
   :ensure flycheck
