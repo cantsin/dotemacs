@@ -27,6 +27,7 @@
 (defadvice switch-to-buffer (before save-buffer-now activate)
   "Switch to buffer."
   (when buffer-file-name (save-buffer)))
+
 (defadvice other-window (before other-window-now activate)
   "Other window."
   (when buffer-file-name (save-buffer)))

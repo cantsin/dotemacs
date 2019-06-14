@@ -79,7 +79,6 @@
   pallet
   pandoc-mode
   paradox
-  paredit
   pkg-info
   popup
   powerline

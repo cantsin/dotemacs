@@ -150,9 +150,7 @@ prefix argument."
            (forward-line 0))
          (call-interactively ',function))
        ',name)))
-;(global-set-key [remap paredit-kill] (bol-with-prefix paredit-kill))
 (global-set-key [remap org-kill-line] (bol-with-prefix org-kill-line))
-;(global-set-key [remap kill-line] (bol-with-prefix paredit-kill))
 
 ;; toggle refill-mode on/off
 (global-set-key (kbd "C-c q") 'refill-mode)
