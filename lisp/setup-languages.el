@@ -33,6 +33,9 @@
   :defer t
   :init (setq compilation-scroll-output t))
 
+(use-package dap-mode
+  :defer t)
+
 (use-package fsharp-mode
   :defer t
   :config
@@ -53,7 +56,8 @@
 (use-package lsp-mode
   :demand t
   :hook (rust-mode . lsp)
-  :bind (("M-." . lsp-find-definition))
+  :bind (("M-." . lsp-find-definition)
+         ("M-?" . lsp-find-references))
   :config
   (setq lsp-enable-snippet nil)
   :commands lsp)
