@@ -6,8 +6,6 @@
 
 (require 'package)
 (unless package--initialized (package-initialize t))
-(require 'use-package)
-(setq use-package-always-defer t)
 
 (setq gc-cons-threshold 100000000)
 
@@ -70,7 +68,6 @@
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
-(add-hook 'text-mode-hook 'prettify-symbols-mode)
 
 ;; global hooks.
 (add-hook 'after-save-hook
@@ -119,9 +116,10 @@
 
 ;; load our other setup files.
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+(require 'setup-fly)
+(require 'setup-projectile)
 (require 'setup-theme)
 (require 'setup-buffer)
-(require 'setup-fly)
 (require 'setup-magit)
 (require 'setup-dired)
 (require 'setup-ivy)
@@ -131,7 +129,6 @@
 (require 'setup-frontend)
 (require 'setup-lisp)
 (require 'setup-haskell)
-(require 'setup-projectile)
 (require 'setup-keys)
 (require 'setup-functions)
 

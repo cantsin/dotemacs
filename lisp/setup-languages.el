@@ -4,6 +4,8 @@
 ;;; Code:
 (require 'use-package)
 
+(add-hook 'makefile-mode-hook '(lambda () (setq indent-tabs-mode t)))
+
 (defun load-agda ()
   "Load agda-mode on demand."
   (interactive)
@@ -17,6 +19,9 @@
 
 ;; auto disassemble llvm when opening .bc files
 (use-package autodisass-llvm-bitcode
+  :defer t)
+
+(use-package cargo-mode
   :defer t)
 
 (use-package cc-mode
@@ -39,11 +44,11 @@
   (add-hook 'python-mode-hook 'jedi:setup)
   (setq jedi:complete-on-dot t))
 
-(use-package irony
-  :config
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+;; (use-package irony
+;;   :config
+;;   (add-hook 'c++-mode-hook 'irony-mode)
+;;   (add-hook 'c-mode-hook 'irony-mode)
+;;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
 (use-package lsp-mode
   :demand t
@@ -64,12 +69,20 @@
   :init
   (setq lua-indent-level 2))
 
-(use-package makefile-mode
-  :init
-  (add-hook 'makefile-mode-hook '(lambda () (setq indent-tabs-mode t))))
+(use-package nix-mode
+  :defer t
+  :mode ("\\.nix\\'" . nix-mode))
 
 (use-package nix-update
   :defer t)
+
+(use-package racer
+  :defer t
+  :config
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode)
+  (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
+  (setq company-tooltip-align-annotations t))
 
 (use-package restclient
   :defer t
@@ -77,10 +90,12 @@
 
 (use-package rust-mode
   :defer t
+  :bind (("M-\"" . racer-find-definition))
+  :mode ("\\.rs\\'" . rust-mode)
   :init
-  (use-package cargo-minor-mode)
-  (add-hook 'rust-mode-hook #'cargo-minor-mode)
-  (setq rust-format-on-save t))
+  (setq rust-format-on-save t)
+  :config
+  (add-hook 'rust-mode-hook #'racer-mode))
 
 (provide 'setup-languages)
 ;;; setup-languages.el ends here

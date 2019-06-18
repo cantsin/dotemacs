@@ -4,6 +4,16 @@
 ;;; Code:
 (require 'use-package)
 
+(add-hook 'text-mode-hook 'prettify-symbols-mode)
+
+(defadvice switch-to-buffer (before save-buffer-now activate)
+  "Save when switching to buffer."
+  (when buffer-file-name (save-buffer)))
+
+(defadvice other-window (before other-window-now activate)
+  "Other window."
+  (when buffer-file-name (save-buffer)))
+
 (use-package avy
   :demand t
   :bind (("C-c j" . avy-goto-word-or-subword-1)
@@ -163,15 +173,6 @@
     (when buffer-file-name (save-buffer)))
   (defadvice windmove-right (before other-window-now activate)
     "Move right."
-    (when buffer-file-name (save-buffer))))
-
-(use-package window
-  :init
-  (defadvice switch-to-buffer (before save-buffer-now activate)
-    "Save when switching to buffer."
-    (when buffer-file-name (save-buffer)))
-  (defadvice other-window (before other-window-now activate)
-    "Other window."
     (when buffer-file-name (save-buffer))))
 
 (use-package ws-butler

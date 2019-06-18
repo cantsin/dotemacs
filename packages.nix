@@ -11,7 +11,7 @@
   cider
   company
   company-emacs-eclim
-  company-irony
+  # company-irony
   company-ghc
   company-lsp
   counsel
@@ -32,7 +32,7 @@
   expand-region
   f
   flycheck
-  flycheck-irony
+  # flycheck-irony
   flycheck-haskell
   flycheck-rust
   flymake-lua
@@ -49,7 +49,7 @@
   hydra
   idris-mode
   interleave
-  irony
+  # irony
   ivy
   ivy-hydra
   ivy-rich
@@ -86,6 +86,7 @@
   prodigy
   projectile
   puppet-mode
+  racer
   reason-mode
   restclient
   ripgrep

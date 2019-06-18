@@ -3,6 +3,7 @@
 ;;; Setup theme modifications.
 ;;; Code:
 (require 'use-package)
+(require 'subr-x)
 
 ;; if icons do not show up:
 ;; M-x all-the-icons-install-fonts
