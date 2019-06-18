@@ -54,6 +54,8 @@
   :demand t
   :hook (rust-mode . lsp)
   :bind (("M-." . lsp-find-definition))
+  :config
+  (setq lsp-enable-snippet nil)
   :commands lsp)
 
 (use-package lsp-ui
@@ -76,26 +78,11 @@
 (use-package nix-update
   :defer t)
 
-(use-package racer
-  :defer t
-  :config
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
-  (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
-  (setq company-tooltip-align-annotations t))
-
 (use-package restclient
   :defer t
   :init (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode)))
 
-(use-package rust-mode
-  :defer t
-  :bind (("M-\"" . racer-find-definition))
-  :mode ("\\.rs\\'" . rust-mode)
-  :init
-  (setq rust-format-on-save t)
-  :config
-  (add-hook 'rust-mode-hook #'racer-mode))
+(use-package rustic)
 
 (provide 'setup-languages)
 ;;; setup-languages.el ends here

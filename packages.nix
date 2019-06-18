@@ -5,7 +5,6 @@
   all-the-icons-dired
   all-the-icons-ivy
   autodisass-llvm-bitcode
-  auto-yasnippet
   avy
   cargo
   cider
@@ -25,7 +24,6 @@
   eclim
   elm-mode
   ember-mode
-  ember-yasnippets
   epl
   erc-image
   esxml
@@ -92,6 +90,7 @@
   ripgrep
   rjsx-mode
   rust-mode
+  rustic
   s
   scala-mode
   scss-mode
@@ -118,7 +117,6 @@
   writegood-mode
   ws-butler
   yaml-mode
-  yasnippet
 ] ++ [
   /* overrides */
   (epkgs.lua-mode.override (args: {
