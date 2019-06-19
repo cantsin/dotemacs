@@ -25,6 +25,9 @@
   :defer t)
 
 (use-package cc-mode
+  :bind
+  (:map c-mode-map ("M-." . xref-find-definitions)
+   :map c-mode-map ("M-?" . xref-find-references))
   :config
   (setq c-basic-offset 4)
   (c-set-offset 'substatement-open 0))
