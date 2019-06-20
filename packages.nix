@@ -10,7 +10,6 @@
   cider
   company
   company-emacs-eclim
-  # company-irony
   company-ghc
   company-lsp
   counsel
@@ -30,7 +29,6 @@
   expand-region
   f
   flycheck
-  # flycheck-irony
   flycheck-haskell
   flycheck-rust
   flymake-lua
@@ -47,7 +45,7 @@
   hydra
   idris-mode
   interleave
-  # irony
+  irony
   ivy
   ivy-hydra
   ivy-rich
@@ -128,6 +126,17 @@
         sha256 = "0cawb544qylifkvqads307n0nfqg7lvyphqbpbzr2xvr5iyi4901";
         # date = 2019-01-13T13:50:39+03:00;
       };
+    });
+  }))
+  # upstream bug: these are not packaged with libclang for some reason
+  (epkgs.company-irony.override (args: {
+    melpaBuild = drv: args.melpaBuild (drv // {
+      packageRequires = with pkgs; [ company emacs irony llvmPackages.libclang ];
+    });
+  }))
+  (epkgs.flycheck-irony.override (args: {
+    melpaBuild = drv: args.melpaBuild (drv // {
+      packageRequires = with pkgs; [ emacs flycheck irony llvmPackages.libclang ];
     });
   }))
 ] ++ [
