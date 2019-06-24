@@ -130,6 +130,7 @@
 (require 'setup-haskell)
 (require 'setup-keys)
 (require 'setup-functions)
+(require 'setup-mail)
 
 (if (file-exists-p (concat user-emacs-directory "lisp/setup-private.el"))
     (require 'setup-private))

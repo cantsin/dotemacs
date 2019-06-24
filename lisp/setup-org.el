@@ -90,7 +90,6 @@
   :defer t)
 
 (use-package org-journal
-  :defer t
   :config
   (setq org-journal-dir "~/journal"))
 
