@@ -31,13 +31,10 @@
          ("C-c C-e" . eval-and-replace))
   :config
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda () (elisp-slime-nav-mode t)))
   (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
   (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
-
-(use-package elisp-slime-nav
-  :defer t
-  :config (add-hook 'emacs-lisp-mode-hook
-                    (lambda () (elisp-slime-nav-mode t))))
 
 (use-package eldoc
   :defer t)

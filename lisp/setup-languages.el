@@ -21,7 +21,7 @@
 (use-package autodisass-llvm-bitcode
   :defer t)
 
-(use-package cargo-mode
+(use-package cargo
   :defer t)
 
 (use-package cc-mode

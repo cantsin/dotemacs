@@ -6,6 +6,11 @@
 
 (add-hook 'text-mode-hook 'prettify-symbols-mode)
 
+(add-hook 'html-mode-hook
+            '(lambda ()
+               (turn-off-auto-fill)
+               (visual-line-mode)))
+
 (defadvice switch-to-buffer (before save-buffer-now activate)
   "Save when switching to buffer."
   (when buffer-file-name (save-buffer)))
@@ -32,14 +37,6 @@
   :bind
   (:map easy-kill-base-map ("C-d" . easy-kill-delete-region)
    :map easy-kill-base-map ("DEL" . easy-kill-delete-region)))
-
-(use-package html-mode
-  :defer t
-  :init
-  (add-hook 'html-mode-hook
-            '(lambda ()
-               (turn-off-auto-fill)
-               (visual-line-mode))))
 
 (use-package key-chord
   :demand t
