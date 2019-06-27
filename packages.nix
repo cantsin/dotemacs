@@ -115,6 +115,7 @@
   writegood-mode
   ws-butler
   yaml-mode
+  zig-mode
 ] ++ [
   /* overrides */
   (epkgs.lua-mode.override (args: {
