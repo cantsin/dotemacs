@@ -32,6 +32,7 @@
   flycheck-haskell
   flycheck-rust
   flymake-lua
+  forge
   format-sql
   fsharp-mode
   gitconfig

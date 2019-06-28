@@ -25,6 +25,9 @@
       (switch-to-buffer previous-buffer-under-magit)
       (setq previous-buffer-under-magit nil))))
 
+(use-package forge
+  :after magit)
+
 (use-package magit
   :commands magit-get-top-dir
   :bind (("C-c g" . magit-status)
