@@ -38,5 +38,8 @@
   (set-face-foreground 'diff-removed "#ff0000")
   (set-face-foreground 'diff-added "#00cc33"))
 
+(use-package magit-todos
+  :hook (magit-mode . magit-todos-mode))
+
 (provide 'setup-magit)
 ;;; setup-magit.el ends here

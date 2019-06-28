@@ -59,6 +59,7 @@
   lsp-mode
   lsp-ui
   magit
+  magit-todos
   markdown-mode
   markdown-mode-plus
   mc-extras
