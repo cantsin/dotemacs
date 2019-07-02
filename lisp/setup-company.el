@@ -39,5 +39,8 @@
   :demand t
   :commands company-lsp)
 
+;; custom company backend for ledger mode
+(require 'company-ledger-accounts)
+
 (provide 'setup-company)
 ;;; setup-company.el ends here

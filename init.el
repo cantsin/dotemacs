@@ -115,6 +115,7 @@
 
 ;; load our other setup files.
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+(add-to-list 'load-path (concat user-emacs-directory "lisp/custom"))
 (require 'setup-fly)
 (require 'setup-projectile)
 (require 'setup-theme)
