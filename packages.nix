@@ -46,7 +46,7 @@
   hydra
   idris-mode
   interleave
-  irony
+  # irony
   ivy
   ivy-hydra
   ivy-rich
@@ -132,16 +132,16 @@
     });
   }))
   # upstream bug: these are not packaged with libclang for some reason
-  (epkgs.company-irony.override (args: {
-    melpaBuild = drv: args.melpaBuild (drv // {
-      packageRequires = with pkgs; [ company emacs irony llvmPackages.libclang ];
-    });
-  }))
-  (epkgs.flycheck-irony.override (args: {
-    melpaBuild = drv: args.melpaBuild (drv // {
-      packageRequires = with pkgs; [ emacs flycheck irony llvmPackages.libclang ];
-    });
-  }))
+#  (epkgs.company-irony.override (args: {
+#    melpaBuild = drv: args.melpaBuild (drv // {
+#      packageRequires = with pkgs; [ company emacs irony llvmPackages.libclang ];
+#    });
+#  }))
+#  (epkgs.flycheck-irony.override (args: {
+#    melpaBuild = drv: args.melpaBuild (drv // {
+#      packageRequires = with pkgs; [ emacs flycheck irony llvmPackages.libclang ];
+#    });
+#  }))
 ] ++ [
   epkgs.orgPackages.org-plus-contrib
   epkgs.pdf-tools
