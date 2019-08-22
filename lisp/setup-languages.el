@@ -91,5 +91,17 @@
 
 (use-package rustic)
 
+(defun zig-format ()
+  "Zig format the buffer."
+  (interactive)
+  (shell-command (format "zig fmt %s" (buffer-file-name)))
+  (revert-buffer :ignore-auto :noconfirm))
+
+(use-package zig-mode
+  :defer t
+  :mode ("\\.zig\\'" . zig-mode)
+  :config
+  (add-hook 'after-save-hook #'zig-format))
+
 (provide 'setup-languages)
 ;;; setup-languages.el ends here
