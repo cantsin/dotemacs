@@ -78,9 +78,17 @@
   :init
   (setq lua-indent-level 2))
 
+(defun nix-format ()
+  "Nix format the buffer."
+  (interactive)
+  (shell-command (format "nixfmt %s" (buffer-file-name)))
+  (revert-buffer :ignore-auto :noconfirm))
+
 (use-package nix-mode
   :defer t
-  :mode ("\\.nix\\'" . nix-mode))
+  :mode ("\\.nix\\'" . nix-mode)
+  :config
+  (add-hook 'after-save-hook #'nix-format))
 
 (use-package nix-update
   :defer t)
