@@ -90,8 +90,8 @@
   :defer t)
 
 (use-package org-journal
-  :config
-  (setq org-journal-dir "~/journal"))
+  :custom
+  (org-journal-dir "~/journal"))
 
 (use-package stripe-buffer
   :defer t)
