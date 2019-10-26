@@ -81,8 +81,9 @@
 (defun nix-format ()
   "Nix format the buffer."
   (interactive)
-  (shell-command (format "nixfmt %s" (buffer-file-name)))
-  (revert-buffer :ignore-auto :noconfirm))
+  (when (string= mode-name "Nix")
+    (shell-command (format "nixfmt %s" (buffer-file-name)))
+    (revert-buffer :ignore-auto :noconfirm)))
 
 (use-package nix-mode
   :defer t
@@ -102,8 +103,9 @@
 (defun zig-format ()
   "Zig format the buffer."
   (interactive)
-  (shell-command (format "zig fmt %s" (buffer-file-name)))
-  (revert-buffer :ignore-auto :noconfirm))
+  (when (string= mode-name "Zig")
+    (shell-command (format "zig fmt %s" (buffer-file-name)))
+    (revert-buffer :ignore-auto :noconfirm)))
 
 (use-package zig-mode
   :defer t
