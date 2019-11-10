@@ -48,10 +48,11 @@
                                    (switch-to-buffer (caar (window-prev-buffers)))))
   (key-chord-define-global "jj" 'avy-goto-char))
 
-(use-package ledger
-  :defer t
+(use-package ledger-mode
   :init
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
+
+(use-package writegood-mode)
 
 (use-package markdown-mode
   :defer t

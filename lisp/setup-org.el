@@ -59,7 +59,6 @@
      (python . t))))
 
 (use-package org-agenda
-  :defer t
   :config
   (setq org-agenda-start-on-weekday 6
         org-stuck-projects '("TODO={.+}/-DONE" nil nil "SCHEDULED:\\|DEADLINE:")
@@ -73,7 +72,6 @@
                (point-at-eol))))))))
 
 (use-package org-capture
-  :defer t
   :config (setq org-capture-templates
                 '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
                    "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
@@ -82,12 +80,10 @@
                 ))
 
 (use-package org-bullets
-  :defer t
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(use-package org-notmuch
-  :defer t)
+(use-package org-notmuch)
 
 (use-package org-journal
   :custom

@@ -4,8 +4,7 @@
 ;;; Code:
 (require 'use-package)
 
-(use-package notmuch
-  :defer t)
+(use-package notmuch)
 
 (provide 'setup-mail)
 ;;; setup-mail.el ends here
