@@ -6,6 +6,7 @@ epkgs:
     all-the-icons
     all-the-icons-dired
     all-the-icons-ivy
+    arduino-mode
     autodisass-llvm-bitcode
     avy
     cargo
@@ -87,6 +88,7 @@ epkgs:
     projectile
     puppet-mode
     racer
+    racket-mode
     reason-mode
     restclient
     ripgrep
