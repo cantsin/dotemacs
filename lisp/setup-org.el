@@ -83,8 +83,6 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(use-package org-notmuch)
-
 (use-package org-journal
   :custom
   (org-journal-dir "~/journal"))
