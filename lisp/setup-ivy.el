@@ -82,6 +82,7 @@
   (:map counsel-find-file-map ("C-l" . counsel-up-directory)))
 
 (use-package counsel-projectile
+  :demand t
   :ensure counsel
   :bind (("M-g s" . counsel-projectile-rg))
   :config

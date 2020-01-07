@@ -39,7 +39,10 @@
   ;; magit settings
   (set-face-foreground 'diff-context "#666666")
   (set-face-foreground 'diff-removed "#ff0000")
-  (set-face-foreground 'diff-added "#00cc33"))
+  (set-face-foreground 'diff-added "#00cc33")
+  ;; custom gitea forge
+  (add-to-list 'forge-alist '("git.home" "git.home/api/v1" "git.home" forge-gitea-repository))
+)
 
 (use-package magit-todos
   :hook (magit-mode . magit-todos-mode))

@@ -93,8 +93,8 @@ epkgs:
     restclient
     ripgrep
     rjsx-mode
-    rust-mode
     rustic
+    rust-mode
     s
     scala-mode
     scss-mode
