@@ -31,6 +31,11 @@
              (lambda (output)
                (replace-regexp-in-string "\033\\[[0-9]+[A-Z]" "" output))))
 
+(use-package direnv
+  :demand t
+  :config
+  (direnv-mode))
+
 ;; replace kill-ring-save.
 (use-package easy-kill
   :demand t

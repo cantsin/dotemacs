@@ -20,6 +20,7 @@ epkgs:
     dap-mode
     deft
     diminish
+    direnv
     dockerfile-mode
     easy-kill
     easy-kill-extras
