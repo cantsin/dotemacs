@@ -20,8 +20,6 @@
          :map company-active-map ("C-n" . next-company-completion)
          :map company-active-map ("C-p" . prev-company-completion))
   :config
-  (global-company-mode t)
-  (add-hook 'after-init-hook 'global-company-mode)
   (setq company-idle-delay 0
         company-tooltip-align-annotations t
         company-minimum-prefix-length 2
