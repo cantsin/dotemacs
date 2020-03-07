@@ -137,4 +137,9 @@ epkgs:
           };
         });
     }))
-  ] ++ [ epkgs.orgPackages.org-plus-contrib epkgs.pdf-tools ])
+  ] ++ [
+    epkgs.orgPackages.org-plus-contrib
+    epkgs.pdf-tools
+  ]
+  # utilities
+  ++ [ pkgs.shellcheck ])
