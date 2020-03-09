@@ -22,6 +22,7 @@ epkgs:
     diminish
     direnv
     dockerfile-mode
+    doom-modeline
     easy-kill
     easy-kill-extras
     eclim
@@ -83,7 +84,6 @@ epkgs:
     paradox
     pkg-info
     popup
-    powerline
     pretty-mode
     prodigy
     projectile
