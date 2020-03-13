@@ -60,6 +60,7 @@ epkgs:
     js2-mode
     json-mode
     key-chord
+    kotlin-mode
     kv
     ledger-mode
     lsp-mode

@@ -8,6 +8,7 @@
 (unless package--initialized (package-initialize t))
 
 (setq gc-cons-threshold 100000000)
+(setq garbage-collection-messages t)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -27,6 +28,7 @@
       font-lock-maximum-decoration t
       inhibit-splash-screen t
       inhibit-startup-message t
+      inhibit-compacting-font-caches t
       initial-scratch-message nil
       line-number-mode t
       make-backup-files nil

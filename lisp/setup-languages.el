@@ -78,6 +78,13 @@
   :init
   (setq lua-indent-level 2))
 
+(use-package kotlin-mode
+  :defer t
+  :mode ("\\.kt\\'" . kotlin-mode)
+  :init
+  (company-mode +1)
+  (add-hook 'kotlin-mode-hook #'lsp))
+
 (defun nix-format ()
   "Nix format the buffer."
   (interactive)
