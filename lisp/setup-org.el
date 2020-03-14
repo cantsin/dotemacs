@@ -83,6 +83,18 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
+(use-package org-clock-convenience
+  :demand t
+  :bind (:map org-agenda-mode-map
+              ("<S-up>" . org-clock-convenience-timestamp-up)
+              ("<S-down>" . org-clock-convenience-timestamp-down)
+              ("<S-home>" . org-clock-convenience-fill-gap)
+              ("<S-end>" . org-clock-convenience-fill-gap-both))
+  :config
+  ;; make clocked times show even if archived
+  (setq org-agenda-archives-mode t)
+  (setq org-clock-clocktable-default-properties '(:maxlevel 2 :scope agenda-with-archives)))
+
 (use-package org-journal
   :custom
   (org-journal-dir "~/journal"))

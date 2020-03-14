@@ -78,6 +78,7 @@ epkgs:
     nodejs-repl
     notmuch
     org-bullets
+    org-clock-convenience
     org-journal
     package-build
     pallet
