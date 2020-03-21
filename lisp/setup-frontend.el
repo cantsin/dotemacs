@@ -33,16 +33,15 @@
   (add-hook 'typescript-mode-hook #'setup-tide-mode))
 
 (use-package web-mode
-  :defer t
   :init
+  (setq css-indent-offset 2)
   (setq web-mode-markup-indent-offset 2
+        web-mode-enable-auto-pairing nil
         web-mode-code-indent-offset 2
         web-mode-css-indent-offset 2
+        web-mode-engine "django"
         web-mode-indent-style 2)
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
   :config
   (smartparens-mode 0))
 
