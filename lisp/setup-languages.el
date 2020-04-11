@@ -85,6 +85,13 @@
   (company-mode +1)
   (add-hook 'kotlin-mode-hook #'lsp))
 
+(use-package merlin
+  :defer t
+  :mode ("\\.ml\\'" "\\.mli\\'")
+  :config
+  (add-hook 'tuareg-mode-hook 'merlin-mode)
+  (add-hook 'caml-mode-hook 'merlin-mode))
+
 (defun nix-format ()
   "Nix format the buffer."
   (interactive)
