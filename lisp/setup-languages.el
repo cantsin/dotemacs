@@ -85,12 +85,40 @@
   (company-mode +1)
   (add-hook 'kotlin-mode-hook #'lsp))
 
+(defun in-nix-shell-p ()
+  "Are we in a nix shell?"
+  (string-equal (getenv "IN_NIX_SHELL") "impure"))
+
+(setq merlin-site-elisp (getenv "MERLIN_SITE_LISP"))
+
 (use-package merlin
   :defer t
+  :if (and merlin-site-elisp (in-nix-shell-p))
   :mode ("\\.ml\\'" "\\.mli\\'")
-  :config
-  (add-hook 'tuareg-mode-hook 'merlin-mode)
-  (add-hook 'caml-mode-hook 'merlin-mode))
+  :load-path merlin-site-elisp
+  :hook
+  (tuareg-mode . merlin-mode)
+  (merlin-mode . company-mode)
+  :custom
+  (merlin-command "ocamlmerlin"))
+
+(setq utop-site-elisp (getenv "UTOP_SITE_LISP"))
+
+(use-package utop
+  :defer t
+  :if (and utop-site-elisp (in-nix-shell-p))
+  :mode ("\\.ml\\'" "\\.mli\\'")
+  :load-path utop-site-elisp
+  :hook
+  (tuareg-mode . utop-minor-mode))
+
+(setq ocp-site-elisp (getenv "OCP_INDENT_SITE_LISP"))
+
+(use-package ocp-indent
+  :defer t
+  :if (and ocp-site-elisp (in-nix-shell-p))
+  :mode ("\\.ml\\'" "\\.mli\\'")
+  :load-path ocp-site-elisp)
 
 (defun nix-format ()
   "Nix format the buffer."
