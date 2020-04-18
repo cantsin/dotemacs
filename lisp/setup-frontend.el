@@ -6,13 +6,14 @@
 
 (use-package js2-mode
   :defer t
+  :mode ("\\.js\\'" . js2-mode)
   :init (progn
           (add-hook 'js-mode-hook 'js2-minor-mode)))
 
 (use-package rjsx-mode
   :defer t
+  :mode ("\\.jsx\\'" . rjsx-mode)
   :init (progn
-          (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
           (setq-default js2-basic-offset 2)
           (setq js-indent-level 2)))
 
@@ -33,17 +34,17 @@
   (add-hook 'typescript-mode-hook #'setup-tide-mode))
 
 (use-package web-mode
+  :defer t
+  :mode ("\\.html\\'" . web-mode)
   :init
   (setq css-indent-offset 2)
   (setq web-mode-markup-indent-offset 2
+        web-mode-enable-css-colorization t
         web-mode-enable-auto-pairing nil
         web-mode-code-indent-offset 2
         web-mode-css-indent-offset 2
         web-mode-engine "django"
-        web-mode-indent-style 2)
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-  :config
-  (smartparens-mode 0))
+        web-mode-indent-style 2))
 
 (provide 'setup-frontend)
 ;;; setup-frontend.el ends here

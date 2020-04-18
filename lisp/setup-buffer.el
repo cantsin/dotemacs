@@ -54,8 +54,8 @@
   (key-chord-define-global "jj" 'avy-goto-char))
 
 (use-package ledger-mode
-  :init
-  (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
+  :defer t
+  :mode ("\\.ledger\\'" . ledger-mode))
 
 (use-package writegood-mode)
 
