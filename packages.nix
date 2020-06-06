@@ -68,7 +68,6 @@ epkgs:
     magit
     magit-todos
     markdown-mode
-    markdown-mode-plus
     mc-extras
     merlin
     moe-theme
