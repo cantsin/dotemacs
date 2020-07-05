@@ -55,7 +55,9 @@
 
 (use-package ledger-mode
   :defer t
-  :mode ("\\.ledger\\'" . ledger-mode))
+  :mode ("\\.ledger\\'" . ledger-mode)
+  :config
+  (add-hook 'ledger-mode-hook 'company-mode))
 
 (use-package writegood-mode)
 
