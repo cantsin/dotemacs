@@ -106,12 +106,6 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-;; font setup
-(add-to-list 'default-frame-alist '(font . "Triplicate T3c-16"))
-(set-face-attribute 'default t :font "Triplicate T3c-16")
-(set-face-attribute 'default nil :font "Triplicate T3c-16")
-(set-frame-font "Triplicate T3c-16" nil t)
-
 (setenv "PATH" (concat (getenv "PATH") ":/home/james/bin"))
 (setq exec-path (append exec-path '("/home/james/bin")))
 
@@ -121,6 +115,25 @@
 (require 'setup-fly)
 (require 'setup-projectile)
 (require 'setup-theme)
+
+;; font setup
+(defun get-font-size ()
+  "Get font size for this system."
+  (if (member (system-name) '("satori")) 12 16))
+(defun get-font (&optional size)
+  "Get font for this system, can be overridden with SIZE."
+  (format "Triplicate T3c-%d" (or size (get-font-size))))
+(let*
+    ((font-size (get-font-size))
+     (current-font (get-font font-size))
+     (current-sub-font (get-font (- font-size 2))))
+  (add-to-list 'default-frame-alist `(font . ,current-font))
+  (set-face-attribute 'default t :font current-font)
+  (set-face-attribute 'default nil :font current-font)
+  (set-frame-font current-font nil t)
+  (set-face-attribute 'mode-line nil :font current-sub-font)
+  (set-face-attribute 'mode-line-inactive nil :font current-sub-font))
+
 (require 'setup-buffer)
 (require 'setup-magit)
 (require 'setup-dired)

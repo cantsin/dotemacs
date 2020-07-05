@@ -38,8 +38,6 @@
   (set-face-foreground 'mode-line "white")
   (set-face-foreground 'mode-line-buffer-id "white")
   (set-face-foreground 'mode-line-inactive "gray20")
-  (set-face-attribute 'mode-line nil :font "Triplicate T3c-14")
-  (set-face-attribute 'mode-line-inactive nil :font "Triplicate T3c-14")
   (set-face-attribute 'mode-line-highlight nil :box nil)
   :config (doom-modeline-mode 1))
 
