@@ -18,9 +18,7 @@
         ivy-height 18
         ivy-count-format ""
         ivy-initial-inputs-alist nil
-        enable-recursive-minibuffers t
-        ivy-re-builders-alist
-        '((t . ivy--regex-ignore-order))))
+        enable-recursive-minibuffers t))
 
 (use-package all-the-icons-ivy
   :demand t
@@ -88,11 +86,6 @@
   :config
   (setq counsel-grep-base-command
         "rg -i -M 120 --no-heading --line-number --color never '%s' %s"))
-
-(use-package swiper
-  :demand t
-  :bind (("C-s" . swiper-isearch)
-         ("C-r" . swiper-isearch)))
 
 (provide 'setup-ivy)
 ;;; setup-ivy.el ends here

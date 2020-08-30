@@ -105,7 +105,6 @@ epkgs:
     smex
     solarized-theme
     stripe-buffer
-    swiper
     tagedit
     terraform-mode
     tide
