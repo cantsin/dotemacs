@@ -79,10 +79,6 @@
                    "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n\n"))
                 ))
 
-(use-package org-bullets
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-
 (use-package org-clock-convenience
   :demand t
   :bind (:map org-agenda-mode-map
