@@ -4,6 +4,7 @@
 ;;; Code:
 (require 'use-package)
 
+(setq gdb-many-windows t)
 (add-hook 'makefile-mode-hook '(lambda () (setq indent-tabs-mode t)))
 
 (defun load-agda ()
