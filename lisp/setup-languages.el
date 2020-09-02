@@ -59,20 +59,11 @@
 
 (use-package lsp-mode
   :demand t
-  :hook (rustic-mode . lsp)
   :bind (("M-." . lsp-find-definition)
          ("M-?" . lsp-find-references))
   :config
   (setq lsp-enable-snippet nil)
   :commands lsp)
-
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :config
-  (require 'lsp-ui-sideline)
-  (set-face-background 'lsp-ui-sideline-global "gray14")
-  :init
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
 (use-package lua-mode
   :defer t
@@ -141,8 +132,14 @@
   :defer t
   :init (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode)))
 
+;; work around a bug where direnv is called too late
+(add-hook 'rustic-mode-hook
+          (lambda () (progn (direnv-update-environment) (lsp))))
+
 (use-package rustic
-  :mode ("\\.rs\\'" . rustic-mode))
+  :mode ("\\.rs\\'" . rustic-mode)
+  :config
+  (setq rustic-format-trigger 'on-save))
 
 (defun zig-format ()
   "Zig format the buffer."

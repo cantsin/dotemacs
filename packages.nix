@@ -58,7 +58,6 @@ epkgs:
     kv
     ledger-mode
     lsp-mode
-    lsp-ui
     lua-mode
     magit
     magit-todos
