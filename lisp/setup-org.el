@@ -39,6 +39,8 @@
   (setq org-default-notes-file "~/todos.org/notes.org"
         org-agenda-files '("~/todos.org/")
         org-confirm-babel-evaluate nil
+        org-image-actual-width nil
+        org-hide-emphasis-markers t
         org-src-fontify-natively t
         org-src-tab-acts-natively t
         org-startup-indented t
