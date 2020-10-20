@@ -36,6 +36,22 @@
   (add-hook 'org-mode-hook 'org-table-stripes-enable)
   :config
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
+  (let* ((variable-tuple '(:font "Valkyrie T3"))
+         (base-font-color (face-foreground 'default nil 'default))
+         (headline `(:inherit default :weight normal :foreground ,base-font-color)))
+    (custom-theme-set-faces
+     'user
+     `(org-level-8 ((t (,@headline ,@variable-tuple))))
+     `(org-level-7 ((t (,@headline ,@variable-tuple))))
+     `(org-level-6 ((t (,@headline ,@variable-tuple))))
+     `(org-level-5 ((t (,@headline ,@variable-tuple))))
+     `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+     `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
+     `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.3))))
+     `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.4))))
+     `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil))))))
   (setq org-default-notes-file "~/todos.org/notes.org"
         org-agenda-files '("~/todos.org/")
         org-confirm-babel-evaluate nil
@@ -80,6 +96,10 @@
                   ("r" "respond" entry (file org-default-notes-file)
                    "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n\n"))
                 ))
+
+(use-package org-superstar
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 
 (use-package org-clock-convenience
   :demand t

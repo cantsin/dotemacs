@@ -77,6 +77,7 @@ epkgs:
     notmuch
     org-clock-convenience
     org-journal
+    org-superstar
     package-build
     pallet
     pandoc-mode
