@@ -45,10 +45,6 @@
   :config
   (setq fsharp-indent-level 2))
 
-(use-package futhark-mode
-  :mode ("\\.fut\\'" . futhark-mode)
-  :defer t)
-
 (use-package jedi
   :defer t
   :config

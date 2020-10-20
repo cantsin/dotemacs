@@ -37,7 +37,6 @@ epkgs:
     flycheck-haskell
     flycheck-rust
     flymake-lua
-    futhark-mode
     forge
     format-sql
     fsharp-mode
