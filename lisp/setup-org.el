@@ -40,10 +40,9 @@
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
   (custom-theme-set-faces
    'user
-   '(variable-pitch ((t (:family "Valkyrie T4" :height 180 :weight thin))))
-   '(fixed-pitch ((t (:family "Triplicate T3c" :height 180))))
-   ;; TODO
-   ;; '(org-link ((t (:inherit variable-pitch :height 1.3))))
+   '(default ((t (:family "Triplicate T3c" :height 180))))
+   '(fixed-pitch ((t (:family "Triplicate T3c"))))
+   '(variable-pitch ((t (:family "Valkyrie T4" :height 1.1))))
    '(org-block ((t (:inherit fixed-pitch))))
    '(org-block-begin-line ((t (:inherit fixed-pitch))))
    '(org-block-end-line ((t (:inherit fixed-pitch))))

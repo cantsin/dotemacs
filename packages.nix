@@ -69,6 +69,7 @@ epkgs:
     magit-todos
     markdown-mode
     mc-extras
+    merlin
     moe-theme
     multiple-cursors
     nix-mode
