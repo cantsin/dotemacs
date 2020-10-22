@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs }:
 epkgs:
 (with epkgs.melpaPackages;
   [
@@ -125,18 +125,18 @@ epkgs:
     zig-mode
   ] ++ [
     # overrides
-    # (epkgs.lua-mode.override (args: {
-    #   melpaBuild = drv:
-    #     args.melpaBuild (drv // {
-    #       src = pkgs.fetchFromGitHub {
-    #         owner = "immerrr";
-    #         repo = "lua-mode";
-    #         rev = "52cc3e465a2d35dbcbad8a87fd5fe548840f5822";
-    #         sha256 = "1iw0z6dxd1nwjmlgy800xd2pgv40f798j831ca1hh3pbai5f84zm";
-    #         # date = 2019-10-15T09:33:40+02:00;
-    #       };
-    #     });
-    # }))
+    (epkgs.lua-mode.override (args: {
+      melpaBuild = drv:
+        args.melpaBuild (drv // {
+          src = pkgs.fetchFromGitHub {
+            owner = "immerrr";
+            repo = "lua-mode";
+            rev = "345ebfc1e236d9676e7e9f7364493785e7756348";
+            sha256 = "sha256-m5Zy4u9tyAFAslBBMP/hYQWoLfqaX7xTrCOjHGeBoHs=";
+            # date = 2020-09-21T19:45:07+02:00;
+          };
+        });
+    }))
   ] ++ [
     epkgs.orgPackages.org-plus-contrib
     epkgs.pdf-tools
