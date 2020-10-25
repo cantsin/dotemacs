@@ -18,18 +18,12 @@ epkgs:
     counsel
     counsel-projectile
     dap-mode
-    deft
-    diminish
     direnv
     dockerfile-mode
     doom-modeline
     easy-kill
     easy-kill-extras
     eclim
-    elm-mode
-    ember-mode
-    epl
-    erc-image
     esxml
     expand-region
     f
@@ -79,16 +73,10 @@ epkgs:
     org-clock-convenience
     org-journal
     org-superstar
-    package-build
-    pallet
     pandoc-mode
-    paradox
-    pkg-info
     popup
     pretty-mode
-    prodigy
     projectile
-    puppet-mode
     racer
     racket-mode
     reason-mode
@@ -104,7 +92,6 @@ epkgs:
     smart-compile
     smartparens
     smex
-    solarized-theme
     stripe-buffer
     tagedit
     terraform-mode
@@ -137,9 +124,4 @@ epkgs:
           };
         });
     }))
-  ] ++ [
-    epkgs.orgPackages.org-plus-contrib
-    epkgs.pdf-tools
-  ]
-  # utilities
-  ++ [ pkgs.shellcheck ])
+  ] ++ [ epkgs.orgPackages.org-plus-contrib epkgs.pdf-tools ])
