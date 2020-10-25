@@ -15,15 +15,14 @@
     };
   };
 
-  outputs = { self, ... }@inputs:
+  outputs = { self, nixpkgs, emacs-overlay }:
+    with import nixpkgs {
+      system = "x86_64-linux";
+      overlays = [ emacs-overlay.overlay ];
+    };
     let
-      pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-      emacs = pkgs.emacs.override { imagemagick = pkgs.imagemagickBig; };
       emacs-packages = import ./packages.nix { inherit pkgs; };
       emacs-final =
-        (pkgs.emacsPackagesNgGen emacs).emacsWithPackages emacs-packages;
-    in {
-      packages.x86_64-linux.emacs = emacs-final;
-      defaultPackage.x86_64-linux = self.packages.x86_64-linux.emacs;
-    };
+        (pkgs.emacsPackagesNgGen pkgs.emacs).emacsWithPackages emacs-packages;
+    in { defaultPackage.x86_64-linux = emacs-final; };
 }
