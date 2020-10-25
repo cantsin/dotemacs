@@ -59,6 +59,7 @@ epkgs:
     ledger-mode
     lsp-mode
     lsp-ui
+    lua-mode
     magit
     magit-todos
     markdown-mode
@@ -111,17 +112,7 @@ epkgs:
     yaml-mode
     zig-mode
   ] ++ [
-    # overrides
-    (epkgs.lua-mode.override (args: {
-      melpaBuild = drv:
-        args.melpaBuild (drv // {
-          src = pkgs.fetchFromGitHub {
-            owner = "immerrr";
-            repo = "lua-mode";
-            rev = "345ebfc1e236d9676e7e9f7364493785e7756348";
-            sha256 = "sha256-m5Zy4u9tyAFAslBBMP/hYQWoLfqaX7xTrCOjHGeBoHs=";
-            # date = 2020-09-21T19:45:07+02:00;
-          };
-        });
-    }))
-  ] ++ [ epkgs.orgPackages.org-plus-contrib epkgs.pdf-tools ])
+    # extras
+    epkgs.orgPackages.org-plus-contrib
+    epkgs.pdf-tools
+  ])
