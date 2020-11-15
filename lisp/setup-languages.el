@@ -59,7 +59,7 @@
 
 (use-package lsp-mode
   :demand t
-  :hook (rust-mode . lsp)
+  :hook (rustic-mode . lsp)
   :bind (("M-." . lsp-find-definition)
          ("M-?" . lsp-find-references))
   :config
@@ -141,7 +141,8 @@
   :defer t
   :init (add-to-list 'auto-mode-alist '("\\.restclient$" . restclient-mode)))
 
-(use-package rustic)
+(use-package rustic
+  :mode ("\\.rs\\'" . rustic-mode))
 
 (defun zig-format ()
   "Zig format the buffer."

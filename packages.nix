@@ -85,7 +85,6 @@ epkgs:
     ripgrep
     rjsx-mode
     rustic
-    rust-mode
     s
     scala-mode
     scss-mode
