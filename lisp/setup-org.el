@@ -57,7 +57,8 @@
    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
    '(org-todo ((t (:inherit fixed-pitch))))
    '(org-done ((t (:inherit fixed-pitch))))
-   '(org-priority ((t (:inherit fixed-pitch)))))
+   '(org-priority ((t (:inherit fixed-pitch))))
+   '(org-ellipsis ((t (:height 0.4 :foreground "#777")))))
   (let* ((variable-tuple '(:font "Valkyrie T3"))
          (base-font-color (face-foreground 'default nil 'default))
          (headline `(:inherit default :weight normal :foreground ,base-font-color)))
@@ -86,6 +87,7 @@
         org-use-fast-todo-selection t
         org-archive-location ".archived.org::* From %s"
         org-columns-default-format "%60ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM"
+        org-ellipsis "⤵"
         org-todo-keywords
         '((sequence "TODO(t)" "PENDING(p)" "|" "DONE(d)")
           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
