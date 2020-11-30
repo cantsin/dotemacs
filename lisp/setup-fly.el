@@ -93,12 +93,22 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
+(flycheck-define-checker vale
+  "Vale checker for prose"
+  :command ("vale" "--output" "line" source)
+  :standard-input nil
+  :error-patterns
+  ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
+  :modes (markdown-mode org-mode text-mode))
+
 (use-package flycheck
   :demand t
   :commands global-flycheck-mode
   :bind (("M-g l" . flycheck-list-errors)
          ("M-g n" . fly-goto-next-error)
          ("M-g p" . fly-goto-previous-error))
+  :init
+  (add-to-list 'flycheck-checkers 'vale 'append)
   :config
   (global-flycheck-mode t)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
