@@ -59,8 +59,6 @@
   :config
   (add-hook 'ledger-mode-hook 'company-mode))
 
-(use-package writegood-mode)
-
 (use-package markdown-mode
   :defer t
   :init
@@ -68,8 +66,7 @@
             '(lambda ()
                (font-lock-add-keywords nil '(("\"\\(\\(?:.\\|\n\\)*?[^\\]\\)\"" 0 font-lock-string-face)))
                (turn-off-auto-fill)
-               (visual-line-mode)
-               (writegood-mode)))
+               (visual-line-mode)))
   (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
   :config
   (defconst markdown-regex-footnote-inline
@@ -97,6 +94,8 @@
                  (&optional arg)
                (interactive "p")
                (sp-wrap-with-pair ,val)))))
+
+(use-package olivetti)
 
 (use-package smartparens-config
   :demand t

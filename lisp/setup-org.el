@@ -32,6 +32,7 @@
   (add-hook 'org-mode-hook
             (lambda ()
               (setq electric-indent-mode nil)
+              (setq cursor-type 'bar)
               (org-update-statistics-cookies t)))
   (add-hook 'org-mode-hook 'org-table-stripes-enable)
   ;; (add-hook 'org-mode-hook 'visual-line-mode)
@@ -137,7 +138,15 @@
 
 (use-package org-journal
   :custom
-  (org-journal-dir "~/journal"))
+  (org-journal-dir "~/journal")
+  :config
+  (add-hook 'org-journal-mode-hook
+            '(lambda ()
+               (fringe-mode '0)
+               (auto-fill-mode -1)
+               (olivetti-set-width 0.8)
+               (olivetti-mode)
+               (flycheck-add-mode 'vale 'org-journal-mode))))
 
 (use-package stripe-buffer
   :defer t)

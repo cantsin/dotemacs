@@ -70,6 +70,7 @@ epkgs:
     nix-update
     nodejs-repl
     notmuch
+    olivetti
     org-clock-convenience
     org-journal
     org-superstar
@@ -105,7 +106,6 @@ epkgs:
     web-mode
     wgrep
     whitespace-cleanup-mode
-    writegood-mode
     ws-butler
     yaml-mode
     zig-mode
