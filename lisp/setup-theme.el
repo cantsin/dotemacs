@@ -23,7 +23,10 @@
 
 (use-package moe-theme
   :demand t
-  :config (moe-dark))
+  :config
+  (moe-dark)
+  (auto-dim-other-buffers-mode t)
+  (set-face-background 'auto-dim-other-buffers-face "gray18"))
 
 (use-package doom-modeline
   :demand t

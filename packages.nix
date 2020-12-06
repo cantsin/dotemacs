@@ -7,6 +7,7 @@ epkgs:
     all-the-icons-dired
     all-the-icons-ivy
     arduino-mode
+    auto-dim-other-buffers
     autodisass-llvm-bitcode
     avy
     cargo
