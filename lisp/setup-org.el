@@ -20,6 +20,10 @@
   "When killing the whole line, also update the cookie."
   (update-parent-cookie))
 
+(defface org-checkbox-done-text
+    '((t (:foreground "#71696A" :strike-through t)))
+    "Face for the text part of a checked org-mode checkbox.")
+
 (use-package org
   :bind (("C-c l" . org-store-link)
          ("M-p" . org-previous-visible-heading)
@@ -37,6 +41,11 @@
   (add-hook 'org-mode-hook 'org-table-stripes-enable)
   ;; (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'variable-pitch-mode)
+  (add-hook 'org-mode-hook (lambda ()
+                             (push '("[ ]" .  "☐") prettify-symbols-alist)
+                             (push '("[X]" . "☑" ) prettify-symbols-alist)
+                             (push '("[-]" . "❍" ) prettify-symbols-alist)
+                             (prettify-symbols-mode)))
   :config
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
   (custom-theme-set-faces
@@ -52,7 +61,7 @@
    '(org-property-value ((t (:inherit fixed-pitch))))
    '(org-table ((t (:inherit fixed-pitch))))
    '(org-special-keyword ((t (:inherit fixed-pitch))))
-   '(org-checkbox ((t (:inherit fixed-pitch))))
+   '(org-checkbox ((t (:inherit fixed-pitch :foreground nil :background nil :box nil))))
    '(org-priority ((t (:inherit fixed-pitch))))
    '(org-meta-line ((t (:inherit fixed-pitch))))
    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
@@ -94,6 +103,11 @@
           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
           (sequence "|" "FUTURE(l)")
           (sequence "|" "CANCELED(c)" "BLOCKED(x)")))
+  (font-lock-add-keywords
+   'org-mode
+   `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
+      1 'org-checkbox-done-text prepend))
+   'append)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell . t)
