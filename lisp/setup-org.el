@@ -42,7 +42,7 @@
   ;; (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'variable-pitch-mode)
   (add-hook 'org-mode-hook (lambda ()
-                             (push '("[ ]" .  "☐") prettify-symbols-alist)
+                             (push '("[ ]" . "☐") prettify-symbols-alist)
                              (push '("[X]" . "☑" ) prettify-symbols-alist)
                              (push '("[-]" . "❍" ) prettify-symbols-alist)
                              (prettify-symbols-mode)))
@@ -136,6 +136,10 @@
 
 (use-package org-superstar
   :config
+  (setq org-superstar-special-todo-items t)
+  (custom-theme-set-faces
+   'user
+   '(org-superstar-header-bullet ((t (:height 0.8)))))
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 
 (use-package org-clock-convenience
