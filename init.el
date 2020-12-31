@@ -58,6 +58,10 @@
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines t)
 (set-default 'sentence-end-double-space nil)
+(set-default 'left-margin-width 1)
+(set-default 'right-margin-width 1)
+(set-default 'fringes-outside-margins t)
+(set-window-buffer nil (current-buffer))
 
 ;; enable some disabled commands.
 (put 'narrow-to-region 'disabled nil)

@@ -24,7 +24,11 @@
 (use-package moe-theme
   :demand t
   :config
-  (moe-dark)
+  (moe-dark))
+
+(use-package auto-dim-other-buffers
+  :demand t
+  :config
   (auto-dim-other-buffers-mode t)
   (set-face-background 'auto-dim-other-buffers-face "gray18"))
 
