@@ -139,7 +139,7 @@
   (setq org-superstar-special-todo-items t)
   (custom-theme-set-faces
    'user
-   '(org-superstar-header-bullet ((t (:height 0.8)))))
+   '(org-superstar-header-bullet ((t (:height 0.8 :width semi-condensed)))))
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 
 (use-package org-clock-convenience
