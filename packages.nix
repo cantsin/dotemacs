@@ -34,7 +34,7 @@ epkgs:
     flymake-lua
     forge
     format-sql
-    fsharp-mode
+    # fsharp-mode
     gitconfig
     gitignore-mode
     glsl-mode
