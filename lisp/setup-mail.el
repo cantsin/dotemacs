@@ -7,6 +7,7 @@
 (use-package notmuch
   :config
   (setq notmuch-hello-thousands-separator ","
+        notmuch-search-oldest-first nil
         notmuch-hello-sections
              (list #'notmuch-hello-insert-saved-searches
 	           #'notmuch-hello-insert-search
