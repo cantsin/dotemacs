@@ -14,7 +14,6 @@ epkgs:
     cider
     company
     company-emacs-eclim
-    company-ghc
     company-lsp
     counsel
     counsel-projectile
