@@ -58,6 +58,7 @@
    '(org-block-end-line ((t (:inherit fixed-pitch))))
    '(org-drawer ((t (:inherit fixed-pitch))))
    '(org-date ((t (:inherit fixed-pitch))))
+   '(org-formula ((t (:inherit fixed-pitch))))
    '(org-property-value ((t (:inherit fixed-pitch))))
    '(org-table ((t (:inherit fixed-pitch))))
    '(org-special-keyword ((t (:inherit fixed-pitch))))
