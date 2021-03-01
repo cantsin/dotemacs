@@ -9,6 +9,7 @@
 
 (setq gc-cons-threshold 100000000)
 (setq garbage-collection-messages t)
+(setq read-process-output-max 1048576)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
