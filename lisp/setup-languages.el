@@ -102,7 +102,9 @@
   :mode ("\\.ml\\'" "\\.mli\\'")
   :load-path utop-site-elisp
   :hook
-  (tuareg-mode . utop-minor-mode))
+  (tuareg-mode . utop-minor-mode)
+  :config
+  (setq utop-command "opam config exec -- dune utop . -- -emacs"))
 
 (setq ocp-site-elisp (getenv "OCP_INDENT_SITE_LISP"))
 
