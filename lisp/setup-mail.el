@@ -14,5 +14,7 @@
 	           #'notmuch-hello-insert-recent-searches
 	           #'notmuch-hello-insert-alltags)))
 
+(setq message-kill-buffer-on-exit t)
+
 (provide 'setup-mail)
 ;;; setup-mail.el ends here
