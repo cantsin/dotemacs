@@ -40,11 +40,6 @@
 (use-package dap-mode
   :defer t)
 
-(use-package fsharp-mode
-  :defer t
-  :config
-  (setq fsharp-indent-level 2))
-
 (use-package jedi
   :defer t
   :config
