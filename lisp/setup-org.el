@@ -4,6 +4,9 @@
 ;;; Code:
 (require 'use-package)
 
+;; avoid "Symbol’s function definition is void: delete-if-not" errors
+(require 'cl)
+
 (defun update-parent-cookie ()
   "Update the count of items in this section."
   (when (equal major-mode 'org-mode)
@@ -84,8 +87,8 @@
      `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.3))))
      `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.4))))
      `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil))))))
-  (setq org-default-notes-file "~/todos.org/notes.org"
-        org-agenda-files '("~/todos.org/")
+  (setq org-default-notes-file "~/todos/notes.org"
+        org-agenda-files '("~/todos/")
         org-confirm-babel-evaluate nil
         org-image-actual-width nil
         org-hide-emphasis-markers t
@@ -96,6 +99,7 @@
         org-enforce-todo-dependencies t
         org-enforce-todo-checkbox-dependencies t
         org-use-fast-todo-selection t
+        org-log-into-drawer t
         org-archive-location ".archived.org::* From %s"
         org-columns-default-format "%60ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM"
         org-ellipsis "⤵"
