@@ -69,6 +69,7 @@
    '(org-priority ((t (:inherit fixed-pitch))))
    '(org-meta-line ((t (:inherit fixed-pitch))))
    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+   '(org-verbatim ((t (:inherit fixed-pitch))))
    '(org-todo ((t (:inherit fixed-pitch))))
    '(org-done ((t (:inherit fixed-pitch))))
    '(org-priority ((t (:inherit fixed-pitch))))
