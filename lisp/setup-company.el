@@ -16,6 +16,7 @@
 
 (use-package company
   :demand t
+  :hook (after-init . global-company-mode)
   :bind (("C-/" . company-complete)
          :map company-active-map ("C-n" . next-company-completion)
          :map company-active-map ("C-p" . prev-company-completion))
@@ -25,17 +26,16 @@
         company-minimum-prefix-length 2
         company-show-numbers t
         company-selection-wrap-around t
-        company-backends (list #'company-lsp
-                               #'company-files
+        company-backends (list #'company-files
                                (list #'company-dabbrev-code
                                      #'company-gtags
                                      #'company-etags
                                      #'company-keywords)
                                #'company-dabbrev)))
 
-(use-package company-lsp
-  :demand t
-  :commands company-lsp)
+(use-package company-nixos-options
+  :config
+  (add-to-list 'company-backends 'company-nixos-options))
 
 ;; custom company backend for ledger mode
 (require 'company-ledger-accounts)

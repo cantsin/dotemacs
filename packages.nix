@@ -14,7 +14,7 @@ epkgs:
     cider
     company
     company-emacs-eclim
-    company-lsp
+    company-nixos-options
     counsel
     counsel-projectile
     dap-mode
@@ -56,6 +56,7 @@ epkgs:
     kotlin-mode
     kv
     ledger-mode
+    lsp-ivy
     lsp-mode
     lua-mode
     magit

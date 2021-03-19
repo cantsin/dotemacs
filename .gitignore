@@ -5,3 +5,4 @@ elpa
 *.eld
 *.elc
 recentf
+/result
