@@ -13,6 +13,7 @@ epkgs:
     cargo
     cider
     company
+    company-box
     company-emacs-eclim
     company-nixos-options
     counsel

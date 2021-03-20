@@ -4,6 +4,8 @@
 ;;; Code:
 (require 'use-package)
 
+(setq tab-always-indent 'complete)
+
 (defun next-company-completion ()
   "Select the next completion item."
   (interactive)
@@ -31,7 +33,11 @@
                                      #'company-gtags
                                      #'company-etags
                                      #'company-keywords)
+                               #'company-capf
                                #'company-dabbrev)))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
 
 (use-package company-nixos-options
   :config
