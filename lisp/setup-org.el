@@ -7,6 +7,12 @@
 ;; avoid "Symbol’s function definition is void: delete-if-not" errors
 (require 'cl)
 
+(defun todo-creation-date (&rest ignore)
+  "Log TODO creation time in the property drawer under the key 'CREATED'."
+  (when (and (org-get-todo-state)
+             (not (org-entry-get nil "CREATED")))
+    (org-entry-put nil "CREATED" (format-time-string (cdr org-time-stamp-formats)))))
+
 (defun update-parent-cookie ()
   "Update the count of items in this section."
   (when (equal major-mode 'org-mode)
@@ -49,6 +55,9 @@
                              (push '("[X]" . "☑" ) prettify-symbols-alist)
                              (push '("[-]" . "❍" ) prettify-symbols-alist)
                              (prettify-symbols-mode)))
+  (advice-add 'org-insert-todo-heading :after #'todo-creation-date)
+  (advice-add 'org-insert-todo-heading-respect-content :after #'todo-creation-date)
+  (advice-add 'org-insert-todo-subheading :after #'todo-creation-date)
   :config
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
   (custom-theme-set-faces
