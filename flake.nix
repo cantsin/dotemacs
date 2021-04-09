@@ -23,6 +23,12 @@
     let
       emacs-packages = import ./packages.nix { inherit pkgs; };
       emacs-final =
-        (pkgs.emacsPackagesNgGen pkgs.emacs).emacsWithPackages emacs-packages;
-    in { defaultPackage.x86_64-linux = emacs-final; };
+        (pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages emacs-packages;
+      aux-packages = import ./auxilary.nix { inherit pkgs; };
+    in {
+      defaultPackage.x86_64-linux = pkgs.buildEnv {
+        name = "emacs-plus-aux-packages";
+        paths = [ emacs-final ] ++ aux-packages;
+      };
+    };
 }

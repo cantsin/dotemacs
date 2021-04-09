@@ -40,18 +40,6 @@
 (use-package dap-mode
   :defer t)
 
-(use-package jedi
-  :defer t
-  :config
-  (add-hook 'python-mode-hook 'jedi:setup)
-  (setq jedi:complete-on-dot t))
-
-;; (use-package irony
-;;   :config
-;;   (add-hook 'c++-mode-hook 'irony-mode)
-;;   (add-hook 'c-mode-hook 'irony-mode)
-;;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-
 (use-package lsp-mode
   :demand t
   :bind (("M-." . lsp-find-definition)
@@ -59,6 +47,13 @@
   :config
   (setq lsp-enable-snippet nil)
   :commands lsp)
+
+(use-package lsp-python-ms
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-python-ms)
+                         (lsp)))
+  :init
+  (setq lsp-python-ms-executable (executable-find "python-language-server")))
 
 (use-package lua-mode
   :defer t
