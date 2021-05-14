@@ -25,10 +25,16 @@
       emacs-final =
         (pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages emacs-packages;
       aux-packages = import ./auxilary.nix { inherit pkgs; };
+      all-packages = [ emacs-final ] ++ aux-packages;
     in {
       defaultPackage.x86_64-linux = pkgs.buildEnv {
         name = "emacs-plus-aux-packages";
-        paths = [ emacs-final ] ++ aux-packages;
+        paths = all-packages;
+      };
+
+      nixosModules.dotemacs = { pkgs, ... }: {
+        nixpkgs.overlays = [ self.overlay ];
+        environment.systemPackages = all-packages;
       };
     };
 }
