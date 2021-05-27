@@ -44,7 +44,6 @@ epkgs:
     htmlize
     hydra
     idris-mode
-    interleave
     ivy
     ivy-hydra
     ivy-rich

@@ -31,10 +31,5 @@
         name = "emacs-plus-aux-packages";
         paths = all-packages;
       };
-
-      nixosModules.dotemacs = { pkgs, ... }: {
-        nixpkgs.overlays = [ self.overlay ];
-        environment.systemPackages = all-packages;
-      };
     };
 }
