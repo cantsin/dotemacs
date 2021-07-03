@@ -23,7 +23,7 @@
     let
       emacs-packages = import ./packages.nix { inherit pkgs; };
       emacs-final =
-        (pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages emacs-packages;
+        (pkgs.emacsPackagesFor pkgs.emacsGcc).emacsWithPackages emacs-packages;
       aux-packages = import ./auxilary.nix { inherit pkgs; };
       all-packages = [ emacs-final ] ++ aux-packages;
     in {
